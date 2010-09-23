@@ -52,12 +52,11 @@ public class Motor {
 	 *  the motor so you can better determine the speed and increase the power
 	 *  if neccesary.
 	 * 
-	 * @param  motor    Motor number to change percent of (0-3)
 	 * @param  percent  percent % of full (-100 to 100)
 	 * 
-	 * @see #fd
-	 * @see #bk
-	 * @see #mav
+	 * @see #forward
+	 * @see #backward
+	 * @see #moveAtVelocity
 	 */
 	public void motor(int percent) {
 		lowMotor.motor(port, percent);
@@ -98,8 +97,8 @@ public class Motor {
 	/**
 	 * Moves to a relative position in ticks
 	 *
-	 * @param  speed    The speed in ticks per second
-	 * @param  goalPos  The goal position to move toward
+	 * @param  speed     The speed in ticks per second
+	 * @param  deltaPos  The relative goal position in ticks to move toward
 	 *
 	 */
 	public int moveRelativePosition(int speed, int deltaPos) {
@@ -200,9 +199,10 @@ public class Motor {
 
     /**
      * Moves the motor forward at full power. Not a Back-EMF function.
-     *  A Back-EMF fuction such as <code>mav()</code> is recommended.
+     *  A Back-EMF fuction such as <code>moveAtVelocity(tps)</code> is
+     *  recommended.
      *
-     * @see #mav
+     * @see #moveAtVelocity
      */
 	public void forward() {
 		lowMotor.fd(port);
