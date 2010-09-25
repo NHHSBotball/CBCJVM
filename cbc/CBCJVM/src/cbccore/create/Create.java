@@ -16,31 +16,32 @@ public class Create {
 	public class ConnectionException extends IOException {
 		private static final long serialVersionUID = -7364867572058696574L;
 	}
-
+	
 	public enum Mode {
 		Safe, Passive, Full, Off
 	}
-
-	private static cbccore.low.Create lowCreate = Device
-			.getLowCreateController();
-	private static LowSideDrivers lowSideDrivers = new LowSideDrivers(lowCreate);
-
+	
+	private static cbccore.low.Create lowCreate =
+		Device.getLowCreateController();
+	private static LowSideDrivers lowSideDrivers =
+		new LowSideDrivers(lowCreate);
+	
 	public Create() throws ConnectionException {
 		connect();
 	}
-
+	
 	@Override
 	public void finalize() {
 		disconnect();
 	}
-
+	
 	public void sendScript(Script script) {
 		Script s = (Script) script.clone();
 		for (Command c : s) {
 			c.add(this);
 		}
 	}
-
+	
 	/**
 	 * First step for connecting CBC to Create. This function puts the Create in
 	 * the safe mode.
@@ -52,7 +53,7 @@ public class Create {
 		if (ret < 0)
 			throw new ConnectionException();
 	}
-
+	
 	/**
 	 * Returns the Create to proper state. Call this at the end of your program.
 	 * 
@@ -61,7 +62,7 @@ public class Create {
 	public void disconnect() {
 		lowCreate.create_disconnect();
 	}
-
+	
 	/**
 	 * Puts the Create into passive mode (no motors).
 	 * 
@@ -72,7 +73,7 @@ public class Create {
 	public void start() {
 		lowCreate.create_start();
 	}
-
+	
 	/**
 	 * Changes the Create's mode. Safe stops if it senses the drop sensor, Full
 	 * will do everything ignoring safety triggers, even if it means destroying
@@ -93,7 +94,7 @@ public class Create {
 		else
 			lowCreate.create_safe();
 	}
-
+	
 	/**
 	 * Simulates a Roomba doing a spot clean.
 	 * 
@@ -104,7 +105,7 @@ public class Create {
 	public void spot() {
 		lowCreate.create_spot();
 	}
-
+	
 	/**
 	 * Simulates a Roomba covering a room.
 	 * 
@@ -115,7 +116,7 @@ public class Create {
 	public void cover() {
 		lowCreate.create_cover();
 	}
-
+	
 	/**
 	 * Runs a specified built-in demo (see Create IO documentation).
 	 * 
@@ -129,7 +130,7 @@ public class Create {
 	public void demo(int d) {
 		lowCreate.create_demo(d);
 	}
-
+	
 	/**
 	 * The Create roams around until it sees an IR dock and then attempts to
 	 * dock.
@@ -141,7 +142,7 @@ public class Create {
 	public void coverDock() {
 		lowCreate.create_cover_dock();
 	}
-
+	
 	/**
 	 * Returns the Create's mode.
 	 * 
@@ -161,14 +162,14 @@ public class Create {
 			return Mode.Full;
 		return Mode.Off;
 	}
-
+	
 	/**
 	 * Stops the drive wheels
 	 */
 	public void stop() {
 		lowCreate.create_stop();
 	}
-
+	
 	/**
 	 * Drives in an arc.
 	 * 
@@ -189,7 +190,7 @@ public class Create {
 	public void drive(int speed, int radius) {
 		lowCreate.create_drive(speed, radius);
 	}
-
+	
 	/**
 	 * Drives straight at speed in mm/s
 	 * 
@@ -199,7 +200,7 @@ public class Create {
 	public void driveStraight(int speed) {
 		lowCreate.create_drive_straight(speed);
 	}
-
+	
 	/**
 	 * Spins CW with edge speed of speed in mm/s
 	 * 
@@ -211,7 +212,7 @@ public class Create {
 	public void spinCW(int speed) {
 		lowCreate.create_spin_CW(speed);
 	}
-
+	
 	/**
 	 * Spins CCW with edge speed of speed in mm/s
 	 * 
@@ -223,7 +224,7 @@ public class Create {
 	public void spinCCW(int speed) {
 		lowCreate.create_spin_CCW(speed);
 	}
-
+	
 	/**
 	 * Specifies individual left and right speeds in mm/s
 	 * 
@@ -236,7 +237,7 @@ public class Create {
 	public void driveDirect(int r_speed, int l_speed) {
 		lowCreate.create_drive_direct(r_speed, l_speed);
 	}
-
+	
 	/**
 	 * This function blocks and does a pretty accurate spin. Note that the
 	 * function will not return until the spin is complete CAUTION: requesting
@@ -256,9 +257,9 @@ public class Create {
 	public int spinBlock(int speed, int angle) {
 		return lowCreate.create_spin_block(speed, angle);
 	}
-
+	
 	// public int _get_raw_encoders(long* lenc, long* renc);
-
+	
 	/**
 	 * Turn on/off the advance LED
 	 * 
@@ -270,7 +271,7 @@ public class Create {
 	public void advanceLed(boolean on) {
 		lowCreate.create_advance_led(on ? 1 : 0);
 	}
-
+	
 	/**
 	 * Turn on/off the play LED
 	 * 
@@ -282,7 +283,7 @@ public class Create {
 	public void playLed(boolean on) {
 		lowCreate.create_play_led(on ? 1 : 0);
 	}
-
+	
 	/**
 	 * Control the color and the brightness of the power LED
 	 * 
@@ -296,7 +297,7 @@ public class Create {
 	public void powerLed(int color, int brightness) {
 		lowCreate.create_power_led(color, brightness);
 	}
-
+	
 	/**
 	 * This function sets the three digital out put pins 20,7,19 where 20 is the
 	 * high bit and 19 is the low. You probably don't care about this function.
@@ -307,7 +308,7 @@ public class Create {
 	public void digitalOutput(int bits) {
 		lowCreate.create_digital_output(bits);
 	}
-
+	
 	/**
 	 * Turns on and off the signal for the three low side drivers (128 = 100%).
 	 * A 0 or 1 should be given for each of the drivers to turn them off or on.
@@ -318,7 +319,7 @@ public class Create {
 	public LowSideDrivers getLowSideDrivers() {
 		return lowSideDrivers;
 	}
-
+	
 	/**
 	 * This loads a song into the robot's memory. Song can be numbered 0 to 15.
 	 * The first element in each row of the array should be the number of notes
@@ -335,7 +336,7 @@ public class Create {
 	public void loadSong(int num) {
 		lowCreate.create_load_song(num);
 	}
-
+	
 	/**
 	 * See the roomba SCI manual for note codes. Uses gc_song_array, an
 	 * inaccessable variable. <b>DO NOT USE THIS FUNCTION UNTIL THE ISSUE IS
@@ -348,13 +349,13 @@ public class Create {
 	public void playSong(int num) {
 		lowCreate.create_play_song(num);
 	}
-
+	
 	// public int read_block(char* data, int count);
-
+	
 	public int getDistance() {
 		return lowCreate.create_distance();
 	}
-
+	
 	/**
 	 * See Create IO Documentation. You probably don't care about this function.
 	 * 
@@ -366,45 +367,42 @@ public class Create {
 		char c = (char) write_byte;
 		lowCreate.create_write_byte(c);
 	}
-
+	
 	public void clearSerialBuffer() {
 		lowCreate.create_clear_serial_buffer();
 	}
-
+	
 	public static byte fromUnsigned(int c) {
 		return (byte) ((c > 127) ? c - 256 : c);
 	}
-
+	
 	public static int fromSigned(byte c) {
 		return c & 0xFF;
 	}
-
+	
 	/**
 	 * Moves the create a set number of mm at a set speed. You should probably
 	 * be using the movement library.
 	 * 
-	 * @param speed
-	 *            The number of seconds to travel for. (shouldn't this be
-	 *            changed to mmps to make range checking easier on the user?)
-	 * @param mm
-	 *            The number of mm for the create to move.
+	 * @param  mmps  The speed of the create in millimeters-per-second
+	 * @param  mm    The number of mm for the create to move.
 	 * @see #turnDeg
 	 * @see cbccore.movement.DriveTrain
 	 * @see cbccore.movement.plugins.create.CreateMovementPlugin
 	 * @see cbccore.movement.DriveTrain#moveCm
 	 */
-	public void moveMm(int speed, int mm) {
-		driveStraight(speed);
-		double mmps = (double) mm / Math.abs(speed);
+	public void moveMm(int mmps, int mm) {
+		double secs = mm/((double)mmps);
+		driveStraight(mmps);
 		try {
-			Thread.sleep(130); // what is this?
-			Thread.sleep((int) (mmps * 1000));
+			//Thread.sleep(130); // what is this?
+			Thread.sleep((int)(secs * 1000.));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		stop();
 	}
-
+	
 	/**
 	 * Moves the create a set number of degrees at a set speed. You should
 	 * probably be using the movement library.
@@ -430,7 +428,7 @@ public class Create {
 		lowCreate.create_spin_block(speed, deg);
 		// shouldn't you stop it here? or does the create handle that for you?
 	}
-
+	
 	public CliffState getCliffs() {
 		byte buffer[] = new byte[12];
 		writeByte(149);
