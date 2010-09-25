@@ -2,7 +2,6 @@
 echo "[COMPILER] ------------------"
 echo "[COMPILER] Building CBCWrapper"
 cd cbc
-mvn clean install
 Build.bat
 cd ..
 

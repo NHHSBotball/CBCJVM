@@ -1,8 +1,8 @@
 #!/bin/bash
 echo "[COMPILER] ------------------"
-echo "[COMPILER] Building CBCWrapper"
+echo "[COMPILER] Building CBCJVM Classes"
 cd cbc
-mvn clean install
+#mvn clean install
 sh Build.sh
 cd ..
 
@@ -12,6 +12,6 @@ sh make_latest_installer
 
 cd ..
 
-echo "[COMPILER] Building Download Tool"
-cd consoleDownload
-ant
+#echo "[COMPILER] Building Download Tool"
+#cd consoleDownload
+#ant
