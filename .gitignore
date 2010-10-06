@@ -3,6 +3,8 @@ runtime-*
 eclipse/CBC/bin
 cbc/.metadata
 cbc/CBCJVM/dist
+cbc/CBCJVM/tests/reports/*
+cbc/CBCJVM/tests/bin/*
 cbc/CBCJVM/docs/api
 installer/install/install_data
 cbc/CBCJVM/target
