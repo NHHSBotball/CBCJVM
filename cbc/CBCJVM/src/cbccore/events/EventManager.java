@@ -91,9 +91,9 @@ public class EventManager {
 	 * @see    #disconnect
 	 * @see    cbccore.events.Event#emit
 	 */
-	public synchronized void connect(EventType type, IEventListener l) {
+	public synchronized void connect(EventType type, IEventListener listener) {
 		Set<IEventListener> listeners = getListeners(type);
-		listeners.add(l);
+		listeners.add(listener);
 		events.put(type, listeners);
 	}
 	
