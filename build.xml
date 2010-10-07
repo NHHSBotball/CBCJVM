@@ -1,0 +1,26 @@
+<project name="build-all" default="dist">
+	<description>
+		Initializes, compiles (runs dist), or cleans all subscripts
+	</description>
+	
+	<property name="install-antfile" location="installer/build.xml"/>
+	<property name="libraries-antfile" location="cbc/CBCJVM/build.xml"/>
+	
+	<!-- Note how there is no dependency chain. This is intentional,
+	     each subscript will handle it's own dependencies -->
+	
+	<target name="init" description="initialize all subscripts">
+		<ant antfile="${libraries-antfile}" target="init" inheritAll="false"/>
+		<ant antfile="${install-antfile}" target="init" inheritAll="false"/>
+	</target>
+	
+	<target name="dist" description="compile (run dist on) all subscripts">
+		<ant antfile="${libraries-antfile}" target="dist" inheritAll="false"/>
+		<ant antfile="${install-antfile}" target="dist" inheritAll="false"/>
+	</target>
+	
+	<target name="clean" description="clean all subscripts">
+		<ant antfile="${libraries-antfile}" target="clean" inheritAll="false"/>
+		<ant antfile="${install-antfile}" target="clean" inheritAll="false"/>
+	</target>
+</project>
