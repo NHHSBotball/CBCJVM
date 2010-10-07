@@ -60,7 +60,9 @@ public class EventManager {
 	private ConcurrentHashMap<EventType, Set<IEventListener>> queue; //can't be thread local- some threads may be using the same type
 	private ConcurrentHashMap<EventType, Integer> refcount; //keep references of num of objects
 	private ConcurrentHashMap<EventType, Integer> mergecount; //must wait for reaching 0 before continueing
-	private int it = 0;
+	private static long it = Long.MIN_VALUE; // making this static lets us have
+	                                         // universal identifiers, for any
+	                                         // EventManager
 	
 	
 	/**
@@ -77,6 +79,18 @@ public class EventManager {
 		return instance;
 	}
 	
+	/**
+	 * Adds an event listener to the list of listeners for a specific
+	 * <code>EventType</code>.
+	 *
+	 * @param  type      The <code>EventType</code> that IEventListener will be
+	 *                       listening for.
+	 * @param  listener  The listening function/object
+	 * @see    cbccore.events.IEventListener
+	 * @see    cbccore.events.EventType
+	 * @see    #disconnect
+	 * @see    cbccore.events.Event#emit
+	 */
 	public synchronized void connect(EventType type, IEventListener l) {
 		Set<IEventListener> listeners = getListeners(type);
 		listeners.add(l);
@@ -84,54 +98,71 @@ public class EventManager {
 	}
 	
 	/**
-	 * Removes an event listener from all types in an emitter.
+	 * Removes an event listener from the list of listeners for a specific
+	 * <code>EventType</code>.
 	 *
-	 * @param type The event type that IEventListener has been listening for.
-	 * @param listener The listening function/object
+	 * @param  type      The <code>EventType</code> that IEventListener has been
+	 *                       listening for.
+	 * @param  listener  The listening function/object
+	 * @see    cbccore.events.IEventListener
+	 * @see    cbccore.events.EventType
+	 * @see    #connect
+	 * @see    cbccore.events.Event#emit
 	 */
-	public synchronized void disconnect(EventType type, IEventListener listener) {
+	public synchronized void disconnect(EventType type,
+	                                    IEventListener listener) {
 		Set<IEventListener> listeners = getListeners(type);
 		listeners.remove(listener);
-		//events.put(e, listeners);
 	}
 	
 	/**
 	 * Do not call this directly
 	 */
 	@SuppressWarnings("unchecked")
-	public void __emit(Event e) {
+	public void __emit(Event e) { // This CANNOT be an EventType
 		Set<IEventListener> listeners = getListeners(e.getType());
 		for (IEventListener i : listeners) {
 			i.event(e);
 		}
 	}
 	
-	/**
-	 * Gets all the listeners for a specific event type
-	 * 
-	 * @param   type  The type of event to get the listeners for
-	 * @return		returnval
-	 * @see		   seealso
-	 */
+	// Gets all the listeners for a specific event type
 	private Set<IEventListener> getListeners(EventType type) {
 		Set<IEventListener> listeners = events.get(type);
 		if (listeners == null) {
-			listeners = Collections.synchronizedSet(new HashSet<IEventListener>());
+			listeners = Collections.synchronizedSet(
+				new HashSet<IEventListener>()
+			);
 			events.put(type, listeners);
 		}
 		return listeners;
 	}
 	
+	/**
+	 * Gets a new <code>Event</code> with an EventType guarenteed to be never
+	 * have been made before by the EventManager class. (note: if you create an
+	 * Event without this it could have a duplicate EventType, which is not
+	 * reccommended if that is not what you are going for)
+	 */
 	@SuppressWarnings("unchecked")
-	public Event getUniqueEvent() {
+	public static Event getUniqueEvent() {
 		return new Event(getUniqueEventType());
 	}
 	
-	public EventType getUniqueEventType() {
-		return new EventType(this);
+	/**
+	 * Gets a new <code>EventType</code> guarenteed to be never have been made
+	 * before by the EventManager class.<p/>
+	 * <b>Calling <code>new EventType()</code> will have the same exact effect.
+	 * </b> This is just an alterative way of doing that
+	 */
+	public static EventType getUniqueEventType() {
+		return new EventType();
 	}
 	
-	public int __getUniqueHandle() {
+	/**
+	 * Do not call this directly
+	 */
+	public static long __getUniqueHandle() {
 		return it++;
 	}
 	

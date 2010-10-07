@@ -25,28 +25,21 @@ package cbccore.events;
  */
 
 public class EventType {
-	@SuppressWarnings("unused")
-	private EventManager manager;
-	private int handle;
+	private long handle;
 	
 	public EventType() {
-		this(EventManager.get());
-	}
-	
-	public EventType(EventManager manager) {
-		handle = manager.__getUniqueHandle();
-		this.manager = manager;
+		handle = EventManager.__getUniqueHandle();
 	}
 	
 	/**
 	 * This should be unneccicary for you, our end user. Don't call this.
 	 */
-	public int getHandle() {
+	public long getHandle() {
 		return handle;
 	}
 	
 	public int hashCode() {
-		return getHandle();
+		return (int)getHandle();
 	}
 	
 	public boolean equals(Object obj) {

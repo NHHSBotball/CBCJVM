@@ -52,6 +52,7 @@
 	<target name="clean" description="clean up">
 		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
+		<delete dir="${docs}"/>
 	</target>
 	
 	<target name="test"

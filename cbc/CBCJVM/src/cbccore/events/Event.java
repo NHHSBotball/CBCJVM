@@ -29,26 +29,78 @@ package cbccore.events;
  */
 
 public class Event<E> extends java.util.EventObject {
-	private static final long serialVersionUID = 146392288658724975L;
 	private EventType handle;
 	public E data;
-	@SuppressWarnings("unused")
-	private EventManager manager;
+	private EventManager manager = EventManager.get();
 	
+	/**
+	 * Constructs a new Event object. The "source" is set to null
+	 * 
+	 * @param  handle  What type of event is this?
+	 * @see    cbccore.events.EventType
+	 */
 	public Event(EventType handle) {
 		this(handle, null);
 	}
 	
+	/**
+	 * Constructs a new Event object. The "source" is set to null
+	 * 
+	 * @param  handle  What type of event is this?
+	 * @param  source  The object on which the Event initially occurred
+	 * @see    cbccore.events.EventType
+	 * @see    java.util.EventObject#getSource
+	 */
 	public Event(EventType handle, Object source) {
 		super(source);
 		this.handle = handle;
 	}
+	
+	
+	/**
+	 * Get the <code>EventType</code> for this object
+	 * 
+	 * @see cbccore.events.EventType
+	 */
 	public EventType getType() {
 		return handle;
 	}
+	
+	
+	/**
+	 * Contacts all <code>IEventListener</code> objects connected to this
+	 * Event's <code>EventType</code>, calling their <code>event</code> method,
+	 * based on this object's <code>EventManager</code>.
+	 * 
+	 * @see cbccore.events.EventManager
+	 * @see cbccore.events.EventManager#connect
+	 * @see cbccore.events.IEventListener
+	 * @see cbccore.events.EventType
+	 */
 	public void emit() {
-		EventManager.get().__emit(this);
+		manager.__emit(this);
 	}
+	
+	/**
+	 * Gets the ad-hoc data variable (exists for easy expandability, when
+	 * extending is too much work)
+	 * 
+	 * @return The value stored in the ad-hoc data variable
+	 */
+	public E getData() {
+		return data;
+	}
+	
+	/**
+	 * Sets the ad-hoc data variable (exists for easy expandability, when
+	 * extending is too much work)
+	 * 
+	 * @param  data  The value to set the ad-hoc data variable to
+	 */
+	public void setData(E data) {
+		this.data = data;
+	}
+	
 	//this function would mess up static event types, by removing all of a type
 	//suspending until we find a cleaner way of doing this
 	/*public void dispose() {
