@@ -21,8 +21,9 @@
 	
 	<target name="compile" depends="init" description="Compiles the unit tests">
 		<javac srcdir="${src}" destdir="${build}"
-		       classpath="${cbcjvm-classpath}:${testng-jar}">
-			<compilerarg value="-Xlint:unchecked"/>
+		       classpath="${cbcjvm-classpath}:${testng-jar}" debug="true"
+		       debuglevel="lines,vars,source">
+			<!--compilerarg value="-Xlint:unchecked"/-->
 		</javac>
 	</target>
 	

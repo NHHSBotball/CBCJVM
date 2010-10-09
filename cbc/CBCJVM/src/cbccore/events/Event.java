@@ -28,13 +28,14 @@ package cbccore.events;
  * @see    EventType
  */
 
-public class Event<E> extends java.util.EventObject {
+public class Event<E> { // extends java.util.EventObject
+                        // EventObject requires source to be filled
 	private EventType handle;
+	private Object source;
 	public E data;
-	private EventManager manager = EventManager.get();
 	
 	/**
-	 * Constructs a new Event object. The "source" is set to null
+	 * Constructs a new Event object.
 	 * 
 	 * @param  handle  What type of event is this?
 	 * @see    cbccore.events.EventType
@@ -44,16 +45,24 @@ public class Event<E> extends java.util.EventObject {
 	}
 	
 	/**
-	 * Constructs a new Event object. The "source" is set to null
+	 * Constructs a new Event object.
 	 * 
 	 * @param  handle  What type of event is this?
-	 * @param  source  The object on which the Event initially occurred
+	 * @param  source  What object is emitting this event?
 	 * @see    cbccore.events.EventType
-	 * @see    java.util.EventObject#getSource
 	 */
 	public Event(EventType handle, Object source) {
-		super(source);
 		this.handle = handle;
+		this.source = source;
+	}
+	
+	/**
+	 * returns the object that has emitted/will be emitting this event.
+	 * 
+	 * @return <code>null</code> if the source was left unspecified
+	 */
+	public Object getSource() {
+		return source;
 	}
 	
 	
@@ -70,7 +79,7 @@ public class Event<E> extends java.util.EventObject {
 	/**
 	 * Contacts all <code>IEventListener</code> objects connected to this
 	 * Event's <code>EventType</code>, calling their <code>event</code> method,
-	 * based on this object's <code>EventManager</code>.
+	 * (uses default singleton <code>EventManager</code>).
 	 * 
 	 * @see cbccore.events.EventManager
 	 * @see cbccore.events.EventManager#connect
@@ -78,7 +87,21 @@ public class Event<E> extends java.util.EventObject {
 	 * @see cbccore.events.EventType
 	 */
 	public void emit() {
-		manager.__emit(this);
+		emit(EventManager.get());
+	}
+	
+	/**
+	 * Contacts all <code>IEventListener</code> objects connected to this
+	 * Event's <code>EventType</code>, calling their <code>event</code> method.
+	 * 
+	 * @param  em  The <code>EventManager</code> to use for emitting
+	 * @see    cbccore.events.EventManager
+	 * @see    cbccore.events.EventManager#connect
+	 * @see    cbccore.events.IEventListener
+	 * @see    cbccore.events.EventType
+	 */
+	public void emit(EventManager em) {
+		em.__emit(this);
 	}
 	
 	/**
