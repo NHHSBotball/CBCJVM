@@ -10,11 +10,12 @@
 	<property name="sourceLibraries" location="lib"/>
 	<property name="targetJVM" location="${installData}/jvm"/>
 	<property name="sourceJVM" location="jvm"/>
-	<property name="targetJNI" location="${targetJVM}/cbc"/>
+	<property name="targetJNI-java" location="${targetJVM}/cbc"/>
+	<property name="targetJNI-c" location="${targetJVM}/cbc/jni"/>
 	<property name="sourceJNI-java" location="../cbc/CBCJVM/bin"/>
 	<property name="sourceJNI-c" location="../cbc/CBCJVM/jni"/>
 	<property name="targetCode" location="${installData}/code"/>
-	<property name="sourceCode" location="../cbc/CBCJVM/bin/cbctools"/>
+	<property name="sourceCode" location="../cbc/CBCJVM/examples/"/>
 	<property name="targetCompile" location="${installData}/compile"/>
 	<property name="sourceCompile" location="compile"/>
 	
@@ -25,7 +26,8 @@
 		<mkdir dir="${installData}"/>
 		<mkdir dir="${targetLibraries}"/>
 		<mkdir dir="${targetJVM}"/>
-		<mkdir dir="${targetJNI}"/>
+		<mkdir dir="${targetJNI-java}"/>
+		<mkdir dir="${targetJNI-c}"/>
 		<mkdir dir="${targetCode}"/>
 		<mkdir dir="${targetCompile}"/>
 	</target>
@@ -37,8 +39,10 @@
 		<copy todir="${targetJVM}">
 			<fileset dir="${sourceJVM}"/>
 		</copy>
-		<copy todir="${targetJNI}">
+		<copy todir="${targetJNI-java}">
 			<fileset dir="${sourceJNI-java}"/>
+		</copy>
+		<copy todir="${targetJNI-c}">
 			<fileset dir="${sourceJNI-c}"/>
 		</copy>
 		<copy todir="${targetCode}">
