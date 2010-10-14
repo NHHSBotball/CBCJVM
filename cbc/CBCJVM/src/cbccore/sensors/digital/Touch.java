@@ -18,7 +18,6 @@ package cbccore.sensors.digital;
 
 import cbccore.Device;
 import cbccore.InvalidPortException;
-import cbccore.sensors.IBooleanSensor;
 
 /**
  * 

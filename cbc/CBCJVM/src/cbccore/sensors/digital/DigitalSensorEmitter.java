@@ -16,7 +16,6 @@
 
 package cbccore.sensors.digital;
 
-import cbccore.sensors.IBooleanSensor;
 import cbccore.events.Event;
 import cbccore.events.EventType;
 import cbccore.events.EventManager;

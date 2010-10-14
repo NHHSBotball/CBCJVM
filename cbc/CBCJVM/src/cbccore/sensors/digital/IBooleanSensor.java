@@ -14,7 +14,7 @@
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package cbccore.sensors;
+package cbccore.sensors.digital;
 
 /**
  * 
@@ -23,5 +23,8 @@ package cbccore.sensors;
  */
 
 public interface IBooleanSensor {
+	/**
+	 * Returns the current state of the boolean sensor
+	 */
 	public boolean getValue();
 }

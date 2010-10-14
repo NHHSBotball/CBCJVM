@@ -18,7 +18,7 @@ package cbccore;
 
 import cbccore.config.ChoiceConfigurator;
 import cbccore.config.Choices;
-import cbccore.sensors.IBooleanSensor;
+import cbccore.sensors.digital.IBooleanSensor;
 import cbccore.sensors.analog.Analog;
 import cbccore.sensors.buttons.AButton;
 import cbccore.sensors.buttons.BButton;
@@ -29,6 +29,8 @@ import cbccore.motors.Motor;
 /**
  * A class that is primarily used in the Botball tournament. It provides
  * several useful functions specific for that tournament.
+ * 
+ * @author Braden McDorman
  */
 
 public class Botball {

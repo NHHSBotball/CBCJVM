@@ -16,7 +16,7 @@
 
 package cbccore.sensors.buttons;
 
-import cbccore.sensors.IBooleanSensor;
+import cbccore.sensors.digital.IBooleanSensor;
 
 /**
  * 

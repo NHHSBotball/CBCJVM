@@ -72,6 +72,15 @@ public class Analog implements IAnalogSensor {
 	 * be done this way due to the userlib api design
 	 */
 	protected void updateFloatingPorts() {
-		lowSensor.set_each_analog_state(floatingSensors[0]?1:0, floatingSensors[1]?1:0, floatingSensors[2]?1:0, floatingSensors[3]?1:0, floatingSensors[4]?1:0, floatingSensors[5]?1:0, floatingSensors[6]?1:0, floatingSensors[7]?1:0);
+		lowSensor.set_each_analog_state(
+			floatingSensors[0]?1:0,
+			floatingSensors[1]?1:0,
+			floatingSensors[2]?1:0,
+			floatingSensors[3]?1:0,
+			floatingSensors[4]?1:0,
+			floatingSensors[5]?1:0,
+			floatingSensors[6]?1:0,
+			floatingSensors[7]?1:0
+		);
 	}
 }

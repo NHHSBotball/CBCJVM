@@ -12,27 +12,15 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-package cbccore.sensors.digital;
-
-import cbccore.Device;
-import cbccore.InvalidPortException;
-
-/**
- * 
- * @author Braden McDorman
- *
  */
 
-public class BreakBeam implements IBooleanSensor {
-	private cbccore.low.Sensor lowSensor = Device.getLowSensorController();
-	private int port = 0;
-	public BreakBeam(int port) throws InvalidPortException {
-		if(port < 0 || port > 7) { throw new InvalidPortException(); }
-		this.port = port;
-	}
-	public boolean getValue() {
-		return lowSensor.digital(port) != 0;
-	}
-}
+
+/**
+ * Provides boolean algebra operations for digital (boolean) sensors. Each
+ * implimenter of <code>AbstractLogicBooleanSensor</code> is both a wrapper for
+ * and a <code>IBooleanSensor</code>, making them stackable.<p/>
+ * For example:<br/>
+ * <code>IBooleanSensor myModifiedSensor =
+ *       new NotBooleanSensor(new AndBooleanSensor(sensorOne, sensorTwo));<code>
+ */
+package cbccore.sensors.digital.logic;
