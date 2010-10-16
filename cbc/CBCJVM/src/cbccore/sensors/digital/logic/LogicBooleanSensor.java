@@ -19,15 +19,11 @@ package cbccore.sensors.digital.logic;
 import cbccore.sensors.digital.IBooleanSensor;
 
 /**
- * Applies a boolean NOT operation to a parent <code>IBooleanSensor</code>
+ * A <code>LogicBooleanSensor</code> allows an easy way for boolean operations
+ * to be applied on top of 
+ * 
  * @author Benjamin Woodruff
  */
-public class NotBooleanSensor extends UnivariateLogicBooleanSensor {
+public abstract class LogicBooleanSensor implements IBooleanSensor {
 	
-	public NotBooleanSensor(IBooleanSensor parent) { super(parent); }
-	
-	@Override
-	public boolean getValue() {
-		return !getParentValue();
-	}
 }

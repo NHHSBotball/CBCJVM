@@ -14,11 +14,23 @@
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cbccore.sensors.digital;
+package cbccore.sensors.digital.logic;
+
+import cbccore.sensors.digital.IBooleanSensor;
 
 /**
+ * Applies a boolean OR operation to two parent <code>IBooleanSensor</code>s
  * @author Benjamin Woodruff
  */
-public abstract class AbstractLogicBooleanSensor implements IBooleanSensor {
+
+public class OrBooleanSensor extends BivariateLogicBooleanSensor {
+	public OrBooleanSensor(IBooleanSensor leftSensor,
+	                       IBooleanSensor rightSensor) {
+		super(leftSensor, rightSensor);
+	}
 	
+	@Override
+	public boolean getValue() {
+		return getLeftSensorValue() || getRightSensorValue();
+	}
 }

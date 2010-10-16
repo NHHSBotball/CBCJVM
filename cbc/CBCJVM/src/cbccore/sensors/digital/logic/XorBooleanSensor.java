@@ -19,15 +19,18 @@ package cbccore.sensors.digital.logic;
 import cbccore.sensors.digital.IBooleanSensor;
 
 /**
- * Applies a boolean NOT operation to a parent <code>IBooleanSensor</code>
+ * Applies a boolean XOR operation to two parent <code>IBooleanSensor</code>s
  * @author Benjamin Woodruff
  */
-public class NotBooleanSensor extends UnivariateLogicBooleanSensor {
-	
-	public NotBooleanSensor(IBooleanSensor parent) { super(parent); }
+
+public class XorBooleanSensor extends BivariateLogicBooleanSensor {
+	public XorBooleanSensor(IBooleanSensor leftSensor,
+	                        IBooleanSensor rightSensor) {
+		super(leftSensor, rightSensor);
+	}
 	
 	@Override
 	public boolean getValue() {
-		return !getParentValue();
+		return getLeftSensorValue() ^ getRightSensorValue();
 	}
 }

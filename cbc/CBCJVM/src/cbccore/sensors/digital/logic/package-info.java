@@ -17,8 +17,8 @@
 
 /**
  * Provides boolean algebra operations for digital (boolean) sensors. Each
- * implimenter of <code>AbstractLogicBooleanSensor</code> is both a wrapper for
- * and a <code>IBooleanSensor</code>, making them stackable.<p/>
+ * implimenter of <code>LogicBooleanSensor</code> is both a wrapper for and a
+ * <code>IBooleanSensor</code>, making them stackable.<p/>
  * For example:<br/>
  * <code>IBooleanSensor myModifiedSensor =
  *       new NotBooleanSensor(new AndBooleanSensor(sensorOne, sensorTwo));<code>
