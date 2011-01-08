@@ -1,27 +1,12 @@
-Current Stable Release: 10.3; Current Development Version: 10.4
+Current Stable Release: 10.7; Current Development Version: 11.2
 -----------
 
 First off, remember that by following these instructions you may brick your CBC and void your warranty.  You have been warned.
 CBCv2 ONLY
 
-Ubuntu Guide (should be similar for other *nix operating systems):
+Install instructions can be found on the [wiki](https://github.com/CBCJVM/CBCJVM/wiki/Install-and-Setup)
 
-To build (assuming you already have a JDK installed):
-        sudo apt-get install git-core ant maven2
-        git clone git://github.com/catron/CBCJVM.git
-        cd CBCJVM
-        sh BuildEverything.sh
-
-Congrats! You should now have everything you need in `CBCJVM/installer/install`!!1!
-See corresponding Readme.txt file.
-
-To update, just run:
-        cd CBCJVM
-        git pull
-        sh BuildEverything.sh
-        ... and reinstall on cbc
-
-Documentation (generated upon build) is located at `CBCJVM/cbc/CBCJVM/docs/api` see the [wiki](http://wiki.github.com/catron/CBCJVM/) for more information
+Documentation (generated upon build) is located at `CBCJVM/cbc/CBCJVM/docs/api` see the [wiki](http://wiki.github.com/CBCJVM/CBCJVM/) for more information
 
 When compiling or running custom code, be sure to set `CBCJVM/cbc/CBCJVM/bin` as your classpath!
 
