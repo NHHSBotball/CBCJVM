@@ -6,7 +6,9 @@ import cbccore.sensors.buttons.AbstractButton;
 import cbccore.sensors.buttons.BlackButton;
 
 public class Main {
-	public static void main(String[] args) throws InterruptedException, IOException {
+	public static void main(String[] args) throws InterruptedException,
+	                                              IOException {
+		cbccore.Device.init();
 		Framebuffer fb0 = Display.getFramebuffer();
 		Pixmap g = new Pixmap(5, 80, Pixel.greenPixel);
 		Pixmap r = new Pixmap(5, 80, Pixel.redPixel);
@@ -20,7 +22,9 @@ public class Main {
 		ImagePixmap cbc = new ImagePixmap(image);
 		Drawer drawer = new Drawer(fb0);
 		int rotatingLineSize = 240;
-		Pixmap rotatingLineFiller = new Pixmap(rotatingLineSize, rotatingLineSize, new Pixel(0, 0, 0));
+		Pixmap rotatingLineFiller = new Pixmap(
+			rotatingLineSize, rotatingLineSize, new Pixel(0, 0, 0)
+		);
 		float angle = 0.f;
 		
 		while(button.isNotPushed()) {

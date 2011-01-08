@@ -3,6 +3,8 @@ import cbccore.sensors.vision.*;
 
 public class Main {
 	public static void main(String [] args) {
+		cbccore.Device.init();
+		
 		Camera c = new Camera();
 		
 		

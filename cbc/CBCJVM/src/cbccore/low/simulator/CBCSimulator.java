@@ -143,7 +143,8 @@ public class CBCSimulator extends Simulator {
 	public void addFramebuffers() {
 		if(framebuffersAdded) return;
 		framebuffersAdded = true;
-		sidebar.add(((SimulatedFramebuffer)cbccore.display.Display.getFramebuffer()).getPanel(), 0);
+		sidebar.add(((SimulatedFramebuffer)
+			cbccore.display.Display.getFramebuffer()).getPanel(), 0);
 	}
 	
 	private class MotorSpeedUpdater extends Thread {

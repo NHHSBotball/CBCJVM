@@ -2,6 +2,8 @@ import cbccore.motors.Motor;
 
 public class Main {
 	public static void main(String [] args) {
+		cbccore.Device.init();
+		
 		Motor m = new Motor(0);
 		m.moveAtVelocity(100);
 		m = new Motor(1);

@@ -1,5 +1,6 @@
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("Welcome to CBCJava");
+		cbccore.Device.init();
+		System.out.println("Hello, CBCJVM!");
 	}
 }

@@ -27,6 +27,9 @@ import java.util.ArrayList;
 
 public class Main {
 	public static void main(String [] args) {
+		
+		cbccore.Device.init();
+		
 		System.out.println("Please press the Black Hardware Button to start.");
 		
 		EventManager.get().connect(ButtonEmitter.BlackButtonReleased,

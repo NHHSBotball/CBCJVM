@@ -6,8 +6,6 @@ import cbccore.sensors.buttons.ButtonEmitter;
 
 public class Main {
 	
-	
-	
 	public void run() {
 		EventManager manager = EventManager.get();
 		ButtonEmitter.get().start();
@@ -37,7 +35,7 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		//Device.init();
+		cbccore.Device.init();
 		System.out.println("Press the A button.");
 		new Main().run();
 	}

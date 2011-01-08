@@ -17,7 +17,8 @@
 package cbccore;
 
 import cbccore.low.*;
-import cbccore.low.simulator.CBCSimulator;
+import cbccore.low.simulator.CBCSimulatorFactory;
+import cbccore.low.Simulator;
 
 /**
  * A static class with static access to instantiations cbccore.low classes.
@@ -35,7 +36,7 @@ import cbccore.low.simulator.CBCSimulator;
  */
 
 public class Device {
-	private static CBCSimulator simulator;
+	private static Simulator simulator;
 	private static Motor lowMotors;
 	private static Display lowDisplay;
 	private static Create lowCreate;
@@ -46,9 +47,12 @@ public class Device {
 	private static Sound lowSound;
 	private static Sensor lowSensors;
 	private static boolean onCBC = true;
-
-	static {
-		//we could probably shorten this, some duplication
+	
+	public static void init() {
+		init(new CBCSimulatorFactory());
+	}
+	
+	public static void init(SimulatorFactory preferedSim) {
 		try {
 			if(System.getProperty("CBC") == null) throw new Exception();
 			System.load("/mnt/user/jvm/cbc/CBC.so");
@@ -58,7 +62,6 @@ public class Device {
 		}
 		try {
 			if(onCBC) {
-				System.out.println("On CBC!");
 				lowSound = new Sound();
 				lowSensors = new Sensor();
 				lowDevice = new cbccore.low.Device();
@@ -69,7 +72,7 @@ public class Device {
 				lowCamera = new Camera();
 				lowCreate = new Create();
 			} else {
-				simulator = new CBCSimulator();
+				simulator = preferedSim.getNewSimulator();
 				lowSound = simulator.getSound();
 				lowSensors = simulator.getSensor();
 				lowDevice = simulator.getDevice();
@@ -87,14 +90,14 @@ public class Device {
 	}
 
 	/**
-	 * Getter for the CBCSimulator object. You probably don't want this. It
-	 * should, in theory, remain invisible. Checking this for null could be
-	 * handy to see if you should activate a simulator work-around.
+	 * Getter for the Simulator object. You probably don't want this. It should,
+	 * in theory, remain invisible. Checking this for null could be handy to see
+	 * if you should activate a simulator work-around.
 	 *
 	 * @return  returns null if not in simulator mode, otherwise the simulator controller
 	 * @see     cbccore.low.CBCSimulator
 	 */
-	public static CBCSimulator getSimulatorController() {
+	public static Simulator getSimulatorController() {
 		return simulator;
 	}
 

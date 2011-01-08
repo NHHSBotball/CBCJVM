@@ -26,7 +26,7 @@ import cbccore.Device;
  *
  */
 
-public abstract class Simulator {
+public class Simulator {
 	private Sound sound;
 	private Sensor sensor;
 	private cbccore.low.Device device;
@@ -121,5 +121,10 @@ public abstract class Simulator {
 	
 	public Create getCreate() {
 		return create;
+	}
+	
+	// TODO: this method should be overhauled to make things more simpler
+	public void addFramebuffers() {
+		// overrideable stub
 	}
 }
