@@ -67,10 +67,10 @@ public class CBCSimulator extends Simulator {
 		
 		//create simulated devices, to replace CBC methods
 		cbob = new SimulatedCBOB();
+		((SimulatedMotor)getMotor()).setCbob(cbob);
 		for(int i = 0; i < motorSpeedLabels.length; ++i) {
 			motorSpeedLabels[i] = new JLabel();
 		}
-		((SimulatedMotor)getMotor()).setCbob(cbob);
 		
 		//Blend in with Native look
 		try {
@@ -165,8 +165,13 @@ public class CBCSimulator extends Simulator {
 					Thread.yield();
 					for(int i = 0; i < (root.motorSpeedLabels.length>>1); i++) {
 						//System.out.println(i);
-						root.motorSpeedLabels[i<<1].setText("Motor #"+(i)+": " + Integer.toString(cbob.getMotorSpeed(i).speed) + (cbob.getMotorSpeed(i).bemf?" tps":" %"));
-						root.motorSpeedLabels[(i<<1)+1].setText("Pos: " + Integer.toString(cbob.getMotorPosition(i)));
+						root.motorSpeedLabels[i<<1].setText(
+							"Motor #"+(i)+": " +
+							Integer.toString(cbob.getMotorSpeed(i).speed) +
+							(cbob.getMotorSpeed(i).bemf?" tps":" %"));
+						root.motorSpeedLabels[(i<<1)+1].setText(
+							"Pos: " + Integer.toString(cbob.getMotorPosition(i))
+						);
 					}
 					Thread.sleep(refreshRate);
 				} catch(InterruptedException ex) {

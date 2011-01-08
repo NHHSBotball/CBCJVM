@@ -32,7 +32,7 @@ public class SimulatedMotor extends Motor {
 	public SimulatedMotor() {
 	}
 	
-	public void setCbob(SimulatedCBOB bob) {
+	public void setCbob(SimulatedCBOB cbob) {
 		this.cbob = cbob;
 	}
 	
