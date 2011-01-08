@@ -3,21 +3,22 @@
 import cbccore.Device;
 import cbccore.events.Event;
 import cbccore.events.EventManager;
-//import cbccore.events.EventEmitter;
 import cbccore.events.EventListenerAdapter;
 import cbccore.events.IEventListener;
 
 public class Main {
-	// Dummy event
-	public static int DRIVE_BEGAN_EVENT = EventManager.get().getUniqueEventType();
-	public static int DESTINATION_REACHED_EVENT = EventManager.get().getUniqueEventType();
+	// Dummy events
+	public static Event DRIVE_BEGAN_EVENT = EventManager.get().getUniqueEvent();
+	public static Event DESTINATION_REACHED_EVENT =
+	                                        EventManager.get().getUniqueEvent();
+	
 	// Dummy emitter
 	public class Driver {
 		public void drive() {
 		    System.out.println("about to emit events");
-			new Event(DRIVE_BEGAN_EVENT).emit();
+			DRIVE_BEGAN_EVENT.emit();
 			// ...
-		    new Event(DESTINATION_REACHED_EVENT).emit();
+		    DESTINATION_REACHED_EVENT.emit();
 		    System.out.println("Done emitting events");
 		}
 	}
@@ -41,9 +42,14 @@ public class Main {
 		Driver driver = new Driver();
 		
 		//two different ways of making event listeners
-		manager.connect(DESTINATION_REACHED_EVENT, new Beeper("BEEP!"));
+		manager.connect(
+			DESTINATION_REACHED_EVENT.getType(), new Beeper("BEEP!")
+		);
 		//this way is more reusable
-		manager.connect(DESTINATION_REACHED_EVENT, new Beeper("Another BEEP!er object"));
+		manager.connect(
+			DESTINATION_REACHED_EVENT.getType(),
+			new Beeper("Another BEEP!er object")
+		);
 		
 		// Inline class ftw! This way is easier for a unique event listener
 		EventListenerAdapter adapter = new EventListenerAdapter() {
@@ -52,7 +58,7 @@ public class Main {
 				System.out.println("DRIVE BEGAN!");
 			}
 		};
-		manager.connect(DRIVE_BEGAN_EVENT, adapter);
+		manager.connect(DRIVE_BEGAN_EVENT.getType(), adapter);
 		driver.drive();
 	}
 	

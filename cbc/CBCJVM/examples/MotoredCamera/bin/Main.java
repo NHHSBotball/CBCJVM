@@ -1,9 +1,15 @@
-import cbccore.movement.*;
-import cbccore.vision.*;
+import cbccore.movement.DriveTrain;
+import cbccore.movement.plugins.motor.MotorMovementPlugin;
+import cbccore.movement.plugins.motor.Wheel;
+import cbccore.sensors.vision.*;
 
 public class Main {
 	public static void main(String [] args) {
-		MotorDriveTrain dt = new MotorDriveTrain(new Wheel(0, 15.5744, 1.), new Wheel(1, 15.5744, 1.), 11.);
+		DriveTrain dt = new DriveTrain(
+			new MotorMovementPlugin(
+				new Wheel(0, 15.5744, 1.), new Wheel(1, 15.5744, 1.), 11.
+			)
+		);
 		Camera c = new Camera();
 		Blob mostProbable = null;
 		int bestConfidence = 0;
@@ -21,9 +27,15 @@ public class Main {
 		while(true) {
 			while(!mostProbable.update()) { c.update(); }
 			if(Math.sqrt(mostProbable.getSize()) > 100) {
-				dt.moveAtCmps(-dt.maxCmps()*Math.abs((double)mostProbable.getSize()-destination)/320.);
+				dt.moveAtCmps(
+					-dt.getMaxCmps() *
+					Math.abs((double)mostProbable.getSize() - destination) /
+					320.);
 			} else {
-				dt.moveAtCmps(dt.maxCmps()*Math.abs((double)mostProbable.getSize()-destination)/320.);
+				dt.moveAtCmps(
+					dt.getMaxCmps() *
+					Math.abs((double)mostProbable.getSize() - destination) /
+					320.);
 			}
 		}
 	}
