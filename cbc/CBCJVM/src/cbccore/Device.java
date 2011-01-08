@@ -17,7 +17,7 @@
 package cbccore;
 
 import cbccore.low.*;
-import cbccore.low.CBCSimulator;
+import cbccore.low.simulator.CBCSimulator;
 
 /**
  * A static class with static access to instantiations cbccore.low classes.
@@ -70,15 +70,15 @@ public class Device {
 				lowCreate = new Create();
 			} else {
 				simulator = new CBCSimulator();
-				lowSound = simulator.sound;
-				lowSensors = simulator.sensor;
-				lowDevice = simulator.device;
-				lowDisplay = simulator.display;
-				lowInput = simulator.input;
-				lowServos = simulator.servo;
-				lowMotors = simulator.motor;
-				lowCamera = simulator.camera;
-				lowCreate = simulator.create;
+				lowSound = simulator.getSound();
+				lowSensors = simulator.getSensor();
+				lowDevice = simulator.getDevice();
+				lowDisplay = simulator.getDisplay();
+				lowInput = simulator.getInput();
+				lowServos = simulator.getServo();
+				lowMotors = simulator.getMotor();
+				lowCamera = simulator.getCamera();
+				lowCreate = simulator.getCreate();
 			}
 		}
 		catch(UnsatisfiedLinkError e) {

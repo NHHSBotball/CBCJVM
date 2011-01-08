@@ -14,10 +14,10 @@
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cbccore.low;
+package cbccore.low.simulator;
 
 import cbccore.display.SimulatedFramebuffer;
-import cbccore.low.simulator.*;
+import cbccore.low.*;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -42,17 +42,8 @@ import java.io.PrintStream;
  * @author Benjamin Woodruff, Braden McDorman
  */
 
-public class CBCSimulator {
+public class CBCSimulator extends Simulator {
 	
-	public SimulatedSound sound;
-	public SimulatedSensor sensor;
-	public SimulatedDevice device;
-	public SimulatedDisplay display;
-	public SimulatedInput input;
-	public SimulatedServo servo;
-	public SimulatedMotor motor;
-	public SimulatedCamera camera;
-	public SimulatedCreate create;
 	public SimulatedCBOB cbob;
 	
 	//sidebar things
@@ -65,9 +56,21 @@ public class CBCSimulator {
 	public static PrintStream stdOut;
 	
 	//Root frame
-	private JFrame frame = new JFrame("CBCJVM-Simulator-10.3-devel");
+	private JFrame frame = new JFrame("CBCJVM-Simulator-11.2-devel");
 	
 	public CBCSimulator() {
+		
+		super(new SimulatedSound(), new SimulatedSensor(),
+		      new SimulatedDevice(), new SimulatedDisplay(),
+		      new SimulatedInput(), new SimulatedServo(), new SimulatedMotor(),
+		      new SimulatedCamera(), new SimulatedCreate());
+		
+		//create simulated devices, to replace CBC methods
+		cbob = new SimulatedCBOB();
+		for(int i = 0; i < motorSpeedLabels.length; ++i) {
+			motorSpeedLabels[i] = new JLabel();
+		}
+		((SimulatedMotor)getMotor()).setCbob(cbob);
 		
 		//Blend in with Native look
 		try {
@@ -76,26 +79,13 @@ public class CBCSimulator {
 			System.out.println("Error setting native LAF: " + e);
 		}
 		
-		//create simulated devices, to replace CBC methods
-		cbob = new SimulatedCBOB(this);
-		sound = new SimulatedSound(this);
-		sensor = new SimulatedSensor(this);
-		device = new SimulatedDevice(this);
-		display = new SimulatedDisplay(this);
-		input = new SimulatedInput(this);
-		servo = new SimulatedServo(this);
-		motor = new SimulatedMotor(this);
-		camera = new SimulatedCamera(this);
-		create = new SimulatedCreate(this);
-		for(int i = 0; i < motorSpeedLabels.length; ++i) {
-			motorSpeedLabels[i] = new JLabel();
-		}
-		
 		//stdOut: redirect System.out.println to the builtin console
 		if(stdOut == null) { stdOut = System.out; }
 		System.out.println("Welcome to CBCJava");
-		frame.getContentPane().add(new JScrollPane(display.getTextBox()), BorderLayout.CENTER);
-		System.setOut(display.getPrintStream());
+		frame.getContentPane().add(
+		    new JScrollPane(((SimulatedDisplay)getDisplay()).getTextBox()),
+		    BorderLayout.CENTER);
+		System.setOut(((SimulatedDisplay)getDisplay()).getPrintStream());
 		
 		//Create sidebar
 		addSidebar();
@@ -135,6 +125,7 @@ public class CBCSimulator {
 		Container buttonContainer = new Container();
 		buttonContainer.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		buttonContainer.setLayout(buttonLayout);
+		SimulatedInput input = (SimulatedInput)getInput();
 		buttonContainer.add(input.ub);
 		buttonContainer.add(input.db);
 		buttonContainer.add(input.lb);

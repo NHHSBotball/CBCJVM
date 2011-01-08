@@ -17,7 +17,6 @@
 package cbccore.low.simulator;
 
 import cbccore.NotImplemented;
-import cbccore.low.CBCSimulator;
 import cbccore.low.Sensor;
 
 /**
@@ -28,10 +27,7 @@ import cbccore.low.Sensor;
 
 public class SimulatedSensor extends Sensor {
 	
-	protected CBCSimulator cbc;
-	
-	@NotImplemented public SimulatedSensor(CBCSimulator c) {
-		cbc = c;
+	@NotImplemented public SimulatedSensor() {
 	}
 	
 	@NotImplemented public int digital(int port) { /* returns a 1 or 0 reflecting the state of port (0 to 7) */

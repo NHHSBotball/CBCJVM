@@ -16,8 +16,6 @@
 
 package cbccore.low.simulator;
 
-import cbccore.low.CBCSimulator;
-
 /**
  * Simulates the actions of the CBOB, called on by the simulated CBC for stuff
  * like motor info. Helps to divide up the tasks, might even be able to speed
@@ -34,7 +32,7 @@ public class SimulatedCBOB {
 	private boolean[] hasTarget = new boolean[4];
 	private int[] motorTargets = new int[4];
 	
-	public SimulatedCBOB(CBCSimulator parent) {
+	public SimulatedCBOB() {
 		for(int i = 0; i < motorSpeeds.length; ++i) {
 			motorSpeeds[i] = new MotorSpeed(0, false);
 			motorPositions[i] = 0;
@@ -57,12 +55,22 @@ public class SimulatedCBOB {
 	public void setMotorTarget(int port, int target) {
 		hasTarget[port] = true;
 		motorTargets[port] = target;
-		motorSpeeds[port].speed = (target-motorPositions[port]>0)?Math.abs(motorSpeeds[port].speed):0-Math.abs(motorSpeeds[port].speed);
+		motorSpeeds[port].speed =
+			(target-motorPositions[port] > 0)?
+				Math.abs(motorSpeeds[port].speed):
+				0 - Math.abs(motorSpeeds[port].speed);
 	}
 	
 	public int getMotorPosition(int port) {
-		int standardPosition = motorPositions[port] + motorSpeeds[port].getTpsSpeed()*((int)(System.currentTimeMillis()-startTimes[port]))/1000;
-		return hasTarget[port]?((motorSpeeds[port].speed>0)?Math.min(standardPosition, motorTargets[port]):Math.max(standardPosition, motorTargets[port])):standardPosition;
+		int standardPosition =
+		    motorPositions[port] + motorSpeeds[port].getTpsSpeed() *
+		    ((int)(System.currentTimeMillis() - startTimes[port])) / 1000;
+		return
+			hasTarget[port]?
+				((motorSpeeds[port].speed > 0)?
+					Math.min(standardPosition, motorTargets[port]):
+					Math.max(standardPosition, motorTargets[port])):
+				standardPosition;
 	}
 	
 	public void setMotorPosition(int port, int pos) {

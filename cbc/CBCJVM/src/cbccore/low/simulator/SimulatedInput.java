@@ -16,7 +16,6 @@
 
 package cbccore.low.simulator;
 
-import cbccore.low.CBCSimulator;
 import cbccore.low.Input;
 
 import java.awt.Button;
@@ -30,8 +29,6 @@ import java.awt.event.MouseEvent;
  */
 
 public class SimulatedInput extends Input {
-	
-	protected CBCSimulator cbc;
 	
 	public boolean u;
 	public boolean d;
@@ -49,9 +46,9 @@ public class SimulatedInput extends Input {
 	public Button bb;
 	public Button blb;
 	
-	public SimulatedInput(CBCSimulator c) {
-		cbc = c;
-		SimulatedInputButtonListener sibl = new SimulatedInputButtonListener(this);
+	public SimulatedInput() {
+		SimulatedInputButtonListener sibl =
+			new SimulatedInputButtonListener(this);
 		ub = new Button("u");
 		ub.addMouseListener(sibl);
 		db = new Button("d");
@@ -69,12 +66,19 @@ public class SimulatedInput extends Input {
 	}
 	
 	public int up_button() { return u ? 1 : 0; }
+	
 	public int down_button() { return d ? 1 : 0; }
+	
 	public int left_button() { return l ? 1 : 0; }
+	
 	public int right_button() { return r ? 1 : 0; }
+	
 	public int a_button() { return a ? 1 : 0; }
+	
 	public int b_button() { return b ? 1 : 0; }
-	public int black_button() { return bl ? 1 : 0; } /* returns value of hardware button on CBC */
+	
+	//returns value of hardware button on CBC
+	public int black_button() { return bl ? 1 : 0; }
 }
 
 
@@ -100,13 +104,11 @@ class SimulatedInputButtonListener implements MouseListener {
 	}
 	
 	public void mouseClicked(MouseEvent e) {}
+	
 	public void mouseEntered(MouseEvent e) {}
+	
 	public void mouseExited(MouseEvent e) {}
 	
-	
-	//<random>
-	//    someExteamlyLongFunctionName(SomeExtreamlyLongClassName someExtreamlyLongVariableName, SomeOtherEvenLongerExtreamlyLongClassName someOtherEvenLongerExtreamlyLongVariableName)
-	//</random>
 	private void mouseEventHandler(MouseEvent e, boolean setTo) {
 		//This is very dirty code. :-( But reflection is really slow, so...
 		String et = ((Button)e.getSource()).getLabel();

@@ -16,7 +16,6 @@
 
 package cbccore.low.simulator;
 
-import cbccore.low.CBCSimulator;
 import cbccore.low.Display;
 
 import java.io.IOException;
@@ -33,12 +32,10 @@ import javax.swing.JTextArea;
 
 public class SimulatedDisplay extends Display {
 	
-	protected CBCSimulator cbc;
 	private PrintStream out;
 	private JTextArea textBox;
 	
-	public SimulatedDisplay(CBCSimulator c) {
-		cbc = c;
+	public SimulatedDisplay() {
 		textBox = new JTextArea("On Simulator!\n");
 		textBox.setLineWrap(true);
 		out = new PrintStream(new TextAreaOutputStream(textBox, TextAreaOutputStream.DEFAULT_BUFFER_SIZE));

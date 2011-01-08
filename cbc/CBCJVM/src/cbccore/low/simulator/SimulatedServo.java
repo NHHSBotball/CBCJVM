@@ -16,7 +16,6 @@
 
 package cbccore.low.simulator;
 
-import cbccore.low.CBCSimulator;
 import cbccore.low.Servo;
 import cbccore.NotImplemented;
 
@@ -28,33 +27,35 @@ import cbccore.NotImplemented;
 
 public class SimulatedServo extends Servo {
 	
-	protected CBCSimulator cbc;
-	
 	private int[] pos = {0, 0, 0, 0};
 	
-	public SimulatedServo(CBCSimulator c) {
-		cbc = c;
+	public SimulatedServo() {
 	}
 	
-	@NotImplemented public void enable_servos() { /* powers up the servos */
+	@NotImplemented public void enable_servos() { // powers up the servos
 		CBCSimulator.NYI("enable_servos");
 	}
 	
-	@NotImplemented public void disable_servos() { /* powers down the servos */
+	@NotImplemented public void disable_servos() { // powers down the servos
 		CBCSimulator.NYI("disable_servos");
 	}
 	
-	public int set_servo_position(int servo, int pos) { /* sets servo (1 to 4) to pos (0 to 2047) */
+	// sets servo (1 to 4) to pos (0 to 2047)
+	public int set_servo_position(int servo, int pos) {
 		this.pos[servo] = pos;
 		if(pos < 0 || pos > 2048) {
-			System.out.println("Servo(" + servo + ") attempted to move to " + pos + ". Bounds: 0 - 2048");
+			System.out.println(
+				"Servo(" + servo + ") attempted to move to " + pos +
+				". Bounds: 0 - 2048"
+			);
 			pos = pos < 0 ? 0 : pos;
 			pos = pos > 2048 ? 2048 : pos;
 		}
 		return 0;
 	}
 	
-	public int get_servo_position(int servo) { /* returns int of last setting for servo (1 to 4) */
+	// returns int of last setting for servo (1 to 4)
+	public int get_servo_position(int servo) {
 		return this.pos[servo]; //stub
 	}
 }

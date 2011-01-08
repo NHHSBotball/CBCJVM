@@ -17,7 +17,6 @@
 package cbccore.low.simulator;
 
 import cbccore.NotImplemented;
-import cbccore.low.CBCSimulator;
 import cbccore.low.Camera;
 
 /**
@@ -30,10 +29,7 @@ import cbccore.low.Camera;
 //Possible use of webcam with a java port of the opensource CBC code?
 public class SimulatedCamera extends Camera {
 	
-	protected CBCSimulator cbc;
-	
-	public SimulatedCamera(CBCSimulator c) {
-		cbc = c;
+	public SimulatedCamera() {
 	}
 	
 	@NotImplemented public void track_init() {
