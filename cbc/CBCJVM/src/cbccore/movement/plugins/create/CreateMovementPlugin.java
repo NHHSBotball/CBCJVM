@@ -17,9 +17,9 @@
 package cbccore.movement.plugins.create;
 
 import cbccore.create.Create;
+import cbccore.create.CreateConnectException;
 import cbccore.movement.plugins.MovementPlugin;
 import cbccore.InvalidValueException;
-import java.io.IOException;
 
 /**
  * A DriveTrain class for the iRobot Create
@@ -40,7 +40,9 @@ public class CreateMovementPlugin extends MovementPlugin {
 	/**
 	 * Basic constructor
 	 */
-	public CreateMovementPlugin(Create create, double efficiency, boolean fullMode) throws IOException {
+	public CreateMovementPlugin(Create create, double efficiency,
+	                            boolean fullMode)
+	                            throws CreateConnectException {
 		super(DEFAULT_TRAIN_WIDTH);
 		this.create = create;
 		create.connect();

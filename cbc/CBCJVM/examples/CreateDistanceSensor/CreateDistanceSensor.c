@@ -1,1 +1,1 @@
-int main(){chdir("/mnt/user/code/CreateDistanceSensor/target/classes");system("/mnt/user/jvm/java Main");}
+int main(){chdir("/mnt/user/code/CreateDistanceSensor/bin");system("/mnt/user/jvm/java Main");}

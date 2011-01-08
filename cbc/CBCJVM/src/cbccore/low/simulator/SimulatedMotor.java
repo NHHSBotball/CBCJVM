@@ -41,7 +41,7 @@ public class SimulatedMotor extends Motor {
 		cbob.setMotorSpeed(motor, new MotorSpeed(percent, false));
 	}
 	
-	// sets motor (0 to 3) counter to 0 */
+	// sets motor (0 to 3) counter to 0
 	public int clear_motor_position_counter(int motor) {
 		cbob.setMotorPosition(motor, 0);
 		return 0;

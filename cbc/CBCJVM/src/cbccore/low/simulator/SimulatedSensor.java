@@ -30,39 +30,58 @@ public class SimulatedSensor extends Sensor {
 	@NotImplemented public SimulatedSensor() {
 	}
 	
-	@NotImplemented public int digital(int port) { /* returns a 1 or 0 reflecting the state of port (0 to 7) */
+	@NotImplemented public int digital(int port) {
 		return 0;
 	}
 	
-	@NotImplemented public int set_digital_output_value(int port, int value) { /*sets port (0 to 7)to value (0 or 1) */
+	// sets port (0 to 7)to value (0 or 1)
+	@NotImplemented public int set_digital_output_value(int port, int value) {
 		return 0;
 	}
 	
-	@NotImplemented public int analog10(int port) { /* returns 10-bit value from analog port (ports 8 to 15) */
+	// returns 10-bit value from analog port (ports 8 to 15)
+	@NotImplemented public int analog10(int port) {
 		return 0;
 	}
 	
-	@NotImplemented public int analog(int port) { /* returns 8-bit value from analog port (ports 8 to 15) */
+	// returns 8-bit value from analog port (ports 8 to 15)
+	@NotImplemented public int analog(int port) {
 		return 0;
 	}
 	
-	@NotImplemented public int accel_x() { /* returns x acceleration (-2047 to 2047, +/- 1.5 gee) */    
+	// returns x acceleration (-2047 to 2047, +/- 1.5 gee)
+	@NotImplemented public int accel_x() {    
 		return 0;
 	}
-	              
-	@NotImplemented public int accel_y() { /* returns y acceleration (-2047 to 2047, +/- 1.5 gee) */
+	
+	// returns y acceleration (-2047 to 2047, +/- 1.5 gee)
+	@NotImplemented public int accel_y() {
 		return -(int)(2047./1.5*1.);
 	}
-	              
-	@NotImplemented public int accel_z() { /* returns z acceleration (-2047 to 2047, +/- 1.5 gee) */
+	
+	// returns z acceleration (-2047 to 2047, +/- 1.5 gee)
+	@NotImplemented public int accel_z() {
 		return 0;
 	}
 	
-	@NotImplemented public int sonar(int port) { /* returns range in mm for sonar plugged into port (13-15)*/        
+	// returns range in mm for sonar plugged into port (13-15)
+	@NotImplemented public int sonar(int port) {
 		return 0; //stub
 	}
-	  
-	@NotImplemented public int sonar_inches(int port) { /* returns range in whole inches for sonar plugged into port (13-15)*/
+	
+	// returns range in whole inches for sonar plugged into port (13-15)
+	@NotImplemented public int sonar_inches(int port) {
 		return 0;
+	}
+	
+	@NotImplemented public void set_analog_floats(int mask) {
+		set_each_analog_state((mask >> 0) & 1, (mask >> 1) & 1, (mask >> 2) & 1,
+		                      (mask >> 3) & 1, (mask >> 4) & 1, (mask >> 5) & 1,
+		                      (mask >> 6) & 1, (mask >> 7) & 1);
+	}
+	
+	@NotImplemented public void set_each_analog_state(int a0, int a1, int a2,
+	                                                  int a3, int a4, int a5,
+	                                                  int a6, int a7) {
 	}
 }

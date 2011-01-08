@@ -15,7 +15,7 @@ consoleDownload/bin
 *.out
 *.sql
 *.sqlite
-cbc/CBCJVM/examples/*.class
+cbc/CBCJVM/examples/**/*.class
 ehthumbs.db
 Icon?
 Thumbs.db
