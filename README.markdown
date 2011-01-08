@@ -10,9 +10,6 @@ Documentation (generated upon build) is located at `CBCJVM/cbc/CBCJVM/docs/api` 
 
 When compiling or running custom code, be sure to set `CBCJVM/cbc/CBCJVM/bin` as your classpath!
 
-You can use maven to build the tests and to build your own programs!
-Just CD into the test directory, and provided it has a good pom.xml file (still cleaning them up and adding them to old tests) and run `mvn clean install`
-
 ### This file is part of CBCJVM. ###
 CBCJVM is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
