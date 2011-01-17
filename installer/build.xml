@@ -33,24 +33,26 @@
 	</target>
 	
 	<target name="dist" depends="init" description="generate the distribution">
-		<copy todir="${targetLibraries}">
-			<fileset dir="${sourceLibraries}"/>
-		</copy>
-		<copy todir="${targetJVM}">
-			<fileset dir="${sourceJVM}"/>
-		</copy>
-		<copy todir="${targetJNI-java}">
-			<fileset dir="${sourceJNI-java}"/>
-		</copy>
-		<copy todir="${targetJNI-c}">
-			<fileset dir="${sourceJNI-c}"/>
-		</copy>
-		<copy todir="${targetCode}">
-			<fileset dir="${sourceCode}"/>
-		</copy>
-		<copy todir="${targetCompile}">
-			<fileset dir="${sourceCompile}"/>
-		</copy>
+		<parallel>
+			<copy todir="${targetLibraries}">
+				<fileset dir="${sourceLibraries}"/>
+			</copy>
+			<copy todir="${targetJVM}">
+				<fileset dir="${sourceJVM}"/>
+			</copy>
+			<copy todir="${targetJNI-java}">
+				<fileset dir="${sourceJNI-java}"/>
+			</copy>
+			<copy todir="${targetJNI-c}">
+				<fileset dir="${sourceJNI-c}"/>
+			</copy>
+			<copy todir="${targetCode}">
+				<fileset dir="${sourceCode}"/>
+			</copy>
+			<copy todir="${targetCompile}">
+				<fileset dir="${sourceCompile}"/>
+			</copy>
+		</parallel>
 	</target>
 	
 	<target name="clean" description="deletes install folder">

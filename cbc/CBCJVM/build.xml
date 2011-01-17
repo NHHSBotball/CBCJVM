@@ -44,8 +44,11 @@
 		</javadoc>
 	</target>
 	
-	<target name="dist" depends="compile, document"
-	        description="generate the distribution">
+	<target name="dist" description="generate the distribution">
+		<parallel>
+			<antcall target="compile"/>
+			<antcall target="document"/>
+		</parallel>
 		<mkdir dir="${dist}/lib"/>
 		<jar jarfile="${dist}/lib/CBCJVM.jar" basedir="${build}"/>
 	</target>
