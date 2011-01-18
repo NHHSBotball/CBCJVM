@@ -40,6 +40,17 @@ public class Simulator {
 	public Simulator(Sound sound, Sensor sensor, cbccore.low.Device device,
 	                 Display display, Input input, Servo servo, Motor motor,
 	                 Camera camera, Create create) {
+		init(sound, sensor, device, display, input, servo, motor, camera,
+		     create);
+	}
+	
+	protected Simulator() {
+		this(null, null, null, null, null, null, null, null, null)
+	}
+	
+	protected void init(Sound sound, Sensor sensor, cbccore.low.Device device,
+	                    Display display, Input input, Servo servo, Motor motor,
+	                    Camera camera, Create create) {
 		setSound(sound);
 		setSensor(sensor);
 		setDevice(device);
