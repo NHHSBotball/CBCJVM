@@ -45,7 +45,7 @@ public class Simulator {
 	}
 	
 	protected Simulator() {
-		this(null, null, null, null, null, null, null, null, null)
+		this(null, null, null, null, null, null, null, null, null);
 	}
 	
 	protected void init(Sound sound, Sensor sensor, cbccore.low.Device device,
