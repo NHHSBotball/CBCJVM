@@ -116,13 +116,13 @@ public class AnalogBooleanAdapter implements IBooleanSensor {
 		int threshold = 0;
 
 		System.out.println("Place sensor in true condition and press button");
-		while(in.black_button()==0);
-		while(in.black_button()==1);	//wait for button to be pressed and released
+		while(in.black_button()==0){java.lang.Thread.yield();}
+		while(in.black_button()==1){java.lang.Thread.yield();}	//wait for button to be pressed and released
 		int trueval = sensor.getValueHigh();
 	
 		System.out.println("Place sensor in false condition and press button");
-		while(in.black_button()==0);	//wait for button to be pressed and released
-		while(in.black_button()==1);
+		while(in.black_button()==0){java.lang.Thread.yield();}	//wait for button to be pressed and released
+		while(in.black_button()==1){java.lang.Thread.yield();}
 		int falseval = sensor.getValueHigh();
 
 		if(trueval>falseval)
