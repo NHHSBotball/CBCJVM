@@ -34,18 +34,46 @@ public class Create {
 		Safe, Passive, Full, Off
 	}
 	
+	private float lag;
+	
 	private static cbccore.low.Create lowCreate =
 		Device.getLowCreateController();
 	private static LowSideDrivers lowSideDrivers =
 		new LowSideDrivers(lowCreate);
 	
 	public Create() throws CreateConnectException {
+		lag=0;		//TODO:Find good 'lag' value. I don't have any cbc/create 
+				//	to test it on at time of writing
 		connect();
 	}
+	
+	/**
+	* Initalizes a new Create object with the lag value
+	* 
+	* @param lag How many seconds between sensor updates
+	*/
+	public Create(float lag){
+		this.lag=lag;
+		connect();
+	}
+	
 	
 	@Override
 	public void finalize() {
 		disconnect();
+	}
+	
+	/**
+	* Sets 'lag' value for create getter functions.
+	*
+	* @param lag How many seconds between sensor updates
+	*/
+	public void setLag(float lag){
+		this.lag=lag;
+	}
+	
+	public float getLag(){
+		return lag;	
 	}
 	
 	public void sendScript(Script script) {
@@ -66,7 +94,7 @@ public class Create {
 		if (ret < 0)
 			throw new CreateConnectException();
 	}
-	
+
 	/**
 	 * Returns the Create to proper state. Call this at the end of your program.
 	 * 
@@ -164,7 +192,7 @@ public class Create {
 	 * @see #setMode
 	 */
 	public Mode getMode() {
-		int m = lowCreate.create_mode();
+		int m = lowCreate.get_create_mode(lag);
 		if (m == 0)
 			return Mode.Off;
 		if (m == 1)
@@ -347,7 +375,7 @@ public class Create {
 	 * @see #playSong
 	 */
 	public void loadSong(int num) {
-		lowCreate.create_load_song(num);
+		low
 	}
 	
 	/**
@@ -366,7 +394,7 @@ public class Create {
 	// public int read_block(char* data, int count);
 	
 	public int getDistance() {
-		return lowCreate.create_distance();
+		return lowCreate.get_create_distance(lag);
 	}
 	
 	/**
