@@ -52,7 +52,7 @@ public class Create {
 	* 
 	* @param lag How many seconds between sensor updates
 	*/
-	public Create(float lag){
+	public Create(float lag) throws CreateConnectException{
 		this.lag=lag;
 		connect();
 	}
@@ -375,7 +375,7 @@ public class Create {
 	 * @see #playSong
 	 */
 	public void loadSong(int num) {
-		low
+		lowCreate.create_load_song(num);
 	}
 	
 	/**
