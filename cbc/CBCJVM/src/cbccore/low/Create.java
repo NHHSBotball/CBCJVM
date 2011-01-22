@@ -157,87 +157,48 @@ public class Create {
 	
 	
 	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_sensor_update();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_wall();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_buttons();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_bumpdrop();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_cliffs();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_angle();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_distance();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_velocity();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_read_IR();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_overcurrents();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_battery_charge();
-	
-	
-	
-	/**
-	 * Don't use. Updates an inaccessable variable.
-	 */
-	public native int create_cargo_bay_inputs();
+	public native int get_create_mode(float lag);
+	public native int get_create_lbump(float lag);
+	public native int get_create_rbump(float lag);
+	public native int get_create_lwdrop(float lag);
+	public native int get_create_cwdrop(float lag);
+	public native int get_create_rwdrop(float lag);
+	public native int get_create_wall(float lag);
+	public native int get_create_lcliff(float lag);
+	public native int get_create_lfcliff(float lag);
+	public native int get_create_rfcliff(float lag);
+	public native int get_create_rcliff(float lag);
+	public native int get_create_vwall(float lag);
+	public native int get_create_overcurrents(float lag);
+	public native int get_create_infrared(float lag);
+	public native int get_create_advance_button(float lag);
+	public native int get_create_play_button(float lag);
+	public native int get_create_normalized_angle(float lag);
+	public native void set_create_normalized_angle(int angle);
+	public native int get_create_total_angle(float lag);
+	public native void set_create_total_angle(int angle);
+	public native int get_create_distance(float lag);
+	public native void set_create_distance(int dist);
+	public native int get_create_battery_charging_state(float lag);
+	public native int get_create_battery_voltage(float lag);
+	public native int get_create_battery_current(float lag);
+	public native int get_create_battery_temp(float lag);
+	public native int get_create_battery_charge(float lag);
+	public native int get_create_battery_capacity(float lag);
+	public native int get_create_wall_amt(float lag);
+	public native int get_create_lcliff_amt(float lag);
+	public native int get_create_lfcliff_amt(float lag);
+	public native int get_create_rfcliff_amt(float lag);
+	public native int get_create_rcliff_amt(float lag);
+	public native int get_create_bay_DI(float lag);
+	public native int get_create_bay_AI(float lag);
+	public native int get_create_song_number(float lag);
+	public native int get_create_song_playing(float lag);
+	public native int get_create_number_of_stream_packets(float lag);
+	public native int get_create_requested_velocity(float lag);
+	public native int get_create_requested_radius(float lag);
+	public native int get_create_requested_right_velocity(float lag);
+	public native int get_create_requested_left_velocity(float lag);
 	
 	
 	

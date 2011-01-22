@@ -89,107 +89,296 @@ JNIEXPORT void JNICALL Java_cbccore_low_Create_create_1cover_1dock
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_mode
+ * Method:    get_create_mode
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1mode
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1mode(JNIEnv *, jobject, jfloat);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_sensor_update
+ * Method:    get_create_lbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1sensor_1update
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lbump(JNIEnv *, jobject, jfloat);
+
+/* Class:     cbccore_low_Create
+ * Method:    get_create_lbump
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lbump(JNIEnv *, jobject, jfloat);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_wall
+ * Method:    get_create_rbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1wall
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rbump(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_buttons
+ * Method:    get_create_lwbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1buttons
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lwbump(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_bumpdrop
+ * Method:    get_create_cwbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1bumpdrop
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1cwbump(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_cliffs
+ * Method:    get_create_rwbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1cliffs
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rwbump(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_angle
+ * Method:    get_create_wall
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1angle
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1wall(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_distance
+ * Method:    get_create_lcliff
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1distance
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lcliff(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_velocity
+ * Method:    get_create_rcliff
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1velocity
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rcliff(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_read_IR
+ * Method:    get_create_lfcliff
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1read_1IR
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lfcliff(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_overcurrents
+ * Method:    get_create_rfcliff
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1overcurrents
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rfcliff(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_battery_charge
+ * Method:    get_create_vwall
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1battery_1charge
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1vwall(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_cargo_bay_inputs
+ * Method:    get_create_overcurrents
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1cargo_1bay_1inputs
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1overcurrents(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_infrared
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1infrared(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_advance_button
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1advance_1button(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_play_button
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1play_1button(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_distance
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1distance(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_normalized_angle
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1normalized_1angle(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_total_angle
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1total_1angle(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    set_create_normalized_angle
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_cbccore_low_Create_set_1create_1normalized_1angle(JNIEnv *env, jobject obj, jint angle);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    set_create_total_angle
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_cbccore_low_Create_set_1create_1total_1angle(JNIEnv *env, jobject obj, jint angle);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_charging_state
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1charging_1state(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_voltage
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1voltage(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_current
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1current(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_temp
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1temp(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_charge
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1charge(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_charge
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1capacity(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_wall_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1wall_1amt(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_lcliff_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lcliff_1amt(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_rcliff_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rcliff_1amt(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_lfcliff_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lfcliff_1amt(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_rfcliff_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rfcliff_1amt(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_bay_DI
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1bay_1DI(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_bay_AI
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1bay_1AI(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_song_number
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1song_1number(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_song_playing
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1song_1playing(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_number_of_stream_packets
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1number_1of_1stream_1packets(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_requested_velocity
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1requested_1velocity(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_requested_radius
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1requested_1radius(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_requested_right_velocity
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1requested_1right_1velocity(JNIEnv *env, jobject obj, jfloat lag);
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_requested_left_velocity
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1requested_1left_1velocity(JNIEnv *env, jobject obj, jfloat lag);
 
 /*
  * Class:     cbccore_low_Create

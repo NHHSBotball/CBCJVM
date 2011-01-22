@@ -166,195 +166,614 @@ JNIEXPORT void JNICALL Java_cbccore_low_Create_create_1cover_1dock(JNIEnv *env, 
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_mode
+ * Method:    get_create_mode
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1mode(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1mode(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_mode();
+    return get_create_mode(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1mode stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1mode stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_sensor_update
+ * Method:    get_create_lbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1sensor_1update(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lbump(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_sensor_update();
+    return get_create_lbump(lag);
 #else
-    printf("Java_cbccore_low_Create_1sensor_1update stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1lbump stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_wall
+ * Method:    get_create_rbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1wall(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rbump(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_wall();
+    return get_create_rbump(lag);
 #else
-    printf("Java_cbccore_low_Create_1wall stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1rbump stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_buttons
+ * Method:    get_create_lwbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1buttons(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lwbump(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_buttons();
+    return get_create_lwbump(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1buttons stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1lwbump stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_bumpdrop
+ * Method:    get_create_cwbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1bumpdrop(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1cwbump(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_bumpdrop();
+    return get_create_cwbump(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1bumpdrop stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1cwbump stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_cliffs
+ * Method:    get_create_rwbump
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1cliffs(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rwbump(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_cliffs();
+    return get_create_rwbump(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1cliffs stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1rwbump stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_angle
+ * Method:    get_create_wall
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1angle(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1wall(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_angle();
+    return get_create_wall(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1angle stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1wall stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_distance
+ * Method:    get_create_lcliff
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1distance(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lcliff(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_distance();
+    return get_create_lcliff(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1distance stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1lcliff stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_velocity
+ * Method:    get_create_rcliff
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1velocity(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rcliff(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_velocity();
+    return get_create_rcliff(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1velocity stub\n");
+    printf("Java_cbccore_low_Create_get_1create_1rcliff stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_read_IR
+ * Method:    get_create_lfcliff
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1read_1IR(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lfcliff(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_read_IR();
+    return get_create_lfcliff(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1read_1IR stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1lfcliff stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_overcurrents
+ * Method:    get_create_rfcliff
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1overcurrents(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rfcliff(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_overcurrents();
+    return get_create_rfcliff(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1overcurrents stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1rfcliff stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_battery_charge
+ * Method:    get_create_vwall
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1battery_1charge(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1vwall(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-    return create_battery_charge();
+    return get_create_vwall(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1battry_1charge stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1vwall stub\n");
+    return 0;
 #endif
 }
 
 /*
  * Class:     cbccore_low_Create
- * Method:    create_cargo_bay_inputs
+ * Method:    get_create_overcurrents
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_cbccore_low_Create_create_1cargo_1bay_1inputs(JNIEnv *env, jobject obj)
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1overcurrents(JNIEnv *env, jobject obj, jfloat lag)
 {
 #ifdef CBC
-	return create_cargo_bay_inputs();
+    return get_create_overcurrents(lag);
 #else
-    printf("Java_cbccore_low_Create_create_1cargo_1bay_1inputs stub\n");
-    return -1;
+    printf("Java_cbccore_low_Create_get_1create_1overcurrents stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_infrared
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1infrared(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_infrared(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1infrared stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_advance_button
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1advance_1button(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_advance_button(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1advance_1button stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_play_button
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1play_1button(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_play_button(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1play_1button stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_distance
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1distance(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_distance(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1distance stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_normalized_angle
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1normalized_1angle(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_normalized_angle(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1normalized_1angle stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_total_angle
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1total_1angle(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_total_angle(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1total_1angle stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    set_create_normalized_angle
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_cbccore_low_Create_set_1create_1normalized_1angle(JNIEnv *env, jobject obj, jint angle)
+{
+#ifdef CBC
+    set_create_normalized_angle(angle);
+#else
+    printf("Java_cbccore_low_Create_set_1create_1normalized_1angle stub\n");
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    set_create_total_angle
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_cbccore_low_Create_set_1create_1total_1angle(JNIEnv *env, jobject obj, jint angle)
+{
+#ifdef CBC
+    set_create_total_angle(angle);
+#else
+    printf("Java_cbccore_low_Create_set_1create_1total_1angle stub\n");
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_charging_state
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1charging_1state(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_battery_charging_state(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1battery_1charging_1state stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_voltage
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1voltage(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_battery_voltage(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1battery_1voltage stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_current
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1current(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_battery_current(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1battery_1current stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_temp
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1temp(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_battery_temp(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1battery_1temp stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_charge
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1charge(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_battery_charge(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1battery_1charge stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_battery_charge
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1battery_1capacity(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_battery_capacity(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1battery_1capacity stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_wall_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1wall_1amt(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_wall_amt(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1wall_1amt stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_lcliff_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lcliff_1amt(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_lcliff_amt(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1lcliff_1amt stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_rcliff_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rcliff_1amt(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_rcliff_amt(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1rcliff_1amt stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_lfcliff_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1lfcliff_1amt(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_lfcliff_amt(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1lfcliff_1amt stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_rfcliff_amt
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1rfcliff_1amt(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_rfcliff_amt(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1rfcliff_1amt stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_bay_DI
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1bay_1DI(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_bay_DI(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1bay_1DI stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_bay_AI
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1bay_1AI(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_bay_AI(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1bay_1AI stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_song_number
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1song_1number(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_song_number(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1song_1number stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_song_playing
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1song_1playing(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_song_playing(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1song_1playing stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_number_of_stream_packets
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1number_1of_1stream_1packets(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_number_of_stream_packets(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1number_1of_1stream_1packets stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_requested_velocity
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1requested_1velocity(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_requested_velocity(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1requested_1velocity stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_requested_radius
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1requested_1radius(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_requested_radius(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1requested_1radius stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_requested_right_velocity
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1requested_1right_1velocity(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_requested_right_velocity(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1requested_1right_1velocity stub\n");
+    return 0;
+#endif
+}
+
+/*
+ * Class:     cbccore_low_Create
+ * Method:    get_create_requested_left_velocity
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cbccore_low_Create_get_1create_1requested_1left_1velocity(JNIEnv *env, jobject obj, jfloat lag)
+{
+#ifdef CBC
+    return get_create_requested_left_velocity(lag);
+#else
+    printf("Java_cbccore_low_Create_get_1create_1requested_1left_1velocity stub\n");
+    return 0;
 #endif
 }
 
