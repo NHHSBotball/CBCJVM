@@ -17,7 +17,7 @@
 package cbccore.sensors.analog;
 
 import cbccore.sensors.digital.IBooleanSensor;
-import cbccore.low.Input;
+import cbccore.sensors.buttons.BlackButton;
 
 /**
  * Allows you to use an Analog sensor in a boolean (digital) fashion. If a
@@ -112,17 +112,17 @@ public class AnalogBooleanAdapter implements IBooleanSensor {
 	 * Preforms automatic calibration of sensor based on user input.
 	 */
 	public void calibrateSensor() throws Exception {
-		Input in = new cbccore.low.Input();	//setup input from black_button
+		BlackButton bb = new BlackButton();	//setup input from black_button
 		int threshold = 0;
 
 		System.out.println("Place sensor in true condition and press button");
-		while(in.black_button()==0){java.lang.Thread.yield();}
-		while(in.black_button()==1){java.lang.Thread.yield();}	//wait for button to be pressed and released
+		while(bb.isNotPushed()){java.lang.Thread.yield();}
+		while(bb.isPushed()){java.lang.Thread.yield();}	//wait for button to be pressed and released
 		int trueval = sensor.getValueHigh();
 	
 		System.out.println("Place sensor in false condition and press button");
-		while(in.black_button()==0){java.lang.Thread.yield();}	//wait for button to be pressed and released
-		while(in.black_button()==1){java.lang.Thread.yield();}
+		while(bb.isNotPushed()){java.lang.Thread.yield();}	//wait for button to be pressed and released
+		while(bb.isPushed()){java.lang.Thread.yield();}
 		int falseval = sensor.getValueHigh();
 
 		if(trueval>falseval)
