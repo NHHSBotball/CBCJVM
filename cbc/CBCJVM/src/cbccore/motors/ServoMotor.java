@@ -82,7 +82,7 @@ public class ServoMotor {
 			return;
 
 		if (System.currentTimeMillis() > begin + ms) {
-			getServo().setPosition(curPos + delta);
+			servo.setPosition(curPos + delta);
 			moving = false;
 			return;
 		}
