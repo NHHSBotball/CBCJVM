@@ -29,8 +29,15 @@ package cbccore.movement.plugins;
 
 public abstract class MovementPlugin {
 	
-	protected double trainWidth;
+	private double trainWidth;
 	
+	/**
+	 * When extending, call this as <code>super</code> to initialize this
+	 * abstract superclass.
+	 * 
+	 * @param  trainWidth  The distance between the robot's two wheels in
+	 *                     centimeters
+	 */
 	public MovementPlugin(double trainWidth) {
 		this.trainWidth = trainWidth;
 	}
@@ -39,8 +46,10 @@ public abstract class MovementPlugin {
 	 * Directly move the robot at said speed, called by DriveTrain. You _must_
 	 * fill this in. Otherwise the robot will not be able to move.
 	 * 
-	 * @param  leftCmps  The desired speed of the left wheel in
-	 *                       centimeters-per-second
+	 * @param  leftCmps   The desired speed of the left wheel in
+	 *                        centimeters-per-second
+	 * @param  rightCmps  The desired speed of the right wheel in
+	 *                        centimeters-per-second
 	 */
 	public abstract void directDrive(double leftCmps, double rightCmps);
 	
@@ -106,11 +115,16 @@ public abstract class MovementPlugin {
 	 * Should get the maximum speed in centimeters-per-second for the right
 	 * wheel of the robot.
 	 * 
-	 * @return       The speed in cmps
-	 * @see          #getLeftMaxCmps
+	 * @return  The speed in cmps
+	 * @see     #getLeftMaxCmps
 	 */
 	public abstract double getRightMaxCmps();
 	
+	/**
+	 * Gets the distance between the robot's two wheels in centimeters.
+	 * 
+	 * @return  The distance in cm
+	 */
 	public double getTrainWidth() {
 		return trainWidth;
 	}
