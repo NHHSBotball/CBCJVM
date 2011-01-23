@@ -14,7 +14,7 @@
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package cbccore.sensors;
+package cbccore.sensors.analog;
 
 /**
  * 

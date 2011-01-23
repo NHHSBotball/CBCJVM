@@ -17,7 +17,6 @@
 package cbccore.sensors.analog;
 
 import cbccore.Device;
-import cbccore.sensors.IAnalogSensor;
 
 /**
  * Access to the analog sensor data from the CBOB
