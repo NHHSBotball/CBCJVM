@@ -65,13 +65,8 @@ public class ServoMotor {
 	}
 	
 	public void moveToSpeed(int tps, int newPos) {
-		curPos = servo.getPosition();
-		delta = newPos - curPos;
-		if(delta == 0) return;
-		begin = System.currentTimeMillis();
-		moving = true;
-		this.ms = Math.abs((delta / tps) * 1000);
-		ServoMotorThread.get().addServoMotor(this);
+		int ms = Math.abs((delta / tps) * 1000);
+		moveToTime(ms, newPos);
 	}
 	
 	/**
