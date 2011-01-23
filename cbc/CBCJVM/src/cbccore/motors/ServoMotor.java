@@ -34,7 +34,7 @@ public class ServoMotor {
 	private boolean moving = false;
 	private Servo servo = null;
 	/**
-	 * Constructs a new servo mototr object taking in a servo to control.
+	 * Constructs a new servo motor object taking in a servo to control.
 	 * 
 	 * @param  servo  the servo to control
 	 */
@@ -54,13 +54,23 @@ public class ServoMotor {
 	 * @param  ms      the allotted amount of time to move
 	 * @param  newPos  the new servo position
 	 */
-	public void moveTo(int ms, int newPos) {
+	public void moveToTime(int ms, int newPos) {
 		curPos = servo.getPosition();
 		delta = newPos - curPos;
 		if(delta == 0) return;
 		begin = System.currentTimeMillis();
 		moving = true;
 		this.ms = ms;
+		ServoMotorThread.get().addServoMotor(this);
+	}
+	
+	public void moveToSpeed(int tps, int newPos) {
+		curPos = servo.getPosition();
+		delta = newPos - curPos;
+		if(delta == 0) return;
+		begin = System.currentTimeMillis();
+		moving = true;
+		this.ms = Math.abs((delta / tps) * 1000);
 		ServoMotorThread.get().addServoMotor(this);
 	}
 	
@@ -74,6 +84,7 @@ public class ServoMotor {
 		if (System.currentTimeMillis() > begin + ms) {
 			getServo().setPosition(curPos + delta);
 			moving = false;
+			return;
 		}
 
 		double frac = ((double) delta / (double) ms);
