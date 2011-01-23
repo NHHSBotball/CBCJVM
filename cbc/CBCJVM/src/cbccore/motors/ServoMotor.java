@@ -64,6 +64,11 @@ public class ServoMotor {
 		ServoMotorThread.get().addServoMotor(this);
 	}
 	
+	/**
+	 * Moves to a new servo position at a given speed (ticks per second)
+	 * @param tps		the speed in servo ticks per second
+	 * @param newPos	the new servo position
+	 */
 	public void moveToSpeed(int tps, int newPos) {
 		int ms = Math.abs((delta / tps) * 1000);
 		moveToTime(ms, newPos);
