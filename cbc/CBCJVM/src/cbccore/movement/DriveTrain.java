@@ -52,15 +52,6 @@ public class DriveTrain {
 		this.plugin = plugin;
 	}
 	
-	
-	/**
-	 * Utility to make cmps match the sign of cm.
-	 */
-	protected static double moveParser(double cm, double cmps) { //returns new cmps
-		//cmps is made to match cm's sign
-		return cm<0?0.-Math.abs(cmps):Math.abs(cmps);
-	}
-	
 	/**
 	 * Rotates the device a specified number of degrees Counter-Clockwise
 	 * 
@@ -68,18 +59,7 @@ public class DriveTrain {
 	 * @see              #rotateRadians
 	 */
 	public void rotateDegrees(double degrees, double degreesPerSecond) {
-		rotateDegrees(degrees, degreesPerSecond, DISABLED, DISABLED, DISABLED, DISABLED, DISABLED, 0., null);
-	}
-	
-	public void rotateDegrees(double degrees, double degreesPerSecond,
-		int stepMode, int inEaseMode, int outEaseMode,
-		int easeTimeMode, int easeTimeConflictHandler, double easeTimeParam,
-		EasingEquation ease) {
-		
-		rotateRadians(Math.toRadians(degrees), Math.toRadians(degreesPerSecond),
-			stepMode, inEaseMode, outEaseMode, easeTimeMode,
-			easeTimeConflictHandler, easeTimeParam, ease
-		);
+		rotateRadians(Math.toRadians(degrees), Math.toRadians(degreesPerSecond));
 	}
 	
 	
@@ -91,22 +71,10 @@ public class DriveTrain {
 	 * @see                      #rotateDegrees
 	 */
 	public void rotateRadians(double radians, double radiansPerSecond) {
-		rotateRadians(radians, radiansPerSecond, DISABLED, DISABLED, DISABLED, DISABLED, DISABLED, 0., null);
-	}
-	
-	public void rotateRadians(double radians, double radiansPerSecond,
-		int stepMode, int inEaseMode, int outEaseMode,
-		int easeTimeMode, int easeTimeConflictHandler, double easeTimeParam,
-		EasingEquation ease) {
-		
 		double dist = plugin.getTrainWidth()*radians*.5;
 		double speed = radiansPerSecond*plugin.getTrainWidth();
-		moveWheelCm(-dist, dist, -speed, speed, stepMode, inEaseMode,
-			outEaseMode, easeTimeMode, easeTimeConflictHandler, easeTimeParam,
-			ease
-		);
+		moveWheelCm(-dist, dist, -speed, speed);
 	}
-	
 	
 	/**
 	 * Moves the robot in a piece of a circle.
@@ -119,18 +87,7 @@ public class DriveTrain {
 	 * @see             #moveCurveRadians
 	 */
 	public void moveCurveDegrees(double degrees, double radius, double cmps) {
-		moveCurveDegrees(degrees, radius, cmps, DISABLED, DISABLED, DISABLED, DISABLED, DISABLED, 0., null);
-	}
-	
-	public void moveCurveDegrees(double degrees, double radius, double cmps,
-		int stepMode, int inEaseMode, int outEaseMode,
-		int easeTimeMode, int easeTimeConflictHandler, double easeTimeParam,
-		EasingEquation ease) {
-		
-		moveCurveRadians(Math.toRadians(degrees), radius, cmps, stepMode,
-			inEaseMode, outEaseMode, easeTimeMode, easeTimeConflictHandler,
-			easeTimeParam, ease
-		);
+		moveCurveRadians(Math.toRadians(degrees), radius, cmps);
 	}
 	
 	
@@ -145,15 +102,6 @@ public class DriveTrain {
 	 * @see             #moveCurveDegrees
 	 */
 	public void moveCurveRadians(double radians, double radius, double cmps) {
-		moveCurveRadians(radians, radius, cmps, DISABLED, DISABLED, DISABLED, DISABLED, DISABLED, 0., null);
-	}
-	
-	
-	
-	public void moveCurveRadians(double radians, double radius, double cmps,
-		int stepMode, int inEaseMode, int outEaseMode,
-		int easeTimeMode, int easeTimeConflictHandler, double easeTimeParam,
-		EasingEquation ease) {
 		
 		//method start
 		double halfOffset = plugin.getTrainWidth()*radians*.5;
@@ -163,10 +111,7 @@ public class DriveTrain {
 		double timeOfTrip = cm/cmps;
 		double leftCmps = leftCm/timeOfTrip;
 		double rightCmps = rightCm/timeOfTrip;
-		moveWheelCm(leftCm, rightCm, leftCmps, rightCmps, stepMode, inEaseMode,
-			outEaseMode, easeTimeMode, easeTimeConflictHandler, easeTimeParam,
-			ease
-		);
+		moveWheelCm(leftCm, rightCm, leftCmps, rightCmps);
 	}
 	
 	
@@ -180,230 +125,62 @@ public class DriveTrain {
 	 * @param  cmps   Desired speed in centimeters-per-second
 	 */
 	public void moveCm(double cm, double cmps) {
-		moveCm(cm, cmps, DISABLED, DISABLED, DISABLED, DISABLED, DISABLED, 0., null);
+		moveWheelCm(cm, cm, cmps, cmps);
+	}
+	
+	/**
+	 * Utility to make cmps match the sign of cm.
+	 */
+	protected static double moveParser(double cm, double cmps) { //returns new cmps
+		//cmps is made to match cm's sign
+		return cm<0?0.-Math.abs(cmps):Math.abs(cmps);
 	}
 	
 	
-	
-	public void moveCm(double cm, double cmps,
-		int stepMode, int inEaseMode, int outEaseMode,
-		int easeTimeMode, int easeTimeConflictHandler, double easeTimeParam,
-		EasingEquation ease) throws InvalidValueException {
+	/**
+	 * Moves each wheel at a constant speed, and is used as the basis for
+	 * moveWheelCm
+	 */
+	private void moveWheelCmConstant(double leftCm, double rightCm,
+	                                 double leftCmps, double rightCmps,
+	                                 long milliseconds)
+	                                 throws InterruptedException {
 		
-		moveWheelCm(cm, cm, cmps, cmps, stepMode, inEaseMode, outEaseMode,
-			easeTimeMode, easeTimeConflictHandler, easeTimeParam, ease
-		);
-	}
-	
-	
-	//left and right cmps must be proper before calling this function
-	private void moveWheelCmEasedHelper(double leftCm, double rightCm,
-	                                        double startLeftCmps, double endLeftCmps,
-	                                        double startRightCmps, double endRightCmps,
-	                                        int easeMode, int stepMode, EasingEquation ease) throws InterruptedException {
-		
-		double deltaLeftCmps = endLeftCmps-startLeftCmps;
-		double deltaRightCmps = endRightCmps-startRightCmps;
-		
-		//System.out.println("avgCmps: " + ease.easeArea(easeMode, 1., startLeftCmps, endLeftCmps-startLeftCmps, 1.));
-		
-		//t is time, b is beginning position, c is the total change in position, and d is the duration of the tween.
-		//when time is 1 second, easeInArea will return the average velocity (d = t*avgVel)
-		long travelTime = (long)(leftCm/ease.easeArea(easeMode, 1., startLeftCmps, endLeftCmps-startLeftCmps, 1.)*1.0e3);
-		
-		//System.out.println("goalCm: " + leftCm);
-		//System.out.println("travelTime: " + travelTime*1.0e-3 + " seconds");
-		
-		long startTime = System.currentTimeMillis();
-		long destTime = travelTime+startTime;
-		long currentTime = 0;
-		
-		double currentLeftCm = 0.;
-		double speedMultiplier;
-		double desiredCurrentLeftCm;
-		double multipliedLeftCmps = 0.; double multipliedRightCmps = 0.;
-		long prevTime = currentTime;
-		long timeDiff;
-		
-		for(; currentTime < travelTime; currentTime = System.currentTimeMillis()-startTime) {
-			timeDiff = currentTime - prevTime;
-			prevTime = currentTime;
-			currentLeftCm += multipliedLeftCmps*timeDiff*1.0e-3;
-			
-			desiredCurrentLeftCm = ease.easeArea(easeMode, currentTime*1.0e-3, startLeftCmps, deltaLeftCmps, travelTime*1.0e-3);
-			speedMultiplier = 1.+((desiredCurrentLeftCm-currentLeftCm)/leftCm);
-			double leftCmps = ease.ease(easeMode, (double)currentTime, startLeftCmps, deltaLeftCmps, (double)travelTime);
-			double rightCmps = ease.ease(easeMode, (double)currentTime, startRightCmps, deltaRightCmps, (double)travelTime);
-			multipliedLeftCmps = leftCmps*speedMultiplier;
-			//System.out.println(speedMultiplier);
-			if(Math.abs(multipliedLeftCmps) > plugin.getLeftMaxCmps()) {
-				speedMultiplier = Math.abs(plugin.getLeftMaxCmps()/leftCmps);
-				multipliedLeftCmps = moveParser(leftCmps, plugin.getLeftMaxCmps());
-			}
-			multipliedRightCmps = rightCmps*speedMultiplier;
-			if(Math.abs(multipliedRightCmps) > plugin.getRightMaxCmps()) {
-				speedMultiplier = Math.abs(plugin.getRightMaxCmps()/rightCmps);
-				multipliedRightCmps = moveParser(rightCmps, plugin.getRightMaxCmps());
-				multipliedLeftCmps = leftCmps*speedMultiplier;
-			}
-			
-			directDrive(multipliedLeftCmps, multipliedRightCmps);
-			
-			switch(stepMode) {
-				case DISABLED:
-				case DriveTrainStepModes.HIGH_PRECISION:
-					break;
-				case DriveTrainStepModes.MIN_SLEEP_AND_YIELD:
-					Thread.yield();
-				case DriveTrainStepModes.MIN_SLEEP:
-					Thread.sleep(0l, 1);
-					break;
-				case DriveTrainStepModes.YIELD:
-					Thread.yield();
-					break;
-				default:
-					Thread.sleep(stepMode);
-			}
-		}
-		//stop();
-		//System.out.println("currLeftCm: "+currentLeftCm);
-		//System.out.println("finished moveWheelCmEasedHelper");
-	}
-	
-	private void moveWheelCmSimpleHelper(double leftCm, double rightCm,
-	                                     double leftCmps, double rightCmps) throws InterruptedException {
-		
-		//do all calculations at front to prevent delays
+		// do all calculations at front to prevent delays
 		leftCmps = moveParser(leftCm, leftCmps);
 		rightCmps = moveParser(rightCm, rightCmps);
-		long travelTime = ((long)((leftCm/leftCmps)*1.0e3));
-		//actually call the support functions
+		// actually call the support functions
 		directDrive(leftCmps, rightCmps);
-		Thread.sleep(travelTime); //let our parent handle interrupted exceptions
-		stop();
+		Thread.sleep(milliseconds); // let our parent handle an
+		                            // InterruptedException
 	}
 	
 	//leftCm/leftCmps must be equal to rightCm/rightCmps
 	protected void moveWheelCm(double leftCm, double rightCm, //positions
-	                         double leftCmps, double rightCmps, //speed
-	                         //finetuning, answer 0 and false for all if you don't
-	                         int stepMode, int inEaseMode, int outEaseMode,
-	                         int easeTimeMode, int easeTimeConflictHandler, double easeTimeParam,
-	                         EasingEquation ease) {
+	                           double leftCmps, double rightCmps) { //speed
 		
 		leftCmps = moveParser(leftCm, leftCmps);
 		rightCmps = moveParser(rightCm, rightCmps);
-		
-		//if I were to re-write this again, I would use part?Cm instead of times
-		long part1Time = 0; long part2Time = (long)(leftCm*1.0e3/leftCmps); long part3Time = 0;
-		//   easein              const speed                                     ease out
-		
-		int steps; //must be defined up here otherwise java freaks that it has
-			//been defined twice, even though that would be impossible
-		
-		if(inEaseMode != DISABLED || outEaseMode != DISABLED) {
-			switch(easeTimeMode) {
-				case PERCENT_DISTANCE:
-					steps = 0;
-					if(inEaseMode != DISABLED) {
-						part1Time = (long)(leftCm*easeTimeParam/ease.easeArea(inEaseMode, 1., 0., leftCmps, 1.)*1.0e3);
-						++steps;
-					} if(outEaseMode != DISABLED) {
-						part3Time = (long)(leftCm*easeTimeParam/ease.easeArea(outEaseMode, 1., 0., leftCmps, 1.)*1.0e3);
-						++steps;
-					}
-					part2Time = (long)((1.-steps*easeTimeParam)*leftCm/leftCmps * 1.0e3);
-					break;
-				case PERCENT_TIME:
-					double part1Cmps = 0.;
-					double part2Cmps = leftCmps;
-					double part3Cmps = 0.;
-					if(inEaseMode != DISABLED) {
-						ease.easeArea(inEaseMode, 1., 0., leftCmps, 1.);
-					}
-					if(outEaseMode != DISABLED) {
-						ease.easeArea(outEaseMode, 1., 0., leftCmps, 1.);
-					}
-					double part1Percent, part2Percent, part3Percent;
-					double sum = part1Cmps+part2Cmps+part3Cmps;
-					
-					part1Percent = part1Cmps/sum;
-					part2Percent = part2Cmps/sum;
-					part3Percent = part3Cmps/sum;
-					
-					double avgCmps = part1Cmps*part1Percent + part2Cmps*part2Percent + part3Cmps*part3Percent;
-					double totalSeconds = leftCm/avgCmps;
-					part1Time = (long)(part1Percent*totalSeconds*1.0e3);
-					part3Time = (long)(part3Percent*totalSeconds*1.0e3);
-					part2Time = (long)((totalSeconds-part1Time-part3Time)*1.0e3); //faster
-					break;
-				case CONSTANT_DISTANCE:
-					steps = 0;
-					if(inEaseMode != DISABLED) {
-						part1Time = (long)(easeTimeParam/ease.easeArea(inEaseMode, 1., 0., leftCmps, 1.)*1.0e3);
-						++steps;
-					} if(outEaseMode != DISABLED) {
-						part3Time = (long)(easeTimeParam/ease.easeArea(outEaseMode, 1., 0., leftCmps, 1.)*1.0e3);
-						++steps;
-					}
-					part2Time = (long)((leftCm-steps*easeTimeParam)/leftCmps * 1.0e3);
-					break;
-				case CONSTANT_TIME:
-					if(inEaseMode != DISABLED) {
-						part1Time = (long)(easeTimeParam*1.0e3);
-					} if(outEaseMode != DISABLED) {
-						part3Time = (long)(easeTimeParam*1.0e3);
-					}
-					part2Time = (long)(1.0e3*(leftCm -
-						ease.easeArea(inEaseMode, ((double)(part1Time))*1.0e-3, 0., leftCmps, ((double)(part1Time))*1.0e-3) -
-						ease.easeArea(outEaseMode, ((double)(part2Time))*1.0e-3, 0., leftCmps, ((double)(part2Time))*1.0e-3)
-					)/leftCmps);
-					
-			}
-		}
-		
-		//this seems kinda verbose, could be shortened
-		
-		if(inEaseMode != DISABLED) {
-			double partLeftCm = ease.easeArea(inEaseMode, part1Time*1.0e-3, 0., leftCmps, part1Time*1.0e-3);
-			double partRightCm = ease.easeArea(inEaseMode, part1Time*1.0e-3, 0., rightCmps, part1Time*1.0e-3);
-			try {
-				moveWheelCmEasedHelper(partLeftCm, partRightCm,
-					0, leftCmps,
-					0, rightCmps,
-					inEaseMode, stepMode, ease
-				);
-			} catch (InterruptedException ex) {
-				stop(); return;
-			}
-		}
-		
+		long milliseconds = ((long)((leftCm/leftCmps)*1.0e3));
 		try {
-			moveWheelCmSimpleHelper(part2Time*leftCmps*1.0e-3, 
-				part2Time*rightCmps*1.0e-3, leftCmps, rightCmps
-			);
-		} catch (InterruptedException ex) {
-			stop(); return;
-		}
-		
-		if(outEaseMode != DISABLED) {
-			double partLeftCm = ease.easeArea(outEaseMode, part3Time*1.0e-3, 0., leftCmps, part3Time*1.0e-3);
-			double partRightCm = ease.easeArea(outEaseMode, part3Time*1.0e-3, 0., rightCmps, part3Time*1.0e-3);
-			try {
-				moveWheelCmEasedHelper(partLeftCm, partRightCm,
-					leftCmps, 0,
-					rightCmps, 0,
-					outEaseMode, stepMode, ease
-				);
-			} catch (InterruptedException ex) {
-				stop(); return;
-			}
-		}
-		
+			moveWheelCmConstant(leftCm, rightCm, leftCmps, rightCmps,
+			                    milliseconds);
+		} catch(InterruptedException ex) {}
 		stop();
 	}
 	
-	
+	/**
+	 * Can be used to manually control the speed of each drive wheel. Every
+	 * movement call eventually gets run through here, so if one wanted to make
+	 * a fundamental change to the movement, this or moveWheelCm would be the
+	 * methods to override.
+	 * 
+	 * 
+	 * @param  leftCmps   The desired speed of the left wheel in
+	 *                        centimeters-per-second
+	 * @param  rightCmps  The desired speed of the right wheel in
+	 *                        centimeters-per-second
+	 */
 	public void directDrive(double leftCmps, double rightCmps) {
 		plugin.directDrive(leftCmps, rightCmps);
 		updateOldPos();
@@ -411,14 +188,23 @@ public class DriveTrain {
 	}
 	
 	
-	//By putting this all in one function, we can minimize duplicate calculations
-	//adapted from http://rossum.sourceforge.net/papers/DiffSteer/DiffSteer.html
-	//Thanks for directing me to it Jeremy!
+	// By putting this all in one function, we can minimize duplicate
+	// calculations. Adapted from
+	// http://rossum.sourceforge.net/papers/DiffSteer/DiffSteer.html
+	// Thanks for directing me to it Jeremy!
+	
+	/**
+	 * Solves for the specific position of the robot at this moment in time.
+	 * Adapted from
+	 * <a href="http://rossum.sourceforge.net/papers/DiffSteer/DiffSteer.html">
+	 * here</a>.
+	 */
 	public DriveTrainPosition getPosition() {
 		double newX, newY, newAngle;
 		double seconds = (double)(System.currentTimeMillis()-oldTime)*1e-3;
 		newAngle = seconds*(rightCmps-leftCmps)/plugin.getTrainWidth();
-		double centerDist = seconds*(rightCmps+leftCmps)*.5; //get rid of duplicate calculations
+		double centerDist = seconds*(rightCmps+leftCmps)*.5;
+		// minimizes duplicate calculations
 		newX = oldX + centerDist*Math.cos(newAngle);
 		newY = oldY + centerDist*Math.sin(newAngle);
 		newAngle += oldAngle;
@@ -426,7 +212,10 @@ public class DriveTrain {
 		return new DriveTrainPosition(newX, newY, newAngle);
 	}
 	
-	
+	/**
+	 * Read <a href="https://github.com/CBCJVM/CBCJVM/wiki/Position-Tracking">
+	 * this</a>.
+	 */
 	protected void updateOldPos() {
 		DriveTrainPosition pos = getPosition();
 		oldX = pos.getX();
