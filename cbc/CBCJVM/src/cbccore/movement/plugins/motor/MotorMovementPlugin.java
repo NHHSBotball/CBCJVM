@@ -62,6 +62,6 @@ public class MotorMovementPlugin extends MovementPlugin {
 	
 	/** {@inheritDoc} */
 	public double getRightMaxCmps() {
-		return leftWheel.getMaxCmps();
+		return rightWheel.getMaxCmps();
 	}
 }
