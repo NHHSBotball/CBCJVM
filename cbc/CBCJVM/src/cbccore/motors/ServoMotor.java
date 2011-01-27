@@ -70,7 +70,7 @@ public class ServoMotor {
 	 * @param newPos	the new servo position
 	 */
 	public void moveToSpeed(int tps, int newPos) {
-		int ms = Math.abs((delta / tps) * 1000);
+		int ms = Math.abs(((newPos - servo.getPosition()) / tps) * 1000);
 		moveToTime(ms, newPos);
 	}
 	
