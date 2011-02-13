@@ -1,1 +1,1 @@
-int main(){chdir("/mnt/user/code/Events/bin");system("/mnt/user/jvm/java Main");}
+int main(){system("cd /mnt/user/code/Events/bin && /mnt/user/jvm/java Main");}

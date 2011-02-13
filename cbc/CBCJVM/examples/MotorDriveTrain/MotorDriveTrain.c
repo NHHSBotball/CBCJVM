@@ -1,1 +1,1 @@
-int main(){chdir("/mnt/user/code/MotorDriveTrain/bin");system("/mnt/user/jvm/java Main");}
+int main(){system("cd /mnt/user/code/MotorDriveTrain/bin && /mnt/user/jvm/java Main");}
