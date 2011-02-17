@@ -283,7 +283,8 @@ public class DriveTrain {
 	 * @see       cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
 	 */
 	public double getMaxRadiansPerSec() {
-		return Math.min(plugin.getLeftMaxCmps()/plugin.getTrainWidth(), plugin.getRightMaxCmps())/plugin.getTrainWidth();
+		return 2. * Math.min(plugin.getLeftMaxCmps(), plugin.getRightMaxCmps())
+		            / plugin.getTrainWidth();
 	}
 	
 	
