@@ -32,7 +32,7 @@ public class EventType {
 	}
 	
 	/**
-	 * This should be unneccicary for you, our end user. Don't call this.
+	 * This should be unnecessary for you, our end user. Don't call this.
 	 */
 	public long getHandle() {
 		return handle;
