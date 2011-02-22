@@ -21,23 +21,17 @@ import cbccore.Device;
 /**
  * 
  * 
- * @author Braden McDorman
+ * @author Braden McDorman, Benjamin Woodruff
  *
  */
 
-public class Sonar implements IAnalogSensor {
-	private int port = 0;
-	private cbccore.low.Sensor lowSensor = Device.getLowSensorController();
+public class Sonar extends Analog {
+	
 	public Sonar(int port) {
-		this.port = port;
-	}
-	@Override
-	public int getValue() {
-		return lowSensor.analog(port);
-	}
-	@Override
-	public int getValueHigh() {
-		return lowSensor.analog10(port);
+		super(port);
 	}
 	
+	public double getCm() {
+		return getLowSensor().sonar(getPort()) / 10.;
+	}
 }

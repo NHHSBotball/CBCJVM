@@ -82,4 +82,12 @@ public class Analog implements IAnalogSensor {
 			floatingSensors[7]?1:0
 		);
 	}
+	
+	protected cbccore.low.Sensor getLowSensor() {
+		return lowSensor;
+	}
+	
+	public int getPort() {
+		return port;
+	}
 }
