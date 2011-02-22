@@ -33,15 +33,6 @@ package cbccore.sensors.analog;
  *
  */
 
-//Version 0.1: First stable version, had to add floating sensor support to
-//                 CBCJVM
-//Version 0.2: Added second getCm method that averages readings
-//Version 0.3: New calibration values
-//Version 1.0: Public CBCJVM release, added documentation.
-
-//Sorry for excessive commenting, I think I'm going to use this for my
-    //documented code example
-
 public class ETSensor extends Analog {
 	
 	//calibration data
