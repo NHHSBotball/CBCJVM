@@ -28,7 +28,7 @@ import cbccore.InvalidPortException;
  * 
  */
 
-public class Motor {
+public class Motor extends AbstractBlockingAdvancedStateMotor {
 	private int port = 0;
 	private static cbccore.low.Motor lowMotor = Device.getLowMotorController();
 	private long destTime = -1;
@@ -81,7 +81,41 @@ public class Motor {
 	public int moveAtVelocity(int velocity) {
 		return lowMotor.mav(port, velocity);
 	}
-
+	
+	/**
+	 * Moves to an absolute position in ticks at full speed
+	 * 
+	 * @param  pos    The goal position to move toward
+	 * 
+	 */
+	public void setPosition(int pos) {
+		moveToPosition(1000, pos);
+	}
+	
+	/**
+	 * Moves to an absolute position in ticks
+	 *
+	 * @param  speed  The speed in ticks per second
+	 * @param  pos    The goal position to move toward
+	 *
+	 */
+	public void setPositionSpeed(int pos, int speed, boolean blocking) {
+		moveToPosition(speed, pos);
+		if(blocking) { waitForDone(); }
+	}
+	
+	/**
+	 * Moves to an absolute position in ticks
+	 *
+	 * @param  time   The movement time in milliseconds
+	 * @param  pos    The goal position to move toward
+	 *
+	 */
+	public void setPositionTime(int pos, int time, boolean blocking) {
+		setPositionSpeed(pos, (pos - getPosition()) * 1000 / time,
+		                 blocking);
+	}
+	
 	/**
 	 * Moves to an absolute position in ticks
 	 *
@@ -168,7 +202,16 @@ public class Motor {
 	public int getPositionCounter() {
 		return lowMotor.get_motor_position_counter(port);
 	}
-
+	
+	/**
+     * Checks the motor position
+     *
+     * @return  position  The motor position in ticks (to +/-2147483647)
+     */
+	public int getPosition() {
+		return getPositionCounter();
+	}
+	
     /**
      * Stops until the motor is done moving to it's goal.
      */
@@ -224,5 +267,12 @@ public class Motor {
 		for(int i = 0; i < 4; ++i) {
 			lowMotor.freeze(i);
 		}
+	}
+	
+	/**
+	 * The default speed is half of maximum (500 ticks per second)
+	 */
+	public int getDefaultSpeed() {
+		return 1000/2;
 	}
 }

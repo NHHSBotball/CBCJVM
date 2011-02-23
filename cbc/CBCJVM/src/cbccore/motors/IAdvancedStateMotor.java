@@ -20,37 +20,17 @@ import cbccore.Device;
 import cbccore.InvalidPortException;
 
 /**
+ * All the functions defined in here in implementing classes should be
+ * non-blocking. For varients with blocking support, one should implement
+ * <code>IBlockingAdvancedStateMotor</code>.
  * 
- * @author Benjamin Woodruff, Braden McDorman
+ * @author Benjamin Woodruff
  *
  */
 
-public class Servo implements IStateMotor {
-	private int port = 0;
-	private static cbccore.low.Servo lowServo = Device.getLowServoController();
+public interface IAdvancedStateMotor extends IStateMotor {
+	public void setPositionTime(int pos, int ms);
+	public void setPositionTime(int pos, double sec);
 	
-	public Servo(int port) throws InvalidPortException {
-		if(port < 0 || port > 4) throw new InvalidPortException();
-		this.port = port;
-	}
-
-	public static void disable() {
-		lowServo.disable_servos();
-	}
-	
-	public static void enable() {
-		lowServo.enable_servos();
-	}
-	
-	public int getPosition() {
-		return lowServo.get_servo_position(port);
-	}
-	
-	public void setPosition(int pos) {
-		lowServo.set_servo_position(port, pos);
-	}
-	
-	public int getPort() {
-		return port;
-	}
+	public void setPositionSpeed(int pos, int speed);
 }
