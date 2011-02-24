@@ -25,7 +25,7 @@ import cbccore.InvalidPortException;
  *
  */
 
-public class Servo {
+public class Servo implements IStateMotor {
 	private int port = 0;
 	private static cbccore.low.Servo lowServo = Device.getLowServoController();
 	
@@ -46,8 +46,8 @@ public class Servo {
 		return lowServo.get_servo_position(port);
 	}
 	
-	public int setPosition(int pos) {
-		return lowServo.set_servo_position(port, pos);
+	public void setPosition(int pos) {
+		lowServo.set_servo_position(port, pos);
 	}
 	
 	public int getPort() {

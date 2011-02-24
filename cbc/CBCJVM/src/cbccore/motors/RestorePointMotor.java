@@ -28,52 +28,64 @@ import java.util.List;
  */
 
 public class RestorePointMotor extends ArrayList<Integer> {
-	private static final long serialVersionUID = 8569618068678782909L;
 	
-	protected Motor controlMotor;
+	protected IAdvancedStateMotor controlMotor;
+	protected int speed;
 	
-	
-	public RestorePointMotor(int port) {
-		this(new Motor(port));
+	public RestorePointMotor(IAdvancedStateMotor controlMotor) {
+		this(controlMotor, -1);
 	}
 	
-	
-	
-	public RestorePointMotor(int port, int ... positions) {
-		this(new Motor(port), positions);
-	}
-	
-	
-	
-	public RestorePointMotor(int port, List<Integer> positions) {
-		this(new Motor(port), positions);
-	}
-	
-	
-	
-	public RestorePointMotor(Motor controlMotor) {
+	public RestorePointMotor(IAdvancedStateMotor controlMotor, int speed) {
 		super();
 		this.controlMotor = controlMotor;
+		this.speed = speed;
 	}
 	
 	
+	/**
+	 * @param  positions  The positions to store in measured as tick positions
+	 */
+	public RestorePointMotor(IAdvancedStateMotor controlMotor,
+	                         int ... positions) {
+		this(controlMotor, -1, positions);
+	}
 	
-	public RestorePointMotor(Motor controlMotor, int ... positions) {
+	/**
+	 * @param  positions  The positions to store in measured as tick positions
+	 */
+	public RestorePointMotor(IAdvancedStateMotor controlMotor, int speed,
+	                         int ... positions) {
 		super(positions.length);
 		this.controlMotor = controlMotor;
+		this.speed = speed;
 		addPositions(positions);
 	}
 	
 	
+	/**
+	 * @param  positions  The positions to store in measured as tick positions
+	 */
+	public RestorePointMotor(IAdvancedStateMotor controlMotor,
+	                         List<Integer> positions) {
+		this(controlMotor, -1, positions);
+	}
 	
-	public RestorePointMotor(Motor controlMotor, List<Integer> positions) {
+	/**
+	 * @param  positions  The positions to store in measured as tick positions
+	 */
+	public RestorePointMotor(IAdvancedStateMotor controlMotor, int speed,
+	                         List<Integer> positions) {
 		super(positions);
+		this.speed = speed;
 		this.controlMotor = controlMotor;
 	}
 	
 	
 	
-	//contructor helper method, Arrays.asList would not work here because we need the wrapper class
+	
+	// contructor helper method, Arrays.asList would not work here because we
+	// need the wrapper class
 	private void addPositions(int[] a) {
 		for(int i : a) {
 			add(Integer.valueOf(i));
@@ -86,49 +98,58 @@ public class RestorePointMotor extends ArrayList<Integer> {
 	 * Gets the stored motor position at a specific location, and move to it,
 	 * "restores" the motor position to that archived point.
 	 * 
-	 * @see           #get
+	 * @param  speed     Speed to move to position in tick per second
+	 * @param  blocking  If true, the function doesn't return until done
+	 * @see    #get
 	 */
-	public void setToPositionIndex(int speed, int posIndex) {
-		controlMotor.moveToPosition(speed, get(posIndex).intValue());
+	public void setToPositionIndex(int posIndex, int speed, boolean blocking) {
+		((IBlockingAdvancedStateMotor)controlMotor).setPositionSpeed(
+			get(posIndex).intValue(), speed, blocking
+		);
 	}
-	
-	
 	
 	/**
-	 * Stops the motor regardless of position, a convenience method
+	 * Gets the stored motor position at a specific location, and move to it,
+	 * "restores" the motor position to that archived point. This is
+	 * nonblocking, it returns before it is done moving.
 	 * 
-	 * @see           Motor#off
-	 * @see           #getMotor
+	 * @param  speed     Speed to move to position in tick per second
+	 * @see    #get
 	 */
-	public void cancel() {
-		controlMotor.off();
+	public void setToPositionIndex(int posIndex, int speed) {
+		controlMotor.setPositionSpeed(get(posIndex).intValue(), speed);
 	}
-	
-	
 	
 	/**
-	 * A convenience method
+	 * Gets the stored motor position at a specific location, and move to it,
+	 * "restores" the motor position to that archived point.
 	 * 
-	 * @see           #blockMotorDone
-	 * @see           #getMotor
+	 * @param  blocking  If true, the function doesn't return until done
+	 * @see    #get
 	 */
-	public void waitForDone() {
-		controlMotor.waitForDone();
+	public void setToPositionIndex(int posIndex, boolean blocking) {
+		if(speed < 0) {
+			((IBlockingAdvancedStateMotor)controlMotor).setPosition(
+				get(posIndex).intValue(), blocking
+			);
+		}
+		this.setToPositionIndex(posIndex, speed, blocking);
 	}
-	
-	
 	
 	/**
-	 * A convenience method
+	 * Gets the stored motor position at a specific location, and move to it,
+	 * "restores" the motor position to that archived point. This is
+	 * nonblocking, it returns before it is done moving.
 	 * 
-	 * @see           #waitForDone
-	 * @see           #getMotor
+	 * @see    #get
 	 */
-	public void blockMotorDone() {
-		controlMotor.blockMotorDone();
+	public void setToPositionIndex(int posIndex) {
+		this.setToPositionIndex(posIndex, false);
 	}
 	
-	
+	public int getPosition() {
+		return controlMotor.getPosition();
+	}
 	
 	/**
 	 * Gets the controller motor, passed into the constructor
@@ -136,7 +157,7 @@ public class RestorePointMotor extends ArrayList<Integer> {
 	 * @see           #waitForDone
 	 * @see           #getMotor
 	 */
-	public Motor getMotor() {
+	public IAdvancedStateMotor getMotor() {
 		return controlMotor;
 	}
 }

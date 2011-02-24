@@ -14,24 +14,23 @@
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package cbccore.sensors.analog;
+package cbccore.motors;
 
 import cbccore.Device;
+import cbccore.InvalidPortException;
 
 /**
+ * All the functions defined in here in implementing classes should be
+ * non-blocking. For varients with blocking support, one should implement
+ * <code>IBlockingAdvancedStateMotor</code>.
  * 
- * 
- * @author Braden McDorman, Benjamin Woodruff
+ * @author Benjamin Woodruff
  *
  */
 
-public class Sonar extends Analog {
+public interface IAdvancedStateMotor extends IStateMotor {
+	public void setPositionTime(int pos, int ms);
+	public void setPositionTime(int pos, double sec);
 	
-	public Sonar(int port) {
-		super(port);
-	}
-	
-	public double getCm() {
-		return getLowSensor().sonar(getPort()) / 10.;
-	}
+	public void setPositionSpeed(int pos, int speed);
 }

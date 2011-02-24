@@ -14,24 +14,18 @@
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package cbccore.sensors.analog;
+package cbccore.motors;
 
 import cbccore.Device;
+import cbccore.InvalidPortException;
 
 /**
  * 
- * 
- * @author Braden McDorman, Benjamin Woodruff
+ * @author Benjamin Woodruff
  *
  */
 
-public class Sonar extends Analog {
-	
-	public Sonar(int port) {
-		super(port);
-	}
-	
-	public double getCm() {
-		return getLowSensor().sonar(getPort()) / 10.;
-	}
+public interface IStateMotor {
+	public int getPosition();
+	public void setPosition(int pos);
 }

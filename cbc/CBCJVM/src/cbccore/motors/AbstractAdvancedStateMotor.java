@@ -14,24 +14,31 @@
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package cbccore.sensors.analog;
-
-import cbccore.Device;
+package cbccore.motors;
 
 /**
  * 
- * 
- * @author Braden McDorman, Benjamin Woodruff
+ * @author Benjamin Woodruff
  *
  */
 
-public class Sonar extends Analog {
-	
-	public Sonar(int port) {
-		super(port);
+public abstract class AbstractAdvancedStateMotor implements IStateMotor {
+	public void setPositionTime(int pos, int ms) {
+		setPositionTime(pos, ms / 1000.);
 	}
 	
-	public double getCm() {
-		return getLowSensor().sonar(getPort()) / 10.;
+	public void setPositionTime(int pos, double sec) {
+		setPositionTime(pos, (int)(sec * 1000.));
 	}
+	
+	public void setPositionSpeed(int pos, int ticksPerSec) {
+		int ms = Math.abs((pos - getPosition()) * 1000 / ticksPerSec);
+		setPositionTime(pos, ms);
+	}
+	
+	public void setPosition(int pos) {
+		setPositionSpeed(pos, getDefaultSpeed());
+	}
+	
+	protected abstract int getDefaultSpeed();
 }
