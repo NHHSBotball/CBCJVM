@@ -31,7 +31,8 @@ public class CreateMovementPlugin extends MovementPlugin {
 	
 	private static final double DEFAULT_TRAIN_WIDTH = 25.5;
 	//private static final double wheelCircumference = 10.;
-	private double efficiency;
+	private double leftEfficiency;
+	private double rightEfficiency;
 	//private double leftCmps = 0.;
 	//private double rightCmps = 0.;
 	private Create create = null;
@@ -40,13 +41,15 @@ public class CreateMovementPlugin extends MovementPlugin {
 	/**
 	 * Basic constructor
 	 */
-	public CreateMovementPlugin(Create create, double efficiency,
+	public CreateMovementPlugin(Create create, double leftEfficiency,
+	                            double rightEfficiency,
 	                            boolean fullMode)
 	                            throws CreateConnectException {
 		super(DEFAULT_TRAIN_WIDTH);
 		this.create = create;
 		create.connect();
-		this.efficiency = efficiency;
+		this.leftEfficiency = leftEfficiency;
+		this.rightEfficiency = rightEfficiency;
 		// FIXME: This should be moved to it's own method
 		if(fullMode) {
 			create.setMode(Create.Mode.Full); 
@@ -57,7 +60,7 @@ public class CreateMovementPlugin extends MovementPlugin {
 	
 	/** {@inheritDoc} */
 	public void directDrive(double leftCmps, double rightCmps) {
-		create.driveDirect((int)(rightCmps*10./efficiency), (int)(leftCmps*10./efficiency));
+		create.driveDirect((int)(rightCmps*10./rightEfficiency), (int)(leftCmps*10./leftEfficiency));
 	}
 	
 	/**
@@ -71,11 +74,11 @@ public class CreateMovementPlugin extends MovementPlugin {
 	
 	/** {@inheritDoc} */
 	public double getLeftMaxCmps() {
-		return 50.*efficiency;
+		return 50.*leftEfficiency;
 	}
 	
 	/** {@inheritDoc} */
 	public double getRightMaxCmps() {
-		return 50.*efficiency;
+		return 50.*rightEfficiency;
 	}
 }
