@@ -18,7 +18,6 @@ package cbccore.motors.statemotors;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 /**
  * A special motor controller that can remember certain set positions, and allow
@@ -28,7 +27,8 @@ import java.util.List;
  * @see    cbccore.motors.Motor
  */
 
-public class RestorePointMotor<K> extends HashMap<K, Integer> {
+public class RestorePointMotor<K> extends HashMap<K, Integer>
+                                        implements IBlockingAdvancedStateMotor {
 	
 	protected IAdvancedStateMotor controlMotor;
 	protected int speed;
@@ -103,10 +103,8 @@ public class RestorePointMotor<K> extends HashMap<K, Integer> {
 	 * @param  blocking  If true, the function doesn't return until done
 	 * @see    #get
 	 */
-	public void setToPosition(K position, int speed, boolean blocking) {
-		((IBlockingAdvancedStateMotor)controlMotor).setPositionSpeed(
-			get(position).intValue(), speed, blocking
-		);
+	public void setPositionSpeed(K position, int speed, boolean blocking) {
+		setPositionSpeed(get(position).intValue(), speed, blocking);
 	}
 	
 	/**
@@ -117,8 +115,8 @@ public class RestorePointMotor<K> extends HashMap<K, Integer> {
 	 * @param  speed     Speed to move to position in tick per second
 	 * @see    #get
 	 */
-	public void setToPosition(K position, int speed) {
-		controlMotor.setPositionSpeed(get(position).intValue(), speed);
+	public void setPositionSpeed(K position, int speed) {
+		setPositionSpeed(get(position).intValue(), speed);
 	}
 	
 	/**
@@ -128,13 +126,8 @@ public class RestorePointMotor<K> extends HashMap<K, Integer> {
 	 * @param  blocking  If true, the function doesn't return until done
 	 * @see    #get
 	 */
-	public void setToPosition(K position, boolean blocking) {
-		if(speed < 0) {
-			((IBlockingAdvancedStateMotor)controlMotor).setPosition(
-				get(position).intValue(), blocking
-			);
-		}
-		this.setToPosition(position, speed, blocking);
+	public void setPosition(K position, boolean blocking) {
+		setPosition(get(position).intValue(), blocking);
 	}
 	
 	/**
@@ -144,12 +137,55 @@ public class RestorePointMotor<K> extends HashMap<K, Integer> {
 	 * 
 	 * @see    #get
 	 */
-	public void setToPosition(K position) {
-		this.setToPosition(position, false);
+	public void setPosition(K position) {
+		setPosition(get(position).intValue());
+	}
+	
+	
+	public void setPosition(int position) {
+		if(speed < 0) {
+			controlMotor.setPosition(position);
+		}
+		setPositionSpeed(position, speed);
+	}
+	
+	public void setPosition(int position, boolean blocking) {
+		if(speed < 0) {
+			getBlockingMotor().setPosition(position, blocking);
+		}
+		setPositionSpeed(position, speed, blocking);
+	}
+	
+	public void setPositionSpeed(int position, int speed) {
+		controlMotor.setPositionSpeed(position, speed);
+	}
+	
+	public void setPositionSpeed(int position, int speed, boolean blocking) {
+		getBlockingMotor().setPositionSpeed(position, speed, blocking);
+	}
+	
+	public void setPositionTime(int pos, double seconds) {
+		controlMotor.setPositionTime(pos, seconds);
+	}
+	
+	public void setPositionTime(int pos, double seconds, boolean blocking) {
+		getBlockingMotor().setPositionTime(pos, seconds, blocking);
+	}
+	
+	public void setPositionTime(int pos, int ms) {
+		controlMotor.setPositionTime(pos, ms);
+	}
+	
+	public void setPositionTime(int pos, int ms, boolean blocking) {
+		getBlockingMotor().setPositionTime(pos, ms, blocking);
 	}
 	
 	public int getPosition() {
 		return controlMotor.getPosition();
+	}
+	
+	private IBlockingAdvancedStateMotor getBlockingMotor() {
+		return (IBlockingAdvancedStateMotor)controlMotor;
 	}
 	
 	/**
