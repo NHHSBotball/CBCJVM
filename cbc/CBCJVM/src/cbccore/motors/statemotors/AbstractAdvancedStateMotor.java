@@ -22,7 +22,7 @@ package cbccore.motors.statemotors;
  *
  */
 
-public abstract class AbstractAdvancedStateMotor implements IStateMotor {
+public abstract class AbstractAdvancedStateMotor implements IAdvancedStateMotor{
 	public void setPositionTime(int pos, int ms) {
 		setPositionTime(pos, ms / 1000.);
 	}

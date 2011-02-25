@@ -23,7 +23,8 @@ package cbccore.motors.statemotors;
  */
 
 public abstract class AbstractBlockingAdvancedStateMotor
-                                            extends AbstractAdvancedStateMotor {
+                                        extends AbstractAdvancedStateMotor
+                                        implements IBlockingAdvancedStateMotor {
 	
 	public void setPositionTime(int pos, int ms) {
 		setPositionTime(pos, ms, false);
