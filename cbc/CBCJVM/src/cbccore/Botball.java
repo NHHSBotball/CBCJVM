@@ -59,7 +59,7 @@ public class Botball {
 				e.printStackTrace();			
 			}	
 			Motor.allOff();
-			Servo.disable();
+			Servo.disableAll();
 			System.exit(0);	
 		}
 	}

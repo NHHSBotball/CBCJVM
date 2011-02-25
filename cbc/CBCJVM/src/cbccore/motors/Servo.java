@@ -16,8 +16,11 @@
 
 package cbccore.motors;
 
+import java.util.ArrayList;
+
 import cbccore.Device;
 import cbccore.InvalidPortException;
+import cbccore.motors.statemotors.AbstractBlockingAdvancedStateMotor;
 
 /**
  * 
@@ -25,32 +28,253 @@ import cbccore.InvalidPortException;
  *
  */
 
-public class Servo implements IStateMotor {
+public class Servo extends AbstractBlockingAdvancedStateMotor {
 	private int port = 0;
 	private static cbccore.low.Servo lowServo = Device.getLowServoController();
+	private long begin = 0;
+	private int ms = 0;
+	private int delta = 0;
+	private int curPos = 0;
+	private boolean moving = false;
+	private int timingCoefficient = 500; // approx millisecs for full sweep
 	
+	/**
+	 * Create a new servo object in the desired port
+	 * @param  port  The port that the desired servo is plugged into
+	 */
 	public Servo(int port) throws InvalidPortException {
 		if(port < 0 || port > 4) throw new InvalidPortException();
 		this.port = port;
 	}
-
-	public static void disable() {
+	
+	/**
+	 * Cuts power to the servo
+	 */
+	public void disable() {
+		setPosition(-1);
+	}
+	
+	/**
+	 * Sets the servo to the middle position, thereby giving it power, unless it
+	 * is already enabled/powered
+	 */
+	public void enable() {
+		if(!isEnabled()) {
+			setPosition((getMinPosition() + getMaxPosition()) / 2);
+		}
+	}
+	
+	/**
+	 * Returns true if there is power being supplied to the servo, false
+	 * otherwise
+	 */
+	public boolean isEnabled() {
+		return getPosition() < 0;
+	}
+	
+	/**
+	 * Cuts power to all the servos
+	 */
+	public static void disableAll() {
 		lowServo.disable_servos();
 	}
 	
-	public static void enable() {
+	/**
+	 * An alias for <code>disableAll</code>
+	 * 
+	 * @see #disableAll
+	 */
+	public static void allOff() {
+		disableAll();
+	}
+	
+	/**
+	 * Enables all the servos by setting them to their middle/center positions,
+	 * unless they are already enabled, in which case it leaves them alone.
+	 */
+	public static void enableAll() {
 		lowServo.enable_servos();
 	}
 	
+	/**
+	 * An alias for <code>enableAll</code>
+	 * 
+	 * @see #enableAll
+	 */
+	public static void allOn() {
+		enableAll();
+	}
+	
+	/**
+	 * Gets the current servo's position.
+	 * 
+	 * @return  -1 if the servo is disabled, otherwise the current position.
+	 */
 	public int getPosition() {
 		return lowServo.get_servo_position(port);
 	}
 	
+	/**
+	 * Move the Servo to a specified position.
+	 * 
+	 * @param  pos  The position value from 0 to 2048 to move to
+	 */
 	public void setPosition(int pos) {
+		rawSetPosition(pos);
+		moving = false;
+	}
+	
+	/**
+	 * Change the position of the servo without touching the isMoving value
+	 */
+	protected void rawSetPosition(int pos) {
+		if(pos < getMinPosition() || pos > getMaxPosition()) {
+			throw new IllegalArgumentException("position is out of range");
+		}
 		lowServo.set_servo_position(port, pos);
+	}
+	
+	/**
+	 * Moves the servo to the desired position, waiting for it to finish moving
+	 * before stopping.<p>
+	 * 
+	 * <b>Implementation Note:</b> As we have no api for actually determining
+	 * when a servo is done moving, an forumula respecting the distance to be
+	 * traveled is used to approximate the time, and then the function sleeps
+	 * for that desired time.
+	 * 
+	 * @param  pos  The position value from 0 to 2048 to move to
+	 */
+	public void setPosition(int pos, boolean blocking) {
+		rawSetPosition(pos);
+		moving = true;
+		try {
+			Thread.sleep(Math.abs(pos - getPosition()) * timingCoefficient
+			             / getMaxPosition());
+		} catch(InterruptedException ex) {
+			// do nothing
+		}
+		moving = false;
+	}
+	
+	/**
+	 * Returns a boolean that tells if the servo is moving or not.
+	 * 
+	 * @return  True is moving, false is not moving
+	 */
+	public boolean isMoving() {
+		return moving;
+	}
+	
+	/**
+	 * Moves to a new servo position in a designated amount of time in
+	 * milliseconds
+	 * @param  ms      the allotted amount of time to move
+	 * @param  newPos  the new servo position
+	 */
+	public void setPositionTime(int newPos, int ms, boolean blocking) {
+		curPos = getPosition();
+		delta = newPos - curPos;
+		if(delta == 0) {
+			return;
+		}
+		begin = System.currentTimeMillis();
+		moving = true;
+		this.ms = ms;
+		if(!blocking) {
+			ServoThread.get().addServo(this);
+		} else {
+			while(isMoving()) {
+				update();
+			}
+		}
+	}
+	
+	/**
+	 * Do not use.
+	 */
+	public void update() {
+		if (!moving)
+			return;
+
+		if (System.currentTimeMillis() > begin + ms) {
+			rawSetPosition(curPos + delta);
+			moving = false;
+			return;
+		}
+
+		double frac = ((double) delta / (double) ms);
+		int y = (int) (frac * (System.currentTimeMillis() - begin) + curPos);
+		
+		if ((delta > 0 && y > curPos + delta) ||
+		    (delta < 0 && y < curPos + delta)) {
+			y = curPos + delta;
+			moving = false;
+		}
+		rawSetPosition(y);
+	}
+	
+	public int getDefaultSpeed() {
+		return 100000;
+	}
+	
+	public int getMinPosition() {
+		return 0;
+	}
+	
+	public int getMaxPosition() {
+		return 2048;
 	}
 	
 	public int getPort() {
 		return port;
+	}
+	
+	public static class ServoThread extends Thread {
+		public static ServoThread get() {
+			if (instance == null) {
+				instance = new ServoThread();
+				instance.start();
+			}
+			return instance;
+		}
+		
+		private ArrayList<Servo> servos = new ArrayList<Servo>();
+		
+		private boolean exit = false;
+		
+		private static ServoThread instance = null;
+		
+		public ServoThread() {
+			setDaemon(true);
+		}
+		
+		public void addServo(Servo servo) {
+			synchronized(servos) {
+				//System.out.println("Added servo motor.");
+				servos.add(servo);
+			}
+		}
+		
+		public void exit() {
+			exit = true;
+		}
+		
+		@Override
+		public void run() {
+			ArrayList<Servo> removes = new ArrayList<Servo>();
+			while (!exit) {
+				removes.clear();
+				synchronized(servos) {
+					for(Servo s: servos) {
+						s.update();
+						if(!s.isMoving()) {
+							removes.add(s);
+						}
+					}
+					servos.removeAll(removes);
+				}
+			}
+		}
 	}
 }

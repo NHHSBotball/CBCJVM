@@ -18,6 +18,7 @@ package cbccore.motors;
 
 import cbccore.Device;
 import cbccore.InvalidPortException;
+import cbccore.motors.statemotors.AbstractBlockingAdvancedStateMotor;
 
 /**
  * Adds a clean API to replace cbccore.low.Motor, and even adds a few minor
@@ -241,28 +242,57 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
 	}
 
     /**
-     * Moves the motor forward at full power. Not a Back-EMF function.
-     *  A Back-EMF fuction such as <code>moveAtVelocity(tps)</code> is
-     *  recommended.
+     * Moves the motor forward at full power. Not a Back-EMF function.<p>
+     * 
+     * A Back-EMF fuction such as <code>moveAtVelocity(tps)</code> is
+     * recommended.
      *
      * @see #moveAtVelocity
+     * @see #backward
      */
 	public void forward() {
 		lowMotor.fd(port);
 	}
-
+	
+	/**
+     * Moves the motor backward at full power. Not a Back-EMF function.<p>
+     * 
+     * A Back-EMF fuction such as <code>moveAtVelocity(tps)</code> is
+     * recommended.
+     *
+     * @see #moveAtVelocity
+     * @see #forward
+     */
 	public void backward() {
 		lowMotor.bk(port);
 	}
-
+	
+	/**
+	 * Cut power to this motor
+	 */
 	public void off() {
 		lowMotor.off(port);
 	}
 	
+	/**
+	 * Turn off all motors
+	 */
 	public static void allOff() {
 		lowMotor.ao();
 	}
 	
+	/**
+	 * An alias for <code>allOff</code>
+	 * 
+	 * @see #allOff
+	 */
+	public static void disableAll() {
+		allOff();
+	}
+	
+	/**
+	 * @see #freeze
+	 */
 	public static void allFreeze() {
 		for(int i = 0; i < 4; ++i) {
 			lowMotor.freeze(i);
