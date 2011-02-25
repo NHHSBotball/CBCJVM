@@ -51,7 +51,7 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 	 * Cuts power to the servo
 	 */
 	public void disable() {
-		setPosition(-1);
+		lowServo.set_servo_position(port, -1);
 	}
 	
 	/**
