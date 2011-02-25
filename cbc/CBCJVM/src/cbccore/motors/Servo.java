@@ -188,6 +188,7 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 		} else {
 			while(isMoving()) {
 				update();
+				Thread.yield();
 			}
 		}
 	}
