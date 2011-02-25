@@ -17,7 +17,6 @@
 package cbccore.movement.plugins.motor;
 
 import cbccore.movement.plugins.MovementPlugin;
-import cbccore.InvalidValueException;
 
 /**
  * A basic DriveTrain plugin with support for a dual-wheel-based motor system

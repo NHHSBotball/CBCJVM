@@ -17,7 +17,6 @@
 package cbccore.movement.plugins.motor;
 
 import cbccore.motors.Motor;
-import cbccore.InvalidValueException;
 
 /**
  * A wheel class used by MotorDriveTrain
@@ -64,25 +63,24 @@ public class Wheel extends Motor {
 		return circumference;
 	}
 	
-	protected void checkTpsRange(int tps) throws InvalidValueException {
+	protected void checkTpsRange(int tps) throws IllegalArgumentException {
 		if(Math.abs(tps) > (maxRps*MotorMovementPlugin.ticksPerRotation)) {
-			System.out.println("" + tps + ", " + maxRps*MotorMovementPlugin.ticksPerRotation);
-			throw new InvalidValueException();
+			throw new IllegalArgumentException(tps + "tps is out of range");
 		}
 	}
 	
-	public void moveAtTps(int tps) throws InvalidValueException {
+	public void moveAtTps(int tps) throws IllegalArgumentException {
 		checkTpsRange(tps);
 		currentTps = tps;
 		clearPositionCounter(); //work-around for CBOBv2 motor bug
 		super.moveAtVelocity((int)(tps/efficiency));
 	}
 	
-	public void moveAtRps(double rps) throws InvalidValueException {
+	public void moveAtRps(double rps) throws IllegalArgumentException {
 		moveAtTps((int)(rps*MotorMovementPlugin.ticksPerRotation));
 	}
 	
-	public void moveAtCmps(double cmps) throws InvalidValueException {
+	public void moveAtCmps(double cmps) throws IllegalArgumentException {
 		moveAtRps(cmps/getCircumference());
 	}
 	

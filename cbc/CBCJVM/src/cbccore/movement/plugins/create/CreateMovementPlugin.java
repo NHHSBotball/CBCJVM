@@ -19,7 +19,6 @@ package cbccore.movement.plugins.create;
 import cbccore.create.Create;
 import cbccore.create.CreateConnectException;
 import cbccore.movement.plugins.MovementPlugin;
-import cbccore.InvalidValueException;
 
 /**
  * A DriveTrain class for the iRobot Create

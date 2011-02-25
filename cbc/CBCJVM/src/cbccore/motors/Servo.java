@@ -168,7 +168,9 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 	
 	/**
 	 * Moves to a new servo position in a designated amount of time in
-	 * milliseconds
+	 * milliseconds. The speed of the movement is simulated by running quickly
+	 * changing the motor positions to intermediate places over time.
+	 * 
 	 * @param  ms      the allotted amount of time to move
 	 * @param  newPos  the new servo position
 	 */
@@ -214,23 +216,43 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 		rawSetPosition(y);
 	}
 	
+	/**
+	 * Needed to extend <code>AbstractBlockingAdvancedStateMotor</code>. It
+	 * makes little sense in this context.
+	 * 
+	 * @return  Some really big number.
+	 */
 	public int getDefaultSpeed() {
 		return 100000;
 	}
 	
+	/**
+	 * Gives the minimum rotational position that the the servo can move to.
+	 * 
+	 * @return  Zero. Always zero. Zip. Nothing. Nada. 0.
+	 */
 	public int getMinPosition() {
 		return 0;
 	}
 	
+	/**
+	 * Gives the maximum rotational position that the the servo can move to.
+	 * 
+	 * @return  2048
+	 */
 	public int getMaxPosition() {
 		return 2048;
 	}
 	
+	/**
+	 * The port that the servo that this object is addressing should be plugged
+	 * into.
+	 */
 	public int getPort() {
 		return port;
 	}
 	
-	public static class ServoThread extends Thread {
+	private static class ServoThread extends Thread {
 		public static ServoThread get() {
 			if (instance == null) {
 				instance = new ServoThread();

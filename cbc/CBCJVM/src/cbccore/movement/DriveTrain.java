@@ -16,7 +16,6 @@
 
 package cbccore.movement;
 
-import cbccore.InvalidValueException;
 import cbccore.easing.EasingEquation;
 import cbccore.movement.plugins.MovementPlugin;
 

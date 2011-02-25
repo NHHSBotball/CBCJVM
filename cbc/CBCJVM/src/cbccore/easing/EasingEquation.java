@@ -27,8 +27,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package cbccore.easing;
 
-import cbccore.InvalidValueException;
-
 /**
  * t is time, b is beginning position, c is the total change in position,
  * and d is the duration of the tween.
@@ -50,7 +48,7 @@ public abstract class EasingEquation {
 	
 	
 	
-	public double ease(int type, double t, double b, double c, double d) throws InvalidValueException {
+	public double ease(int type, double t, double b, double c, double d) throws IllegalArgumentException {
 		switch(type) {
 			case EASE_IN:
 				return easeIn(t, b, c, d);
@@ -59,7 +57,7 @@ public abstract class EasingEquation {
 			case EASE_IN_OUT:
 				return easeInOut(t, b, c, d);
 		}
-		throw new InvalidValueException();
+		throw new IllegalArgumentException();
 	}
 	
 	public double easeIn(double t, double b, double c, double d) {
@@ -80,7 +78,7 @@ public abstract class EasingEquation {
 	
 	
 	
-	public double ease(int type, double t, double c, double d) throws InvalidValueException {
+	public double ease(int type, double t, double c, double d) throws IllegalArgumentException {
 		switch(type) {
 			case EASE_IN:
 				return easeIn(t, c, d);
@@ -89,7 +87,7 @@ public abstract class EasingEquation {
 			case EASE_IN_OUT:
 				return easeInOut(t, c, d);
 		}
-		throw new InvalidValueException();
+		throw new IllegalArgumentException();
 	}
 	
 	public double easeIn(double t, double c, double d) {
@@ -112,7 +110,7 @@ public abstract class EasingEquation {
 	
 	
 	
-	public double ease(int type, double percent) throws InvalidValueException {
+	public double ease(int type, double percent) throws IllegalArgumentException {
 		switch(type) {
 			case EASE_IN:
 				return easeIn(percent);
@@ -121,7 +119,7 @@ public abstract class EasingEquation {
 			case EASE_IN_OUT:
 				return easeInOut(percent);
 		}
-		throw new InvalidValueException();
+		throw new IllegalArgumentException();
 	}
 	
 	public abstract double easeIn(double percent);
@@ -149,7 +147,7 @@ public abstract class EasingEquation {
 	//******* area under the graph
 	//****************************
 	
-	public double easeArea(int type, double t, double b, double c, double d) throws InvalidValueException {
+	public double easeArea(int type, double t, double b, double c, double d) throws IllegalArgumentException {
 		switch(type) {
 			case EASE_IN:
 				return easeInArea(t, b, c, d);
@@ -158,7 +156,7 @@ public abstract class EasingEquation {
 			case EASE_IN_OUT:
 				return easeInOutArea(t, b, c, d);
 		}
-		throw new InvalidValueException();
+		throw new IllegalArgumentException();
 	}
 	
 	public double easeInArea(double t, double b, double c, double d) {
@@ -175,7 +173,7 @@ public abstract class EasingEquation {
 	
 	
 	
-	public double easeArea(int type, double t, double c, double d) throws InvalidValueException {
+	public double easeArea(int type, double t, double c, double d) throws IllegalArgumentException {
 		switch(type) {
 			case EASE_IN:
 				return easeInArea(t, c, d);
@@ -184,7 +182,7 @@ public abstract class EasingEquation {
 			case EASE_IN_OUT:
 				return easeInOutArea(t, c, d);
 		}
-		throw new InvalidValueException();
+		throw new IllegalArgumentException();
 	}
 	
 	public double easeInArea(double t, double c, double d) {
@@ -206,7 +204,7 @@ public abstract class EasingEquation {
 	
 	
 	
-	public double easeArea(int type, double percent) throws InvalidValueException {
+	public double easeArea(int type, double percent) throws IllegalArgumentException {
 		switch(type) {
 			case EASE_IN:
 				return easeInArea(percent);
@@ -215,7 +213,7 @@ public abstract class EasingEquation {
 			case EASE_IN_OUT:
 				return easeInOutArea(percent);
 		}
-		throw new InvalidValueException();
+		throw new IllegalArgumentException();
 	}
 	
 	//find the indefinate integral
