@@ -1,5 +1,7 @@
-Current Stable Release: 10.7; Current Development Version: 11.2
+Current Stable Release: 10.7; Next stable release not yet planned
 -----------
+
+It is recommended that you stick with the development/git version and report bugs as you find them. The last stable version lacks many of those of the development version. Personally, I would suggest updating your copy of CBCJVM up until a week or so before the competition, upon which time I suggest you institute your own local freeze for stability. We may eventually move to a rolling-release model.
 
 First off, remember that by following these instructions you may brick your CBC and void your warranty.  You have been warned.
 CBCv2 ONLY
