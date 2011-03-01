@@ -31,10 +31,12 @@ import cbccore.motors.statemotors.AbstractBlockingAdvancedStateMotor;
 public class Servo extends AbstractBlockingAdvancedStateMotor {
 	private int port = 0;
 	private static cbccore.low.Servo lowServo = Device.getLowServoController();
-	private long begin = 0;
+	
+	// variables for advanced motion
+	private long beginTime = 0;
 	private int ms = 0;
-	private int delta = 0;
-	private int curPos = 0;
+	private int deltaPos = 0;
+	private int startPos = 0;
 	private boolean moving = false;
 	private int timingCoefficient = 500; // approx millisecs for full sweep
 	
@@ -175,12 +177,12 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 	 * @param  newPos  the new servo position
 	 */
 	public void setPositionTime(int newPos, int ms, boolean blocking) {
-		curPos = getPosition();
-		delta = newPos - curPos;
-		if(delta == 0) {
+		startPos = getPosition();
+		deltaPos = newPos - startPos;
+		if(deltaPos == 0) {
 			return;
 		}
-		begin = System.currentTimeMillis();
+		beginTime = System.currentTimeMillis();
 		moving = true;
 		this.ms = ms;
 		if(!blocking) {
@@ -197,21 +199,21 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 	 * Do not use.
 	 */
 	public void update() {
-		if (!moving)
+		if(!moving) {
 			return;
-
-		if (System.currentTimeMillis() > begin + ms) {
-			rawSetPosition(curPos + delta);
+		}
+		int time = (int)(System.currentTimeMillis() - beginTime);
+		if(time > ms) {
+			rawSetPosition(startPos + deltaPos);
 			moving = false;
 			return;
 		}
-
-		double frac = ((double) delta / (double) ms);
-		int y = (int) (frac * (System.currentTimeMillis() - begin) + curPos);
 		
-		if ((delta > 0 && y > curPos + delta) ||
-		    (delta < 0 && y < curPos + delta)) {
-			y = curPos + delta;
+		int y = (int)(deltaPos * time / ms + startPos);
+		
+		if ((deltaPos > 0 && y > startPos + deltaPos) ||
+		    (deltaPos < 0 && y < startPos + deltaPos)) {
+			y = startPos + deltaPos;
 			moving = false;
 		}
 		rawSetPosition(y);

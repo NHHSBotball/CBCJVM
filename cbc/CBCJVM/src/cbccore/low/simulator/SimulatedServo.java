@@ -43,12 +43,12 @@ public class SimulatedServo extends Servo {
 	// sets servo (1 to 4) to pos (0 to 2047)
 	public int set_servo_position(int servo, int pos) {
 		this.pos[servo] = pos;
-		if(pos < 0 || pos > 2048) {
+		if(pos < -1 || pos > 2048) {
 			System.out.println(
 				"Servo(" + servo + ") attempted to move to " + pos +
-				". Bounds: 0 - 2048"
+				". Bounds: -1 - 2048"
 			);
-			pos = pos < 0 ? 0 : pos;
+			pos = pos < 0 ? (pos == -1 ? -1 : 0) : pos;
 			pos = pos > 2048 ? 2048 : pos;
 		}
 		return 0;
