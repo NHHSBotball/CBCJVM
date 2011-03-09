@@ -71,7 +71,7 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 	 * otherwise
 	 */
 	public boolean isEnabled() {
-		return getPosition() < 0;
+		return getPosition() >= 0;
 	}
 	
 	/**
@@ -131,7 +131,8 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 	 */
 	protected void rawSetPosition(int pos) {
 		if(pos < getMinPosition() || pos > getMaxPosition()) {
-			throw new IllegalArgumentException("position is out of range");
+			throw new IllegalArgumentException("Position: " + pos +
+			                                   " is out of range");
 		}
 		lowServo.set_servo_position(port, pos);
 	}
@@ -177,6 +178,17 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 	 * @param  newPos  the new servo position
 	 */
 	public void setPositionTime(int newPos, int ms, boolean blocking) {
+		if(!isEnabled()) {
+			setPosition(newPos);
+			if(blocking) {
+				try {
+					Thread.sleep(ms);
+				} catch(InterruptedException ex) {
+					return;
+				}
+			}
+			return;
+		}
 		startPos = getPosition();
 		deltaPos = newPos - startPos;
 		if(deltaPos == 0) {
@@ -211,8 +223,8 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 		
 		int y = (int)(deltaPos * time / ms + startPos);
 		
-		if ((deltaPos > 0 && y > startPos + deltaPos) ||
-		    (deltaPos < 0 && y < startPos + deltaPos)) {
+		if((deltaPos > 0 && y > startPos + deltaPos) ||
+		   (deltaPos < 0 && y < startPos + deltaPos)) {
 			y = startPos + deltaPos;
 			moving = false;
 		}
@@ -276,7 +288,6 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 		
 		public void addServo(Servo servo) {
 			synchronized(servos) {
-				//System.out.println("Added servo motor.");
 				servos.add(servo);
 			}
 		}
