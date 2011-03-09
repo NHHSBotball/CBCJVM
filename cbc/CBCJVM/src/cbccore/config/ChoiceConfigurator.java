@@ -36,7 +36,10 @@ public class ChoiceConfigurator implements Configurator {
 	private IBooleanSensor waitForInput(Set<IBooleanSensor> sensors) {
 		for(;;) {
 			for(IBooleanSensor sensor : sensors) {
-				if(sensor.getValue()) return sensor;
+				if(sensor.getValue()) {
+					while(sensor.getValue()) {}
+					return sensor;
+				}
 			}
 		}
 	}
