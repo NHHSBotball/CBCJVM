@@ -76,7 +76,6 @@ public class AnalogBooleanAdapter implements IBooleanSensor {
 	public void setReverseCondition(boolean reverseCondition) {
 		this.reverseCondition = reverseCondition;
 	}
-
 	/**
 	 * The point where the boolean value "pivot"s around, if the value goes
 	 * below this, false is returned otherwise true is returned.
@@ -124,18 +123,11 @@ public class AnalogBooleanAdapter implements IBooleanSensor {
 		while(bb.isNotPushed()){java.lang.Thread.yield();}	//wait for button to be pressed and released
 		while(bb.isPushed()){java.lang.Thread.yield();}
 		int falseval = sensor.getValueHigh();
-
-		if(trueval>falseval)
-		{
-			threshold=trueval+(2/(falseval-trueval)); //set set threshold to halfway inbetween high
-								// and low ranges
-			reverseCondition=false;			//don't reverse
-		}	
-		if(falseval>trueval)
-		{
-			threshold=falseval+(2/(trueval-falseval));
-			reverseCondition=true;			//reverse true and false
-		}
+			
+		reverseCondition=false;
+		threshold=(trueval+falseval)/2 ;	//threshold is half way inbetween trueval and falseval
+		reverseCondition=falseval>trueval;	//if falseval is greater than true, we reverse condition
+	
 		if(falseval==trueval)				//they shouldn't be equal
 			throw new Exception("Bad Calibration! High and low range values are both at "+trueval);
 		pivot=threshold;				//set pivot
