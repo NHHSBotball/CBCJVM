@@ -26,13 +26,15 @@ public class Main {
 		DriveTrain dt = null;
 		try {
 			dt = new DriveTrain(
-				new CreateMovementPlugin(new Create(), 1., false)
+				new CreateMovementPlugin(new Create(), 1., 1., false)
 			);
 		} catch(CreateConnectException e) {
 			System.out.println("Create failed to connect.");
 			System.exit(1);
 		}
-		dt.moveCm(100., dt.getMaxCmps()*.8);
-		dt.rotateDegrees(180., dt.getMaxDegreesPerSec()*.8);
+		// dt.moveCm(100., dt.getMaxCmps()*.8);
+		// dt.rotateDegrees(180., dt.getMaxDegreesPerSec()*.8);
+		dt.moveCurveDegrees(360., 50., 0.5*dt.getMaxCmps(50.));
+		dt.moveCurveDegrees(360., -50., 0.5*dt.getMaxCmps(-50.));
 	}
 }

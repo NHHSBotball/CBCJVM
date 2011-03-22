@@ -103,10 +103,16 @@ public class DriveTrain {
 	public void moveCurveRadians(double radians, double radius, double cmps) {
 		
 		//method start
-		double halfOffset = plugin.getTrainWidth()*radians*.5;
-		double cm = radians*radius;
-		double leftCm = cm - halfOffset;
-		double rightCm = cm + halfOffset;
+		double halfOffset = plugin.getTrainWidth() * Math.abs(radians) * .5;
+		double cm = radians * Math.abs(radius);
+		double leftCm, rightCm;
+		if(radius > 0) {
+			leftCm = cm - halfOffset;
+			rightCm = cm + halfOffset;
+		} else {
+			leftCm = cm + halfOffset;
+			rightCm = cm - halfOffset;
+		}
 		double timeOfTrip = cm/cmps;
 		double leftCmps = leftCm/timeOfTrip;
 		double rightCmps = rightCm/timeOfTrip;
@@ -303,7 +309,6 @@ public class DriveTrain {
 	
 	/**
 	 * Gets the maximum speed when moving in a curve
-	 * DOES NOT YET WORK
 	 * 
 	 * @param   radius  paraminfo
 	 * @return  The maximum speed of the center of the robot in
@@ -312,8 +317,16 @@ public class DriveTrain {
 	 * @see      #moveCurveDegrees
 	 */
 	public double getMaxCmps(double radius) {
-		double outerMaxSpeed = (radius>0 ? plugin.getRightMaxCmps() : plugin.getLeftMaxCmps()) - (radius+plugin.getTrainWidth()*.5)/radius;
-		double innerMaxSpeed = (radius>0 ? plugin.getLeftMaxCmps() : plugin.getRightMaxCmps()) + (radius+plugin.getTrainWidth()*.5)/radius;
+		double outerMaxSpeed, innerMaxSpeed;
+		if(radius > 0) {
+			outerMaxSpeed = plugin.getRightMaxCmps();
+			innerMaxSpeed = plugin.getLeftMaxCmps();
+		} else {
+			outerMaxSpeed = plugin.getLeftMaxCmps();
+			innerMaxSpeed = plugin.getRightMaxCmps();
+		}
+		outerMaxSpeed /= (radius + plugin.getTrainWidth() * .5) / radius;
+		innerMaxSpeed /= (radius - plugin.getTrainWidth() * .5) / radius;
 		return Math.min(outerMaxSpeed, innerMaxSpeed);
 	}
 }
