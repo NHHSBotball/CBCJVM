@@ -23,11 +23,8 @@ cp ./CBC.so /mnt/user/jvm/cbc/
 cd /mnt/user
 echo "[INSTALL] Removing JNI source..."
 rm -Rf /mnt/user/jvm/cbc/jni
-echo "[INSTALL] Remounting and copying compile script."
-cd /mnt/user/compile
+echo "[INSTALL] Remounting..."
 mount -o remount,rw /dev/sda2
-cp compile /mnt/kiss/usercode/
 cd /mnt/user
-rm -Rf compile
 echo "[INSTALL] CBCJVM Installed!"
 echo "Please run the HelloWorld Program to verify."
