@@ -14,18 +14,41 @@
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cbccore.motors.statemotors;
+package cbccore.motors.statemotors.offset;
 
-import cbccore.Device;
-import cbccore.InvalidPortException;
+import cbccore.motors.statemotors.IStateMotor;
 
 /**
+ * A wrapper for an <code>IStateMotor</code> that is useful for plugging into a
+ * <code>ComposedStateMotor</code>.
  * 
  * @author Benjamin Woodruff
  *
  */
 
-public interface IStateMotor {
-	public int getPosition();
-	public void setPosition(int pos);
+public class OffsetStateMotor<E extends IStateMotor> implements IStateMotor {
+	
+	private E baseMotor;
+	private int offset;
+	
+	public OffsetStateMotor(E baseMotor, int offset) {
+		this.baseMotor = baseMotor;
+		this.offset = offset;
+	}
+	
+	public E getBaseMotor() {
+		return baseMotor;
+	}
+	
+	public int getOffset() {
+		return offset;
+	}
+	
+	public int getPosition() {
+		return getBaseMotor().getPosition() + getOffset();
+	}
+	
+	public void setPosition(int pos) {
+		getBaseMotor().setPosition(pos - getOffset());
+	}
 }
