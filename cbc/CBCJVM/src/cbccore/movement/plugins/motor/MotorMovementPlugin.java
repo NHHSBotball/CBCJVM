@@ -33,7 +33,8 @@ public class MotorMovementPlugin extends MovementPlugin {
 	private double maxRps;
 	private double maxCmps;
 	
-	public MotorMovementPlugin(Wheel leftWheel, Wheel rightWheel, double trainWidth) {
+	public MotorMovementPlugin(Wheel leftWheel, Wheel rightWheel,
+	                           double trainWidth) {
 		super(trainWidth);
 		this.leftWheel = leftWheel;
 		this.rightWheel = rightWheel;
@@ -52,6 +53,16 @@ public class MotorMovementPlugin extends MovementPlugin {
 	public void freeze() {
 		leftWheel.freeze();
 		rightWheel.freeze();
+	}
+	
+	/** {@inheritDoc} */
+	public double getLeftMinCmps() {
+		return leftWheel.getMinCmps();
+	}
+	
+	/** {@inheritDoc} */
+	public double getRightMinCmps() {
+		return rightWheel.getMinCmps();
 	}
 	
 	/** {@inheritDoc} */

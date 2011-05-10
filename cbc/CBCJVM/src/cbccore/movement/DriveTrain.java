@@ -101,15 +101,13 @@ public class DriveTrain {
 	 * @see             #moveCurveDegrees
 	 */
 	public void moveCurveRadians(double radians, double radius, double cmps) {
-		
-		//method start
 		double halfOffset = plugin.getTrainWidth() * Math.abs(radians) * .5;
 		double cm = radians * Math.abs(radius);
 		double leftCm, rightCm;
-		if(radius > 0) {
+		if(radius > 0) { //  CCW
 			leftCm = cm - halfOffset;
 			rightCm = cm + halfOffset;
-		} else {
+		} else { // CW
 			leftCm = cm + halfOffset;
 			rightCm = cm - halfOffset;
 		}
@@ -242,7 +240,13 @@ public class DriveTrain {
 		directDrive(cmps, cmps);
 	}
 	
-	
+	/**
+	 * Just mirrors (calls) <code>freeze()</code>
+	 * 
+	 * @see       #freeze
+	 * @see       #kill
+	 * @see       cbccore.movement.plugins.MovementPlugin#stop
+	 */
 	public void stop() {
 		plugin.stop();
 		updateOldPos();
@@ -250,57 +254,132 @@ public class DriveTrain {
 		//we don't need to change oldTime, cause speed is 0 :-)
 	}
 	
-	
+	/**
+	 * Will lock both the robot's motors if possible, otherwise it will call
+	 * <code>kill()</code>
+	 * 
+	 * @see       #stop
+	 * @see       #kill
+	 * @see       cbccore.movement.plugins.MovementPlugin#freeze
+	 */
 	public void freeze() {
 		plugin.freeze();
 		updateOldPos();
 		leftCmps = 0; rightCmps = 0;
 	}
 	
-	
+	/**
+	 * Stops the robot by setting the speed to zero, or with whatever other
+	 * mechanism that is defined by the MovementPlugin.
+	 * 
+	 * @see       #stop
+	 * @see       #freeze
+	 * @see       cbccore.movement.plugins.MovementPlugin#kill
+	 */
 	public void kill() {
 		plugin.kill();
 		updateOldPos();
 		leftCmps = 0; rightCmps = 0;
 	}
 	
-	
 	/**
-	 * Gets the maximum speed in centimeters-per-second for the robot.
+	 * Gets the maximum linear speed in centimeters-per-second for the robot.
 	 * 
-	 * @return      The maximum speed in centimeters-per-second for the robot.
-	 * @see         #getMaxRadiansPerSec
-	 * @see         cbccore.movement.plugins.MovementPlugin#getLeftMaxCmps
-	 * @see         cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
+	 * @return    The maximum speed in centimeters-per-second for the robot.
+	 * @see       #getMinCmps
+	 * @see       #getMinRadiansPerSec
+	 * @see       #getMaxRadiansPerSec
+	 * @see       #getMinDegreesPerSec
+	 * @see       #getMaxDegreesPerSec
+	 * @see       cbccore.movement.plugins.MovementPlugin#getLeftMaxCmps
+	 * @see       cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
 	 */
 	public double getMaxCmps() {
 		return Math.min(plugin.getLeftMaxCmps(), plugin.getRightMaxCmps());
 	}
 	
+	/**
+	 * Gets the minimum linear speed in centimeters-per-second for the robot.
+	 * 
+	 * @return    The minimum speed in centimeters-per-second for the robot.
+	 *            (<code>&lt; 0</code>)
+	 * @see       #getMaxCmps
+	 * @see       #getMinRadiansPerSec
+	 * @see       #getMaxRadiansPerSec
+	 * @see       #getMinDegreesPerSec
+	 * @see       #getMaxDegreesPerSec
+	 * @see       cbccore.movement.plugins.MovementPlugin#getLeftMaxCmps
+	 * @see       cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
+	 */
+	public double getMinCmps() {
+		return Math.max(plugin.getLeftMinCmps(), plugin.getRightMinCmps());
+	}
 	
 	/**
-	 * Gets the maximum speed that the robot could turn in place
+	 * Gets the minumum angular velocity that the robot could turn in place with
+	 * (clockwise)
 	 * 
-	 * @return    The maximum speed in radians-per-second
+	 * @return    The minimum angular velocity in radians-per-second
+	 * @see       #getMaxRadiansPerSec
+	 * @see       #getMinDegreesPerSec
 	 * @see       #getMaxDegreesPerSec
+	 * @see       #getMinCmps
+	 * @see       #getMaxCmps
+	 * @see       cbccore.movement.plugins.MovementPlugin#getLeftMaxCmps
+	 * @see       cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
+	 */
+	public double getMinRadiansPerSec() {
+		return Math.max(-plugin.getLeftMaxCmps(), plugin.getRightMinCmps())
+		       / plugin.getTrainWidth();
+	}
+	
+	/**
+	 * Gets the maximum angular velocity that the robot could turn in place with
+	 * in radians per second (counter-clockwise)
+	 * 
+	 * @return    The maximum angular velocity in radians-per-second
+	 * @see       #getMinRadiansPerSec
+	 * @see       #getMinDegreesPerSec
+	 * @see       #getMaxDegreesPerSec
+	 * @see       #getMinCmps
 	 * @see       #getMaxCmps
 	 * @see       cbccore.movement.plugins.MovementPlugin#getLeftMaxCmps
 	 * @see       cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
 	 */
 	public double getMaxRadiansPerSec() {
-		return Math.min(plugin.getLeftMaxCmps(), plugin.getRightMaxCmps())
+		return Math.min(-plugin.getLeftMinCmps(), plugin.getRightMaxCmps())
 		       / plugin.getTrainWidth();
 	}
 	
+	/**
+	 * Gets the maxumum angular velocity that the robot could turn in place with
+	 * in degrees per second (counter-clockwise)
+	 * 
+	 * @return    The minimum angular velocity in degrees-per-second
+	 * @see       #getMaxDegreesPerSec
+	 * @see       #getMinRadiansPerSec
+	 * @see       #getMaxDegreesPerSec
+	 * @see       #getMinCmps
+	 * @see       #getMaxCmps
+	 * @see       cbccore.movement.plugins.MovementPlugin#getLeftMaxCmps
+	 * @see       cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
+	 */
+	public double getMinDegreesPerSec() {
+		return Math.toDegrees(getMinRadiansPerSec());
+	}
 	
 	/**
-	 * Gets the maximum speed that the robot could turn in place
+	 * Gets the maxumum angular velocity that the robot could turn in place with
+	 * in degrees per second (counter-clockwise)
 	 * 
-	 * @return     The maximum speed in degrees-per-second
-	 * @see        #getMaxRadiansPerSec
-	 * @see        #getMaxCmps
-	 * @see        cbccore.movement.plugins.MovementPlugin#getLeftMaxCmps
-	 * @see        cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
+	 * @return    The maximum angular velocity in degrees-per-second
+	 * @see       #getMinDegreesPerSec
+	 * @see       #getMinRadiansPerSec
+	 * @see       #getMaxDegreesPerSec
+	 * @see       #getMinCmps
+	 * @see       #getMaxCmps
+	 * @see       cbccore.movement.plugins.MovementPlugin#getLeftMaxCmps
+	 * @see       cbccore.movement.plugins.MovementPlugin#getRightMaxCmps
 	 */
 	public double getMaxDegreesPerSec() {
 		return Math.toDegrees(getMaxRadiansPerSec());

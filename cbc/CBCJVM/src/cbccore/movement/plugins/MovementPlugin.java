@@ -87,36 +87,52 @@ public abstract class MovementPlugin {
 	}
 	
 	/**
-	 * Should get the maximum speed in centimeters-per-second for the left wheel
-	 * of the robot.
+	 * Should get the minimum velocity in centimeters-per-second for the right
+	 * wheel of the robot. (read: <code>&lt; 0</code>) By default returns the
+	 * negative value of <code>getLeftMaxCmps</code>.
+	 * 
+	 * @return  The speed in cmps
+	 * @see     #getLeftMaxCmps
+	 * @see     #getRightMinCmps
+	 * @see     #getRightMaxCmps
+	 */
+	public double getLeftMinCmps() {
+		return -getLeftMaxCmps();
+	}
+	
+	/**
+	 * Should get the maximum velocity in centimeters-per-second for the left
+	 * wheel of the robot.
 	 * 
 	 * @return    The speed in cmps
+	 * @see       #getLeftMinCmps
 	 * @see       #getRightMaxCmps
+	 * @see       #getRightMinCmps
 	 */
 	public abstract double getLeftMaxCmps();
 	
 	/**
-	 * System is not yet implemented yet. However, to future-proof your plugins,
-	 * you should override this.
+	 * Should get the minimum velocity in centimeters-per-second for the right
+	 * wheel of the robot. (read: <code>&lt; 0</code>) By default returns the
+	 * negative value of <code>getRightMaxCmps</code>.
+	 * 
+	 * @return  The speed in cmps
+	 * @see     #getRightMaxCmps
+	 * @see     #getLeftMinCmps
+	 * @see     #getLeftMaxCmps
 	 */
-	public double getMinLeftCmps() {
-		return 0.;
+	public double getRightMinCmps() {
+		return -getRightMaxCmps();
 	}
 	
 	/**
-	 * System is not yet implemented yet. However, to future-proof your plugins,
-	 * you should override this.
-	 */
-	public double getMinRightCmps() {
-		return 0.;
-	}
-	
-	/**
-	 * Should get the maximum speed in centimeters-per-second for the right
+	 * Should get the maximum velocity in centimeters-per-second for the right
 	 * wheel of the robot.
 	 * 
 	 * @return  The speed in cmps
+	 * @see     #getRightMinCmps
 	 * @see     #getLeftMaxCmps
+	 * @see     #getLeftMinCmps
 	 */
 	public abstract double getRightMaxCmps();
 	

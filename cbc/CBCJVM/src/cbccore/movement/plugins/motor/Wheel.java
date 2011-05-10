@@ -17,6 +17,8 @@
 package cbccore.movement.plugins.motor;
 
 import cbccore.motors.Motor;
+import cbccore.movement.efficiency.IEfficiencyCalibrator;
+import cbccore.movement.efficiency.SingleValueEfficiencyCalibrator;
 
 /**
  * A wheel class used by MotorDriveTrain
@@ -26,74 +28,129 @@ import cbccore.motors.Motor;
  */
 
 public class Wheel extends Motor {
-	
-	//public final double WHEEL = 0; must find the actual circumferences
-	
-	protected double efficiency;
-	protected double circumference;
-	private double maxRps;
+	private IEfficiencyCalibrator efficiency;
+	private double circumference;
+	private double minCmps;
 	private double maxCmps;
-	private int currentTps;
+	private double currentCmps;
+	private double cmCount = 0.;
+	
+	public Wheel(int port, double circumference) {
+		this(port, circumference, 1.);
+	}
 	
 	public Wheel(int port, double circumference, double efficiency) {
+		this(port, circumference,
+		     new SingleValueEfficiencyCalibrator(efficiency));
+	}
+	
+	public Wheel(int port, double circumference,
+	             IEfficiencyCalibrator efficiency) {
 		super(port);
 		this.circumference = circumference;
 		this.efficiency = efficiency;
-		this.maxRps = 1000./MotorMovementPlugin.ticksPerRotation*efficiency;
-		this.maxCmps = maxRps*getCircumference();
+		double baseMaxCmps = getCircumference()
+		                     * MotorMovementPlugin.ticksPerRotation
+		                     / 1000.; // max is 1000 ticks per second
+		this.maxCmps = this.efficiency.getMaxCmps(baseMaxCmps);
+		this.minCmps = this.efficiency.getMinCmps(-baseMaxCmps);
 	}
 	
-	public double getMaxRps() {
-		return maxRps;
+	/**
+	 * Takes centimeters and converts it to ticks, for this wheel.
+	 * 
+	 * @see #toCm
+	 */
+	public int toTicks(double centimeters) {
+		return (int)(MotorMovementPlugin.ticksPerRotation * centimeters /
+		             getCircumference());
 	}
 	
+	/**
+	 * Takes ticks and converts it to centimeters, for this wheel.
+	 * 
+	 * @see #toTicks
+	 */
+	public double toCm(int ticks) {
+		return ticks * getCircumference() /
+		       MotorMovementPlugin.ticksPerRotation;
+	}
+	
+	/**
+	 * Gets the minimum velocity in centimeters-per-second for the wheel (read:
+	 * <code>&lt; 0</code>).
+	 */
+	public double getMinCmps() {
+		return minCmps;
+	}
+	
+	/**
+	 * Gets the maximum velocity in centimeters-per-second for the wheel
+	 */
 	public double getMaxCmps() {
 		return maxCmps;
 	}
 	
-	public int currentTps() {
-	    return currentTps;
+	/**
+	 * Gets the minimum velocity in ticks-per-second for the wheel (read:
+	 * <code>&lt; 0</code>).
+	 */
+	public int getMinTps() {
+		return toTicks(getMinCmps());
 	}
 	
-	public double currentRps() {
-		return currentTps/MotorMovementPlugin.ticksPerRotation;
+	/**
+	 * Gets the maximum velocity in ticks-per-second for the wheel
+	 */
+	public double getMaxTps() {
+		return toTicks(getMaxCmps());
+	}
+	
+	/**
+	 * Gets the current tangential (linear/translational) velocity of the wheel
+	 * in centimeters-per-second.
+	 */
+	public double getCurrentCmps() {
+		return currentCmps;
+	}
+	
+	/**
+	 * Gets the current tangential (linear/translational) velocity of the wheel
+	 * in ticks-per-second.
+	 */
+	public int getCurrentTps() {
+	    return toTicks(getCurrentCmps());
 	}
 	
 	public double getCircumference() {
 		return circumference;
 	}
 	
-	protected void checkTpsRange(int tps) throws IllegalArgumentException {
-		if(Math.abs(tps) > (maxRps*MotorMovementPlugin.ticksPerRotation)) {
-			throw new IllegalArgumentException(tps + "tps is out of range");
-		}
-	}
-	
 	public void moveAtTps(int tps) throws IllegalArgumentException {
-		checkTpsRange(tps);
-		currentTps = tps;
-		clearPositionCounter(); //work-around for CBOBv2 motor bug
-		super.moveAtVelocity((int)(tps/efficiency));
-	}
-	
-	public void moveAtRps(double rps) throws IllegalArgumentException {
-		moveAtTps((int)(rps*MotorMovementPlugin.ticksPerRotation));
+		moveAtCmps(toCm(tps));
 	}
 	
 	public void moveAtCmps(double cmps) throws IllegalArgumentException {
-		moveAtRps(cmps/getCircumference());
+		cmCount = getCmCounter();
+		clearPositionCounter(); //work-around for CBOBv2 motor bug
+		super.moveAtVelocity(toTicks(efficiency.translateCmps(cmps)));
+		currentCmps = cmps;
 	}
 	
+	/**
+	 * Returns the number of ticks that this wheel has moved since it was
+	 * constructed.
+	 */
 	public int getTickCounter() {
-		return getPositionCounter();
+		return toTicks(getCmCounter());
 	}
 	
-	public double getWheelRotationCounter() {
-		return ((double)getTickCounter())/MotorMovementPlugin.ticksPerRotation;
-	}
-	
+	/**
+	 * Returns the number of centimeters that this wheel has moved since it was
+	 * constructed.
+	 */
 	public double getCmCounter() {
-		return getWheelRotationCounter()*getCircumference();
+		return cmCount + toCm(getTickCounter());
 	}
 	
 	/**

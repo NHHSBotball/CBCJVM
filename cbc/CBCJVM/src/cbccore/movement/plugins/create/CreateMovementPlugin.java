@@ -19,6 +19,8 @@ package cbccore.movement.plugins.create;
 import cbccore.create.Create;
 import cbccore.create.CreateConnectException;
 import cbccore.movement.plugins.MovementPlugin;
+import cbccore.movement.efficiency.IEfficiencyCalibrator;
+import cbccore.movement.efficiency.SingleValueEfficiencyCalibrator;
 
 /**
  * A DriveTrain class for the iRobot Create
@@ -30,26 +32,53 @@ public class CreateMovementPlugin extends MovementPlugin {
 	
 	private static final double DEFAULT_TRAIN_WIDTH = 25.5;
 	//private static final double wheelCircumference = 10.;
-	private double leftEfficiency;
-	private double rightEfficiency;
+	private IEfficiencyCalibrator leftEfficiency;
+	private IEfficiencyCalibrator rightEfficiency;
 	//private double leftCmps = 0.;
 	//private double rightCmps = 0.;
 	private Create create = null;
 	
+	public CreateMovementPlugin(Create create) throws CreateConnectException {
+		this(create, 1., 1.);
+	}
 	
-	/**
-	 * Basic constructor
-	 */
 	public CreateMovementPlugin(Create create, double leftEfficiency,
-	                            double rightEfficiency,
+	                            double rightEfficiency)
+	                            throws CreateConnectException {
+		this(create, new SingleValueEfficiencyCalibrator(leftEfficiency),
+		     new SingleValueEfficiencyCalibrator(rightEfficiency));
+	}
+	
+	public CreateMovementPlugin(Create create,
+	                            IEfficiencyCalibrator leftEfficiency,
+	                            IEfficiencyCalibrator rightEfficiency)
+	                            throws CreateConnectException {
+		this(create, leftEfficiency, rightEfficiency, false);
+	}
+	
+	public CreateMovementPlugin(Create create,
+	                            IEfficiencyCalibrator leftEfficiency,
+	                            IEfficiencyCalibrator rightEfficiency,
 	                            boolean fullMode)
 	                            throws CreateConnectException {
-		super(DEFAULT_TRAIN_WIDTH);
+		this(create, leftEfficiency, rightEfficiency, DEFAULT_TRAIN_WIDTH,
+		     fullMode);
+	}
+	
+	public CreateMovementPlugin(Create create,
+	                            IEfficiencyCalibrator leftEfficiency,
+	                            IEfficiencyCalibrator rightEfficiency,
+	                            double trainWidth, boolean fullMode)
+	                            throws CreateConnectException {
+		super(trainWidth);
 		this.create = create;
 		create.connect();
 		this.leftEfficiency = leftEfficiency;
 		this.rightEfficiency = rightEfficiency;
-		// FIXME: This should be moved to it's own method
+		setFullMode(fullMode);
+	}
+	
+	public void setFullMode(boolean fullMode) {
 		if(fullMode) {
 			create.setMode(Create.Mode.Full); 
 		} else {
@@ -57,9 +86,25 @@ public class CreateMovementPlugin extends MovementPlugin {
 		}
 	}
 	
+	public void setSafeMode(boolean safeMode) {
+		setFullMode(!safeMode);
+	}
+	
+	public boolean isFullMode() {
+		return create.getMode() == Create.Mode.Full;
+	}
+	
+	public boolean isSafeMode() {
+		return create.getMode() == Create.Mode.Safe;
+	}
+	
 	/** {@inheritDoc} */
 	public void directDrive(double leftCmps, double rightCmps) {
-		create.driveDirect((int)(rightCmps*10./rightEfficiency), (int)(leftCmps*10./leftEfficiency));
+		// As a note: create.driveDirect oddly takes right first then left
+		create.driveDirect(
+			(int)(rightEfficiency.translateCmps(rightCmps) * 10.),
+			(int)(leftEfficiency.translateCmps(leftCmps) * 10.)
+		);
 	}
 	
 	/**
@@ -72,12 +117,22 @@ public class CreateMovementPlugin extends MovementPlugin {
 	}
 	
 	/** {@inheritDoc} */
+	public double getLeftMinCmps() {
+		return leftEfficiency.getMinCmps(-50.);
+	}
+	
+	/** {@inheritDoc} */
+	public double getRightMinCmps() {
+		return rightEfficiency.getMinCmps(-50.);
+	}
+	
+	/** {@inheritDoc} */
 	public double getLeftMaxCmps() {
-		return 50.*leftEfficiency;
+		return leftEfficiency.getMaxCmps(50.);
 	}
 	
 	/** {@inheritDoc} */
 	public double getRightMaxCmps() {
-		return 50.*rightEfficiency;
+		return rightEfficiency.getMaxCmps(50.);
 	}
 }
