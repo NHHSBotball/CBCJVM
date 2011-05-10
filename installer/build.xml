@@ -16,8 +16,6 @@
 	<property name="sourceJNI-c" location="../cbc/CBCJVM/jni"/>
 	<property name="targetCode" location="${installData}/code"/>
 	<property name="sourceCode" location="../cbc/CBCJVM/examples/"/>
-	<property name="targetCompile" location="${installData}/compile"/>
-	<property name="sourceCompile" location="compile"/>
 	
 	<target name="init" depends="clean"
 	        description="initialize folder structure">
@@ -29,7 +27,6 @@
 		<mkdir dir="${targetJNI-java}"/>
 		<mkdir dir="${targetJNI-c}"/>
 		<mkdir dir="${targetCode}"/>
-		<mkdir dir="${targetCompile}"/>
 	</target>
 	
 	<target name="dist" depends="init" description="generate the distribution">
@@ -48,9 +45,6 @@
 			</copy>
 			<copy todir="${targetCode}">
 				<fileset dir="${sourceCode}"/>
-			</copy>
-			<copy todir="${targetCompile}">
-				<fileset dir="${sourceCompile}"/>
 			</copy>
 		</parallel>
 	</target>
