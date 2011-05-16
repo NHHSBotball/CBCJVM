@@ -53,6 +53,10 @@ public class Device {
 	}
 	
 	public static void init(SimulatorFactory preferedSim) {
+		if (isInited) {
+			return;
+		}
+		isInited = true;
 		try {
 			if(System.getProperty("CBC") == null) throw new Exception();
 			System.load("/mnt/user/jvm/cbc/CBC.so");
