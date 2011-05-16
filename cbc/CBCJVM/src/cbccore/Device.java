@@ -61,7 +61,7 @@ public class Device {
 		if (isInited) {
 			return;
 		}
-		
+		isInited = true;
 		try {
 			if(System.getProperty("CBC") == null) throw new Exception();
 			System.load("/mnt/user/jvm/cbc/CBC.so");
