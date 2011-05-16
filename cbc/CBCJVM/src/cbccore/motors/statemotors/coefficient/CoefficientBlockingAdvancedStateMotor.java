@@ -31,13 +31,15 @@ public class CoefficientBlockingAdvancedStateMotor
              extends CoefficientAdvancedStateMotor<E>
              implements IBlockingAdvancedStateMotor {
 	
-	public CoefficientBlockingAdvancedStateMotor(E baseMotor, int offset) {
-		super(baseMotor, offset);
+	public CoefficientBlockingAdvancedStateMotor(E baseMotor,
+	                                             double coefficient) {
+		super(baseMotor, coefficient);
 	}
 	
-	public CoefficientBlockingAdvancedStateMotor(E baseMotor, int offset,
-	                                        boolean changeSpeed) {
-		super(baseMotor, offset, changeSpeed);
+	public CoefficientBlockingAdvancedStateMotor(E baseMotor,
+	                                             double coefficient,
+	                                             boolean changeSpeed) {
+		super(baseMotor, coefficient, changeSpeed);
 	}
 	
 	public void setPositionTime(int pos, int ms, boolean blocking) {

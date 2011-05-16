@@ -31,13 +31,13 @@ public class CoefficientAdvancedStateMotor<E extends IAdvancedStateMotor>
 	
 	private boolean changeSpeed;
 	
-	public CoefficientAdvancedStateMotor(E baseMotor, int offset) {
-		this(baseMotor, offset, true);
+	public CoefficientAdvancedStateMotor(E baseMotor, double coefficient) {
+		this(baseMotor, coefficient, true);
 	}
 	
-	public CoefficientAdvancedStateMotor(E baseMotor, int offset,
+	public CoefficientAdvancedStateMotor(E baseMotor, double coefficient,
 	                                     boolean changeSpeed) {
-		super(baseMotor, offset);
+		super(baseMotor, coefficient);
 		this.changeSpeed = changeSpeed;
 	}
 	
