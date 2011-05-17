@@ -392,6 +392,7 @@ public class DriveTrain {
 	 * @param   radius  paraminfo
 	 * @return  The maximum speed of the center of the robot in
 	 *              centimeters-per-second
+	 * @see      #getMinCmps
 	 * @see      #moveCurveRadians
 	 * @see      #moveCurveDegrees
 	 */
@@ -407,5 +408,29 @@ public class DriveTrain {
 		outerMaxSpeed /= (radius + plugin.getTrainWidth() * .5) / radius;
 		innerMaxSpeed /= (radius - plugin.getTrainWidth() * .5) / radius;
 		return Math.min(outerMaxSpeed, innerMaxSpeed);
+	}
+	
+	/**
+	 * Gets the minimum speed when moving in a curve
+	 * 
+	 * @param   radius  paraminfo
+	 * @return  The maximum speed of the center of the robot in
+	 *              centimeters-per-second
+	 * @see      #getMaxCmps
+	 * @see      #moveCurveRadians
+	 * @see      #moveCurveDegrees
+	 */
+	public double getMinCmps(double radius) {
+		double outerMinSpeed, innerMinSpeed;
+		if(radius > 0) {
+			outerMinSpeed = plugin.getRightMinCmps();
+			innerMinSpeed = plugin.getLeftMinCmps();
+		} else {
+			outerMinSpeed = plugin.getLeftMinCmps();
+			innerMinSpeed = plugin.getRightMinCmps();
+		}
+		outerMinSpeed /= (radius + plugin.getTrainWidth() * .5) / radius;
+		innerMinSpeed /= (radius - plugin.getTrainWidth() * .5) / radius;
+		return Math.max(outerMinSpeed, innerMinSpeed);
 	}
 }
