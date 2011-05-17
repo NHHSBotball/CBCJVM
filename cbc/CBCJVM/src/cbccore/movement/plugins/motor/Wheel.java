@@ -49,9 +49,7 @@ public class Wheel extends Motor {
 		super(port);
 		this.circumference = circumference;
 		this.efficiency = efficiency;
-		double baseMaxCmps = getCircumference()
-		                     * MotorMovementPlugin.ticksPerRotation
-		                     / 1000.; // max is 1000 ticks per second
+		double baseMaxCmps = toCm(1000); // max is 1000 ticks per second
 		this.maxCmps = this.efficiency.getMaxCmps(baseMaxCmps);
 		this.minCmps = this.efficiency.getMinCmps(-baseMaxCmps);
 	}
@@ -145,12 +143,16 @@ public class Wheel extends Motor {
 		return toTicks(getCmCounter());
 	}
 	
+	public int getPosition() {
+		return getTickCounter();
+	}
+	
 	/**
 	 * Returns the number of centimeters that this wheel has moved since it was
 	 * constructed.
 	 */
 	public double getCmCounter() {
-		return cmCount + toCm(getTickCounter());
+		return cmCount + toCm(super.getPosition());
 	}
 	
 	/**
