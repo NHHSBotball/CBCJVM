@@ -16,17 +16,16 @@
 
 package cbccore.movement.efficiency;
 
-public class SingleValueEfficiencyCalibrator
-             extends AbstractEfficiencyCalibrator {
+public class SingleValueEfficiencyCalibrator implements IEfficiencyCalibrator {
 	
-	double efficiency;
+	private double efficiency;
 	
 	public SingleValueEfficiencyCalibrator(double efficiency) {
 		this.efficiency = efficiency;
 	}
 	
-	public double getEfficiencyAt(double cmps) {
-		return efficiency;
+	public double translateCmps(double oldCmps) {
+		return oldCmps / efficiency;
 	}
 	
 	public double getMaxCmps(double oldMaxCmps) {
