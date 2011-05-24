@@ -78,9 +78,12 @@ public class DriveTrain {
 	/**
 	 * Moves the robot in a piece of a circle.
 	 * 
-	 * @param  degrees  The piece of the circle defined as a change in the
-	 *                      robot's rotation in degrees
-	 * @param  radius   The radius of the circle.
+	 * @param  radians  The piece of the circle defined as a change in the
+	 *                      robot's rotation in radians. If degrees, the robot
+	 *                      will move backwards around the circle, otherwise
+	 *                      positive.
+	 * @param  radius   The radius of the circle. If negative, the robot
+	 *                      will move in a CW circle, otherwise a CCW one.
 	 * @param  cmps     The Centimeters-Per-Second of the center of the robot.
 	 *                      The maximum value for this is less than maxCmps
 	 * @see             #moveCurveRadians
@@ -94,8 +97,11 @@ public class DriveTrain {
 	 * Moves the robot in a piece of a circle.
 	 * 
 	 * @param  radians  The piece of the circle defined as a change in the
-	 *                      robot's rotation in radians
-	 * @param  radius   The radius of the circle.
+	 *                      robot's rotation in radians. If negative, the robot
+	 *                      will move backwards around the circle, otherwise
+	 *                      positive.
+	 * @param  radius   The radius of the circle. If negative, the robot
+	 *                      will move in a CW circle, otherwise a CCW one.
 	 * @param  cmps     The Centimeters-Per-Second of the center of the robot.
 	 *                      The maximum value for this is less than maxCmps
 	 * @see             #moveCurveDegrees
@@ -104,7 +110,7 @@ public class DriveTrain {
 		double halfOffset = plugin.getTrainWidth() * Math.abs(radians) * .5;
 		double cm = radians * Math.abs(radius);
 		double leftCm, rightCm;
-		if(radius > 0) { //  CCW
+		if(radius > 0) { // CCW
 			leftCm = cm - halfOffset;
 			rightCm = cm + halfOffset;
 		} else { // CW
