@@ -22,18 +22,6 @@ package cbccore.movement.efficiency;
  * interface can define efficiency as a function of speed for a motor/wheel.
  */
 public interface IEfficiencyCalibrator {
-	/**
-	 * Efficiency values represent the proportion of the actual speed that a
-	 * motor moves when it is told to move a certain speed. For example, if a
-	 * wheel is moving at 5 cm/s when it is told to move at 4 cm/s, the
-	 * efficiency value returned should be <code>5.0 / 4.0 = 1.25</code> for the
-	 * rate of 4 cm/s. Therefore <code>getEfficiencyAt(4)</code> should return
-	 * 1.25</code>.<p/>
-	 * 
-	 * The more efficient a motor, the higher the efficiency value, the less
-	 * efficient the motor is, the lower the efficiency value should be.
-	 */
-	public double getEfficiencyAt(double cmps);
 	
 	/**
 	 * Divides the desired cmps by the efficiency at that cmps. In other words,
@@ -43,16 +31,16 @@ public interface IEfficiencyCalibrator {
 	public double translateCmps(double cmps);
 	
 	/**
-	 * returns the value of cmps such that <code>x * getEfficiencyAt(x)</code>
-	 * is less than <code>oldMaxCmps</code> for all points from
-	 * <code>x = 0</code> to <code>x = cmps</cmps>.
+	 * returns the value of cmps such that <code>translateCmps(x)</code> is less
+	 * than <code>oldMaxCmps</code> for all points from <code>x = 0</code> to
+	 * <code>x = cmps</cmps>.
 	 */
 	public double getMaxCmps(double oldMaxCmps);
 	
 	/**
-	 * returns the value of cmps such that <code>x * getEfficiencyAt(x)</code>
-	 * is less than <code>oldMinCmps</code> for all points from
-	 * <code>x = 0</code> to <code>x = -cmps</cmps>.
+	 * returns the value of cmps such that <code>translateCmps(x)</code> is more
+	 * than <code>oldMinCmps</code> for all points from <code>x = 0</code> to
+	 * <code>x = -cmps</cmps>.
 	 */
 	public double getMinCmps(double oldMinCmps);
 }
