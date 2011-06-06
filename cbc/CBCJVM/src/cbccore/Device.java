@@ -47,8 +47,13 @@ public class Device {
 	private static Sound lowSound;
 	private static Sensor lowSensors;
 	private static boolean onCBC = true;
+	private static boolean isInited = false;
 	
 	public static void init() {
+		if (isInited) {
+			return;
+		}
+
 		init(new CBCSimulatorFactory());
 	}
 	
@@ -113,6 +118,8 @@ public class Device {
 	 * @see     cbccore.low.Motor
 	 */
 	public static Motor getLowMotorController() {
+		init();
+
 		return lowMotors;
 	}
 
@@ -124,6 +131,8 @@ public class Device {
 	 * @see     cbccore.low.Create
 	 */
 	public static Create getLowCreateController() {
+		init();
+
 		return lowCreate;
 	}
 
@@ -135,6 +144,8 @@ public class Device {
 	 * @see     cbccore.low.Display
 	 */
 	public static Display getLowDisplayController() {
+		init();
+
 		return lowDisplay;
 	}
 
@@ -146,6 +157,8 @@ public class Device {
 	 * @see     cbccore.low.Servo
 	 */
 	public static Servo getLowServoController() {
+		init();
+		
 		return lowServos;
 	}
 
@@ -157,6 +170,8 @@ public class Device {
 	 * @see     cbccore.low.Camera
 	 */
 	public static Camera getLowCameraController() {
+		init();
+
 		return lowCamera;
 	}
 
@@ -168,6 +183,8 @@ public class Device {
 	 * @see     cbccore.low.Device
 	 */
 	public static cbccore.low.Device getLowDeviceController() {
+		init();
+
 		return lowDevice;
 	}
 
@@ -179,6 +196,8 @@ public class Device {
 	 * @see     cbccore.low.Input
 	 */
 	public static Input getLowInputController() {
+		init();
+
 		return lowInput;
 	}
 
@@ -190,6 +209,8 @@ public class Device {
 	 * @see     cbccore.low.Sound
 	 */
 	public static Sound getLowSoundController() {
+		init();
+
 		return lowSound;
 	}
 
@@ -201,6 +222,8 @@ public class Device {
 	 * @see     cbccore.low.Sensor
 	 */
 	public static Sensor getLowSensorController() {
+		init();
+
 		return lowSensors;
 	}
 	
