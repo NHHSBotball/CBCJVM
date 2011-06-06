@@ -31,13 +31,13 @@ public abstract class AbstractConfigurator implements Configurator {
 				if(s.getValue()) {
 					while(s.getValue()) {
 						try {
-							Thread.sleep(10L);
+							Thread.yield();
 						} catch(Exception ex) {}
 					}
 					return s;
 				}
 				try {
-					Thread.sleep(10L);
+					Thread.yield();
 				} catch(Exception ex) {}
 			}
 		}
