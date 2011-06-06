@@ -23,26 +23,18 @@ import java.util.Set;
 import cbccore.sensors.digital.IBooleanSensor;
 
 /**
- * @author Braden McDorman
+ * @author Braden McDorman, Benjamin Woodruff
  */
 
-public class ChoiceConfigurator implements Configurator {
-	Choices choices = null;
-	IBooleanSensor[] sensors = null;
+public class ChoiceConfigurator extends AbstractConfigurator {
+	private Choices choices;
+	private IBooleanSensor[] sensors;
+	
 	public ChoiceConfigurator(IBooleanSensor[] sensors, Choices choices) {
 		this.choices = choices;
 		this.sensors = sensors;
 	}
-	private IBooleanSensor waitForInput(Set<IBooleanSensor> sensors) {
-		for(;;) {
-			for(IBooleanSensor sensor : sensors) {
-				if(sensor.getValue()) {
-					while(sensor.getValue()) {}
-					return sensor;
-				}
-			}
-		}
-	}
+	
 	@Override
 	public int ask() {
 		HashMap<IBooleanSensor, Integer> elements = new HashMap<IBooleanSensor, Integer>();
