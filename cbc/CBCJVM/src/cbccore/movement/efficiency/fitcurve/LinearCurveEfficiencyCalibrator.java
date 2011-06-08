@@ -1,0 +1,79 @@
+/*
+ * This file is part of CBCJVM.
+ * CBCJVM is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CBCJVM is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package cbccore.movement.efficiency.fitcurve;
+
+import java.util.Arrays;
+import cbccore.movement.efficiency.IEfficiencyCalibrator;
+
+/**
+ * Performs simple linear interpolation between calibration data-points, and
+ * very basic linear extrapolation (which, like all extrapolation, should be
+ * avoided whenever possible).<p/>
+ * 
+ * This doesn't form a smooth curve, but it makes fast approximations!
+ * 
+ * @author Benjamin Woodruff
+ */
+public class LinearCurveEfficiencyCalibrator
+             extends AbstractCurveEfficiencyCalibrator {
+	private double[] slopes;
+	
+	public LinearCurveEfficiencyCalibrator(double[] target, double[] actual) {
+		super(target, actual);
+		target = this.getTargetData(); actual = this.getActualData();
+		slopes = new double[target.length - 1];
+		for(int i = 0; i < slopes.length; ++i) {
+			slopes[i] = (target[i+1] - target[i]) / (actual[i+1] - actual[i]);
+		}
+	}
+	
+	public double[] getSlopesData() {
+		return slopes;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	@Override
+	public double translateCmps(double cmps) {
+		int i = bisectActualData(cmps);
+		return getTargetData()[i] + slopes[i] * (cmps - getActualData()[i]);
+	}
+	
+	protected double inverseTranslateCmps(double cmps) {
+		// I'm not entirely sure I wrote this function right, it could use some
+		// tests
+		int i = bisectTargetData(cmps);
+		return getActualData()[i] + (cmps - getTargetData()[i]) / slopes[i];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	@Override
+	public double getMinCmps(double oldCmps) {
+		return inverseTranslateCmps(oldCmps);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	@Override
+	public double getMaxCmps(double oldCmps) {
+		return inverseTranslateCmps(oldCmps);
+	}
+}
