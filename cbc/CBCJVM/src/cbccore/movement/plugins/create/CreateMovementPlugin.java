@@ -36,10 +36,19 @@ public class CreateMovementPlugin extends MovementPlugin {
 	private IEfficiencyCalibrator rightEfficiency;
 	//private double leftCmps = 0.;
 	//private double rightCmps = 0.;
-	private Create create = null;
+	private Create create;
+	
+	public CreateMovementPlugin() throws CreateConnectException {
+		this(new Create(), 1., 1.);
+	}
 	
 	public CreateMovementPlugin(Create create) throws CreateConnectException {
 		this(create, 1., 1.);
+	}
+	
+	public CreateMovementPlugin(double leftEfficiency, double rightEfficiency)
+	                            throws CreateConnectException {
+		this(new Create(), leftEfficiency, rightEfficiency);
 	}
 	
 	public CreateMovementPlugin(Create create, double leftEfficiency,
@@ -49,11 +58,24 @@ public class CreateMovementPlugin extends MovementPlugin {
 		     new SingleValueEfficiencyCalibrator(rightEfficiency));
 	}
 	
+	public CreateMovementPlugin(IEfficiencyCalibrator leftEfficiency,
+	                            IEfficiencyCalibrator rightEfficiency)
+	                            throws CreateConnectException {
+		this(new Create(), leftEfficiency, rightEfficiency);
+	}
+	
 	public CreateMovementPlugin(Create create,
 	                            IEfficiencyCalibrator leftEfficiency,
 	                            IEfficiencyCalibrator rightEfficiency)
 	                            throws CreateConnectException {
 		this(create, leftEfficiency, rightEfficiency, false);
+	}
+	
+	public CreateMovementPlugin(IEfficiencyCalibrator leftEfficiency,
+	                            IEfficiencyCalibrator rightEfficiency,
+	                            boolean fullMode)
+	                            throws CreateConnectException {
+		this(new Create(), leftEfficiency, rightEfficiency, fullMode);
 	}
 	
 	public CreateMovementPlugin(Create create,
@@ -65,6 +87,14 @@ public class CreateMovementPlugin extends MovementPlugin {
 		     fullMode);
 	}
 	
+	public CreateMovementPlugin(IEfficiencyCalibrator leftEfficiency,
+	                            IEfficiencyCalibrator rightEfficiency,
+	                            double trainWidth, boolean fullMode)
+	                            throws CreateConnectException {
+		this(new Create(), leftEfficiency, rightEfficiency, trainWidth,
+		     fullMode);
+	}
+		
 	public CreateMovementPlugin(Create create,
 	                            IEfficiencyCalibrator leftEfficiency,
 	                            IEfficiencyCalibrator rightEfficiency,
