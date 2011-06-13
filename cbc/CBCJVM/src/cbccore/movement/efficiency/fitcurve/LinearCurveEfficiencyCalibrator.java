@@ -55,19 +55,17 @@ public class LinearCurveEfficiencyCalibrator
 		if(i < 0) {
 			i = 0;
 		} else if(i >= getActualData().length) {
-			i = getActualData().length -1;
+			i = getActualData().length - 1;
 		}
-		return getTargetData()[i] + slopes[i] * (cmps - getActualData()[i]);
+		return getTargetData()[i] + (cmps - getActualData()[i]) * slopes[i];
 	}
 	
 	protected double inverseTranslateCmps(double cmps) {
-		// I'm not entirely sure I wrote this function right, it could use some
-		// tests
 		int i = bisectTargetData(cmps);
 		if(i < 0) {
 			i = 0;
 		} else if(i >= getTargetData().length) {
-			i = getTargetData().length -1;
+			i = getTargetData().length - 1;
 		}
 		return getActualData()[i] + (cmps - getTargetData()[i]) / slopes[i];
 	}
