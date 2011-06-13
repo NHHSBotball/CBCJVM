@@ -35,10 +35,11 @@ public class LinearCurveEfficiencyCalibrator
 	public LinearCurveEfficiencyCalibrator(double[] target, double[] actual) {
 		super(target, actual);
 		target = this.getTargetData(); actual = this.getActualData();
-		slopes = new double[target.length - 1];
-		for(int i = 0; i < slopes.length; ++i) {
+		slopes = new double[target.length];
+		for(int i = 0; i < slopes.length - 1; ++i) {
 			slopes[i] = (target[i+1] - target[i]) / (actual[i+1] - actual[i]);
 		}
+		slopes[slopes.length - 1] = slopes[slopes.length - 2]; // extrapolation
 	}
 	
 	public double[] getSlopesData() {
@@ -51,6 +52,11 @@ public class LinearCurveEfficiencyCalibrator
 	@Override
 	public double translateCmps(double cmps) {
 		int i = bisectActualData(cmps);
+		if(i < 0) {
+			i = 0;
+		} else if(i >= getActualData().length) {
+			i = getActualData().length -1;
+		}
 		return getTargetData()[i] + slopes[i] * (cmps - getActualData()[i]);
 	}
 	
@@ -58,6 +64,11 @@ public class LinearCurveEfficiencyCalibrator
 		// I'm not entirely sure I wrote this function right, it could use some
 		// tests
 		int i = bisectTargetData(cmps);
+		if(i < 0) {
+			i = 0;
+		} else if(i >= getTargetData().length) {
+			i = getTargetData().length -1;
+		}
 		return getActualData()[i] + (cmps - getTargetData()[i]) / slopes[i];
 	}
 	
