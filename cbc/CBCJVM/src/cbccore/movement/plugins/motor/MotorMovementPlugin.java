@@ -44,7 +44,7 @@ public class MotorMovementPlugin extends MovementPlugin {
 	public void directDrive(double leftCmps, double rightCmps) {
 		//an old trick I learned a long time ago from the old botball forums
 		//should keep wheels near perfectly straight
-		//leftWheel.moveAtCmps(leftCmps*.5);
+		leftWheel.moveAtCmps(leftCmps * .5);
 		rightWheel.moveAtCmps(rightCmps);
 		leftWheel.moveAtCmps(leftCmps);
 	}
