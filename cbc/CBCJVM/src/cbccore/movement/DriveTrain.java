@@ -52,6 +52,15 @@ public class DriveTrain {
 	}
 	
 	/**
+	 * Gets the distance between the robot's two wheels in centimeters.
+	 * 
+	 * @return  The distance in cm
+	 */
+	public double getTrainWidth() {
+		return plugin.getTrainWidth();
+	}
+	
+	/**
 	 * Rotates the device a specified number of degrees Counter-Clockwise
 	 * 
 	 * @param  degrees   The desired change in degrees
