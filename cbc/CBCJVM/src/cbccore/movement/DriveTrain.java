@@ -26,7 +26,6 @@ import cbccore.movement.plugins.MovementPlugin;
  * architecture, people will be able to use your version with their own plugins.
  * 
  * @author Benjamin Woodruff
- * @author Grady Bryson
  * @see	cbccore.movement.plugins
  * @see	cbccore.movement.plugins.MovementPlugin
  */
