@@ -155,7 +155,7 @@ public class ComposedBlockingAdvancedStateMotor
 		private int ms;
 		
 		public SetPositionTimeMillisecondsAction(
-		       IBlockingAdvancedStateMotor motor, int ms, int position,
+		       IBlockingAdvancedStateMotor motor, int position, int ms,
 		       boolean blocking) {
 			super(motor, position, blocking);
 			this.ms = ms;
@@ -186,7 +186,7 @@ public class ComposedBlockingAdvancedStateMotor
 		private int speed;
 		
 		public SetPositionSpeedAction(IBlockingAdvancedStateMotor motor,
-		                              int speed, int position,
+		                              int position, int speed,
 		                              boolean blocking) {
 			super(motor, position, blocking);
 			this.speed = speed;

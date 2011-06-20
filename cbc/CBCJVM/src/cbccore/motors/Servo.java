@@ -126,14 +126,18 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 		moving = false;
 	}
 	
+	private void throwOutOfRange(int pos) throws IllegalArgumentException {
+		if(pos < getMinPosition() || pos > getMaxPosition()) {
+			throw new IllegalArgumentException("Servo " + port + ", Position: "
+			                                    + pos + " is out of range");
+		}
+	}
+	
 	/**
 	 * Change the position of the servo without touching the isMoving value
 	 */
 	protected void rawSetPosition(int pos) {
-		if(pos < getMinPosition() || pos > getMaxPosition()) {
-			throw new IllegalArgumentException("Position: " + pos +
-			                                   " is out of range");
-		}
+		throwOutOfRange(pos);
 		lowServo.set_servo_position(port, pos);
 	}
 	
@@ -178,6 +182,7 @@ public class Servo extends AbstractBlockingAdvancedStateMotor {
 	 * @param  newPos  the new servo position
 	 */
 	public void setPositionTime(int newPos, int ms, boolean blocking) {
+		throwOutOfRange(newPos);
 		if(!isEnabled()) {
 			setPosition(newPos);
 			if(blocking) {
