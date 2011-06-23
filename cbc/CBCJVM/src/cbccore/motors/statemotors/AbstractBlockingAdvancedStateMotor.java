@@ -17,9 +17,17 @@
 package cbccore.motors.statemotors;
 
 /**
+ * This class defines a few methods to help implement
+ * IBlockingAdvancedStateMotor. For example, you can write
+ * <code>setPositionTime(int pos, int ms, boolean blocking)</code> and get
+ * automagically working versions of
+ * <code>setPositionTime(int pos, int ms)</code>,
+ * <code>setPositionSpeed(int pos, int ticksPerSec, boolean blocking)</code>,
+ * <code>setPositionSpeed(int pos, int ticksPerSec)</code>, and even
+ * <code><code>setPosition(int pos)</code> (assuming you have a proper
+ * implementation of <code>getDefaultSpeed()</code>)
  * 
  * @author Benjamin Woodruff
- *
  */
 
 public abstract class AbstractBlockingAdvancedStateMotor

@@ -20,12 +20,17 @@ import cbccore.Device;
 import cbccore.InvalidPortException;
 
 /**
+ * A blocking function is one that doesn't return until its action is done. This
+ * interface defines blocking versions of the functions available in
+ * <code>IStateMotor</code> and <code>IAdvancedStateMotor</code>.<p/>
+ * 
  * <b>Implementation note:</b> When using versions of the functions defined in
  * <code>IAdvancedStateMotor</code>, the default behavior should be
  * non-blocking.
  * 
+ * @see    cbccore.motors.statemotors.IStateMotor
+ * @see    cbccore.motors.statemotors.IAdvancedStateMotor
  * @author Benjamin Woodruff
- *
  */
 
 public interface IBlockingAdvancedStateMotor extends IAdvancedStateMotor {
@@ -34,4 +39,16 @@ public interface IBlockingAdvancedStateMotor extends IAdvancedStateMotor {
 	
 	public void setPositionSpeed(int pos, int speed, boolean blocking);
 	public void setPosition(int pos, boolean blocking);
+	
+	/**
+	 * Determines if the motor is still moving or not. If it's moving, this
+	 * returns true, false otherwise. A motor is classified of moving regardless
+	 * of how it is started, be it through an <code>IAdvancedStateMotor</code>
+	 * method or even an <code>IStateMotor</code> method. If the motor is
+	 * physically moving, this returns true. If it's not, this returns false.
+	 * 
+	 * @return  <code>true</code> if the motor is physically moving,
+	 *          <code>false</code> otherwise.
+	 */
+	public boolean isMoving();
 }

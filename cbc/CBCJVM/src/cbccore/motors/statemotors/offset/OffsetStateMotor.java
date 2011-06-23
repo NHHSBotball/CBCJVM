@@ -20,7 +20,11 @@ import cbccore.motors.statemotors.IStateMotor;
 
 /**
  * A wrapper for an <code>IStateMotor</code> that is useful for plugging into a
- * <code>ComposedStateMotor</code>.
+ * <code>ComposedStateMotor</code>.<p/>
+ * 
+ * When setting motor positions, the position is actually set to
+ * <code>pos - offset</pos>. When reading positions, the returned position is
+ * actually <code>pos + offset</code>.
  * 
  * @author Benjamin Woodruff
  *

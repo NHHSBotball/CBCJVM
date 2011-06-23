@@ -194,4 +194,8 @@ public class RestorePointMotor<K> extends HashMap<K, Integer>
 	public IAdvancedStateMotor getMotor() {
 		return controlMotor;
 	}
+	
+	public boolean isMoving() {
+		return getBlockingMotor().isMoving();
+	}
 }

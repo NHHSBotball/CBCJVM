@@ -20,12 +20,16 @@ import cbccore.Device;
 import cbccore.InvalidPortException;
 
 /**
+ * This class defines ways of setting a </code>IStateMotor</code>'s position at
+ * a specified speed.
+ * 
  * All the functions defined in here in implementing classes should be
  * non-blocking. For varients with blocking support, one should implement
  * <code>IBlockingAdvancedStateMotor</code>.
  * 
+ * @see    cbccore.motors.statemotors.IStateMotor
+ * @see    cbccore.motors.statemotors.IBlockingAdvancedStateMotor
  * @author Benjamin Woodruff
- *
  */
 
 public interface IAdvancedStateMotor extends IStateMotor {

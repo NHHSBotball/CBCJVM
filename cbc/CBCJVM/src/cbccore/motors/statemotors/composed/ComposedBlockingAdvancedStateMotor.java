@@ -43,157 +43,63 @@ public class ComposedBlockingAdvancedStateMotor
 	}
 	
 	public void setPositionTime(int pos, int ms, boolean blocking) {
-		BlockingMotorRunnable[] runners = getRunnerArray();
-		for(int i = 0; i < getMotors().length; ++i) {
-			runners[i] = new SetPositionTimeMillisecondsAction(
-				getMotors()[i], pos, ms, blocking
-			);
+		for(IBlockingAdvancedStateMotor m: getMotors()) {
+			m.setPositionTime(pos, ms);
 		}
-		waitForRunners(runners, blocking);
+		waitForMotors(blocking);
 	}
 	
 	public void setPositionTime(int pos, double sec, boolean blocking) {
-		BlockingMotorRunnable[] runners = getRunnerArray();
-		for(int i = 0; i < getMotors().length; ++i) {
-			runners[i] = new SetPositionTimeSecondsAction(
-				getMotors()[i], pos, sec, blocking
-			);
+		for(IBlockingAdvancedStateMotor m: getMotors()) {
+			m.setPositionTime(pos, sec);
 		}
-		waitForRunners(runners, blocking);
+		waitForMotors(blocking);
 	}
 	
 	public void setPositionSpeed(int pos, int speed, boolean blocking) {
-		BlockingMotorRunnable[] runners = getRunnerArray();
-		for(int i = 0; i < getMotors().length; ++i) {
-			runners[i] = new SetPositionSpeedAction(
-				getMotors()[i], pos, speed, blocking
-			);
+		for(IBlockingAdvancedStateMotor m: getMotors()) {
+			m.setPositionSpeed(pos, speed);
 		}
-		waitForRunners(runners, blocking);
+		waitForMotors(blocking);
 	}
 	
 	public void setPosition(int pos, boolean blocking) {
-		BlockingMotorRunnable[] runners = getRunnerArray();
-		for(int i = 0; i < getMotors().length; ++i) {
-			runners[i] = new SetPositionAction(
-				getMotors()[i], pos, blocking
-			);
+		for(IBlockingAdvancedStateMotor m: getMotors()) {
+			m.setPosition(pos);
 		}
-		waitForRunners(runners, blocking);
+		waitForMotors(blocking);
 	}
 	
-	private BlockingMotorRunnable[] getRunnerArray() {
-		return new BlockingMotorRunnable[getMotors().length];
-	}
-	
-	protected void waitForRunners(BlockingMotorRunnable[] runners,
-	                              boolean blocking) {
-		if(blocking) {
-			Thread[] threads = new Thread[runners.length];
-			for(int i = 0; i < runners.length; ++i) {
-				threads[i] = new Thread(runners[i]);
-				threads[i].start();
-			}
-			for(Thread t: threads) {
-				while(t.isAlive()) {
-					Thread.yield();
-				}
-			}
-		} else {
-			for(BlockingMotorRunnable i: runners) {
-				i.run();
+	/**
+	 * Doesn't return until all the motors have moved, if <code>blocking</code>
+	 * is <code>true</code>. If <code>blocking</code> is <code>false</code>,
+	 * this function returns immediately.
+	 * 
+	 * @param  blocking  If <code>false</code>, the function immediately
+	 *                   returns, if <code>true</code>, the function waits for
+	 *                   all motors to finish moving before returning.
+	 */
+	protected void waitForMotors(boolean blocking) {
+		if(!blocking) {
+			return;
+		}
+		for(IBlockingAdvancedStateMotor m: getMotors()) {
+			while(m.isMoving()) {
+				Thread.yield();
 			}
 		}
 	}
 	
-	protected static abstract class BlockingMotorRunnable
-	                                <E extends IBlockingAdvancedStateMotor>
-	                                implements Runnable {
-		private E motor;
-		private boolean blocking;
-		
-		protected BlockingMotorRunnable(E motor, boolean blocking) {
-			this.motor = motor;
+	/**
+	 * Returns <code>true</code> if at least one of the child motors is moving,
+	 * <code>false</code> if none of them are moving.
+	 */
+	public boolean isMoving() {
+		for(IBlockingAdvancedStateMotor m: getMotors()) {
+			if(m.isMoving()) {
+				return true;
+			}
 		}
-		
-		public E getMotor() {
-			return motor;
-		}
-		
-		public boolean isBlocking() {
-			return blocking;
-		}
-		
-		public void run() {
-			doAction();
-		}
-		
-		protected abstract void doAction();
-		
-	}
-	
-	protected static class SetPositionAction extends BlockingMotorRunnable {
-		private int position;
-		
-		public SetPositionAction(IBlockingAdvancedStateMotor motor,
-		                         int position, boolean blocking) {
-			super(motor, blocking);
-			this.position = position;
-		}
-		
-		protected int getPosition() {
-			return position;
-		}
-		
-		protected void doAction() {
-			getMotor().setPosition(getPosition(), isBlocking());
-		}
-	}
-	
-	protected static class SetPositionTimeMillisecondsAction
-	                       extends SetPositionAction {
-		private int ms;
-		
-		public SetPositionTimeMillisecondsAction(
-		       IBlockingAdvancedStateMotor motor, int position, int ms,
-		       boolean blocking) {
-			super(motor, position, blocking);
-			this.ms = ms;
-		}
-		
-		protected void doAction() {
-			getMotor().setPositionTime(getPosition(), ms, isBlocking());
-		}
-	}
-	
-	protected static class SetPositionTimeSecondsAction
-	                       extends SetPositionAction {
-		private double secs;
-		
-		public SetPositionTimeSecondsAction(IBlockingAdvancedStateMotor motor,
-		                                    int position, double secs,
-		                                    boolean blocking) {
-			super(motor, position, blocking);
-			this.secs = secs;
-		}
-		
-		protected void doAction() {
-			getMotor().setPositionTime(getPosition(), secs, isBlocking());
-		}
-	}
-	
-	protected static class SetPositionSpeedAction extends SetPositionAction {
-		private int speed;
-		
-		public SetPositionSpeedAction(IBlockingAdvancedStateMotor motor,
-		                              int position, int speed,
-		                              boolean blocking) {
-			super(motor, position, blocking);
-			this.speed = speed;
-		}
-		
-		protected void doAction() {
-			getMotor().setPositionSpeed(getPosition(), speed, isBlocking());
-		}
+		return false;
 	}
 }

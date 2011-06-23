@@ -62,4 +62,8 @@ public class CoefficientBlockingAdvancedStateMotor
 	public void setPosition(int pos, boolean blocking) {
 		getBaseMotor().setPosition((int)(pos * getCoefficient()), blocking);
 	}
+	
+	public boolean isMoving() {
+		return getBaseMotor().isMoving();
+	}
 }

@@ -33,6 +33,7 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
 	private int port = 0;
 	private static cbccore.low.Motor lowMotor = Device.getLowMotorController();
 	private long destTime = -1;
+	private boolean simpleIsMoving = false;
 	
 	/**
 	 * Constructs a Motor which is used to power the robot. Motors are
@@ -60,6 +61,7 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
 	 * @see #moveAtVelocity
 	 */
 	public void motor(int percent) {
+		simpleIsMoving = percent != 0;
 		lowMotor.motor(port, percent);
 	}
 	
@@ -80,6 +82,7 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
 	 * 
 	 */
 	public int moveAtVelocity(int velocity) {
+		simpleIsMoving = velocity != 0;
 		return lowMotor.mav(port, velocity);
 	}
 	
@@ -144,6 +147,10 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
 	//a helper method
 	private void setDestTime(int speed, int deltaPos) {
 		destTime = System.currentTimeMillis() + Math.abs(deltaPos*1000/speed);
+	}
+	
+	public boolean isMoving() {
+		return destTime - System.currentTimeMillis() > 0l;
 	}
 	
 	/**
@@ -228,6 +235,7 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
      * @see    #getPwm
      */
 	public int setPwm(int pwm) {
+		simpleIsMoving = pwm != 0;
 		return lowMotor.setpwm(port, pwm);
 	}
 
@@ -251,6 +259,7 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
      * @see #backward
      */
 	public void forward() {
+		simpleIsMoving = true;
 		lowMotor.fd(port);
 	}
 	
@@ -264,6 +273,7 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
      * @see #forward
      */
 	public void backward() {
+		simpleIsMoving = true;
 		lowMotor.bk(port);
 	}
 	
@@ -271,6 +281,7 @@ public class Motor extends AbstractBlockingAdvancedStateMotor {
 	 * Cut power to this motor
 	 */
 	public void off() {
+		simpleIsMoving = false;
 		lowMotor.off(port);
 	}
 	

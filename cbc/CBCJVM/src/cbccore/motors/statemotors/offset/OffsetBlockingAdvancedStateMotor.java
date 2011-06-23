@@ -50,4 +50,8 @@ public class OffsetBlockingAdvancedStateMotor
 	public void setPosition(int pos, boolean blocking) {
 		getBaseMotor().setPosition(pos - getOffset(), blocking);
 	}
+	
+	public boolean isMoving() {
+		return getBaseMotor().isMoving();
+	}
 }
