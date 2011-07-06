@@ -84,6 +84,29 @@ public class DriveTrain {
 	}
 	
 	/**
+	 * Rotates the device a specified speed Counter-Clockwise
+	 * 
+	 * @param  radiansPerSecond  The number of radians to rotate every second
+	 * @see                      #rotateRadians
+	 * @see                      #rotateAtDegreesPerSec
+	 */
+	public void rotateAtRadiansPerSec(double radiansPerSecond) {
+		double speed = radiansPerSecond * plugin.getTrainWidth() * .5;
+		directDrive(-speed, speed);
+	}
+	
+	/**
+	 * Rotates the device a specified speed Counter-Clockwise
+	 * 
+	 * @param  degreesPerSecond  The number of degrees to rotate every second
+	 * @see                      #rotateDegrees
+	 * @see                      #rotateAtRadiansPerSec
+	 */
+	public void rotateAtDegreesPerSec(double degreesPerSecond) {
+		rotateAtRadiansPerSec(Math.toRadians(degreesPerSecond));
+	}
+	
+	/**
 	 * Moves the robot in a piece of a circle.
 	 * 
 	 * @param  radians  The piece of the circle defined as a change in the
