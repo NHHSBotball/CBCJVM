@@ -78,8 +78,8 @@ public class DriveTrain {
 	 * @see                      #rotateDegrees
 	 */
 	public void rotateRadians(double radians, double radiansPerSecond) {
-		double dist = plugin.getTrainWidth()*radians*.5;
-		double speed = radiansPerSecond*plugin.getTrainWidth();
+		double dist = plugin.getTrainWidth() * radians * .5;
+		double speed = radiansPerSecond * plugin.getTrainWidth() * .5;
 		moveWheelCm(-dist, dist, -speed, speed);
 	}
 	
@@ -344,7 +344,7 @@ public class DriveTrain {
 	 */
 	public double getMinRadiansPerSec() {
 		return Math.max(-plugin.getLeftMaxCmps(), plugin.getRightMinCmps())
-		       / plugin.getTrainWidth();
+		       / plugin.getTrainWidth() * 2.;
 	}
 	
 	/**
@@ -362,7 +362,7 @@ public class DriveTrain {
 	 */
 	public double getMaxRadiansPerSec() {
 		return Math.min(-plugin.getLeftMinCmps(), plugin.getRightMaxCmps())
-		       / plugin.getTrainWidth();
+		       / plugin.getTrainWidth() * 2.;
 	}
 	
 	/**
