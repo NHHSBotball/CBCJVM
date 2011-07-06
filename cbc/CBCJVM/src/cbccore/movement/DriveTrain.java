@@ -109,8 +109,8 @@ public class DriveTrain {
 	/**
 	 * Moves the robot in a piece of a circle.
 	 * 
-	 * @param  radians  The piece of the circle defined as a change in the
-	 *                      robot's rotation in radians. If degrees, the robot
+	 * @param  degrees  The piece of the circle defined as a change in the
+	 *                      robot's rotation in degrees. If negative, the robot
 	 *                      will move backwards around the circle, otherwise
 	 *                      positive.
 	 * @param  radius   The radius of the circle. If negative, the robot
