@@ -34,18 +34,18 @@ import cbccore.motors.Motor;
  */
 
 public class Botball {
-	Thread shutDownThread = null;
 	
 	/**
 	 * Creates a new thread and terminates all movement of the robot after
 	 * the time limit (set in the constructor) has been reached.
 	 */
-	public void shutDownIn(double secs) {
-		shutDownThread = new Thread(new ShutDownIn(secs));
+	public static void shutDownIn(double secs) {
+		Thread shutDownThread = new Thread(new ShutDownIn(secs));
+		shutDownThread.setDaemon(true);
 		shutDownThread.start();
 	}
 	
-	private class ShutDownIn implements Runnable {
+	private static class ShutDownIn implements Runnable {
 		double secs = 0.0;
 		public ShutDownIn(double secs) {
 			this.secs = secs;		
