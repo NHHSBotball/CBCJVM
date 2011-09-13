@@ -16,8 +16,8 @@
 
 package cbccore.low.simulator;
 
+import cbc.NotImplemented;
 import cbccore.low.Servo;
-import cbccore.NotImplemented;
 
 /**
  * 

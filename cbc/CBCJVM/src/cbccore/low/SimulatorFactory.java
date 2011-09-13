@@ -16,7 +16,7 @@
 
 package cbccore.low;
 
-import cbccore.Device;
+import cbc.Device;
 
 /**
  * Subclasses of this should override the getNewSimulator() method. This class

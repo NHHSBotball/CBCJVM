@@ -16,8 +16,8 @@
 
 package cbccore.low.simulator;
 
-import cbccore.low.SimulatorFactory;
 import cbccore.low.Simulator;
+import cbccore.low.SimulatorFactory;
 
 /**
  * @see cbccore.low.SimulatorFactory

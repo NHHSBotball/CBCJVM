@@ -21,8 +21,8 @@ import java.util.Queue;
 
 import javax.swing.JFrame;
 
+import cbc.NotImplemented;
 import cbccore.low.Create;
-import cbccore.NotImplemented;
 
 /**
  * 

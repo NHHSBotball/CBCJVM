@@ -16,7 +16,7 @@
 
 package cbccore.low.simulator;
 
-import cbccore.display.SimulatedFramebuffer;
+import cbc.display.SimulatedFramebuffer;
 import cbccore.low.*;
 
 import javax.swing.JFrame;
@@ -144,7 +144,7 @@ public class CBCSimulator extends Simulator {
 		if(framebuffersAdded) return;
 		framebuffersAdded = true;
 		sidebar.add(((SimulatedFramebuffer)
-			cbccore.display.Display.getFramebuffer()).getPanel(), 0);
+			cbc.display.Display.getFramebuffer()).getPanel(), 0);
 	}
 	
 	private class MotorSpeedUpdater extends Thread {

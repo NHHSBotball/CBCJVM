@@ -21,7 +21,7 @@ package cbccore.low;
  * Documentation stolen from the KISS-C documentation
  *
  * @author  Braden McDorman
- * @see     cbccore.Device
+ * @see     cbc.Device
  */
 
 public class Camera {

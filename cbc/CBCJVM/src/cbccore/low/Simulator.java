@@ -16,7 +16,7 @@
 
 package cbccore.low;
 
-import cbccore.Device;
+import cbc.Device;
 
 /**
  * A parent class for any simulator. The goal is to provide an easy way to write

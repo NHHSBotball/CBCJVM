@@ -16,7 +16,7 @@
 
 package cbccore.low.simulator;
 
-import cbccore.NotImplemented;
+import cbc.NotImplemented;
 import cbccore.low.Camera;
 
 /**
