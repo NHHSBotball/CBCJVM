@@ -12,26 +12,36 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-package cbc.sensors.buttons;
-
-import cbc.Device;
+package cbc.low.simulator;
 
 /**
  * 
- * @author Braden McDorman
+ * @author Benjamin Woodruff
  *
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
+
+public class MotorSpeed {
+	
+	public int speed;
+	public boolean bemf;
+	
+	public MotorSpeed(int speed, boolean bemf) {
+		reconstruct(speed, bemf);
 	}
-	@Override
-	public String toString() {
-		return "Up Button";
+	
+	/**
+	 * Faster than constructing a new, modifies this current instance as if
+	 * constructing new.
+	 */
+	public void reconstruct(int speed, boolean bemf) {
+		this.speed = speed;
+		this.bemf = bemf;
+	} //breaks current SimulatedCBOB Api
+	
+	public int getTpsSpeed() {
+		return bemf?speed:speed*10;
 	}
 }

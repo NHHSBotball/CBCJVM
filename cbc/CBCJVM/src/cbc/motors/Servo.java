@@ -30,7 +30,7 @@ import cbc.motors.statemotors.AbstractBlockingAdvancedStateMotor;
 
 public class Servo extends AbstractBlockingAdvancedStateMotor {
 	private int port = 0;
-	private static cbccore.low.Servo lowServo = Device.getLowServoController();
+	private static cbc.low.Servo lowServo = Device.getLowServoController();
 	
 	// variables for advanced motion
 	private long beginTime = 0;

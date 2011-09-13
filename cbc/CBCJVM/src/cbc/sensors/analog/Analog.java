@@ -28,7 +28,7 @@ public class Analog implements IAnalogSensor {
 	private int port = 0;
 	protected static boolean[] floatingSensors = new boolean[8];
 	
-	private cbccore.low.Sensor lowSensor = Device.getLowSensorController();
+	private cbc.low.Sensor lowSensor = Device.getLowSensorController();
 	
 	public Analog(int port) {
 		this.port = port;
@@ -83,7 +83,7 @@ public class Analog implements IAnalogSensor {
 		);
 	}
 	
-	protected cbccore.low.Sensor getLowSensor() {
+	protected cbc.low.Sensor getLowSensor() {
 		return lowSensor;
 	}
 	

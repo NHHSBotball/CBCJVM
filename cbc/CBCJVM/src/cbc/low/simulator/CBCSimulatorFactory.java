@@ -12,26 +12,22 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-package cbc.sensors.buttons;
-
-import cbc.Device;
-
-/**
- * 
- * @author Braden McDorman
- *
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
-	}
-	@Override
-	public String toString() {
-		return "Up Button";
+package cbc.low.simulator;
+
+import cbc.low.Simulator;
+import cbc.low.SimulatorFactory;
+
+/**
+ * @see cbc.low.SimulatorFactory
+ * @see cbc.low.simulator.CBCSimulator
+ * @author Benjamin Woodruff
+ * 
+ */
+
+public class CBCSimulatorFactory extends SimulatorFactory {
+	public Simulator getNewSimulator() {
+		return new CBCSimulator();
 	}
 }

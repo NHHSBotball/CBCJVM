@@ -31,7 +31,7 @@ import cbc.motors.statemotors.AbstractBlockingAdvancedStateMotor;
 
 public class Motor extends AbstractBlockingAdvancedStateMotor {
 	private int port = 0;
-	private static cbccore.low.Motor lowMotor = Device.getLowMotorController();
+	private static cbc.low.Motor lowMotor = Device.getLowMotorController();
 	private long destTime = -1;
 	
 	/**

@@ -12,26 +12,24 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-package cbc.sensors.buttons;
-
-import cbc.Device;
-
-/**
- * 
- * @author Braden McDorman
- *
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
-	}
-	@Override
-	public String toString() {
-		return "Up Button";
-	}
+package cbc.low;
+
+/**
+ * System related items, such as accelerometer or power
+ * 
+ * @author Braden McDorman
+ */
+
+public class Device {
+	
+	
+	/**
+	 * Gets the current power level in volts.
+	 * 
+	 * @return The current power level in volts
+	 */
+	public native float power_level(); /* returns a float battery voltage */
 }
+ 

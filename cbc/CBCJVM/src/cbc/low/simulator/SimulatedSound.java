@@ -12,26 +12,29 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-package cbc.sensors.buttons;
+package cbc.low.simulator;
 
-import cbc.Device;
+import cbc.NotImplemented;
+import cbc.low.Sound;
 
 /**
  * 
- * @author Braden McDorman
+ * @author Braden McDorman / Benjamin Woodruff
  *
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
+public class SimulatedSound extends Sound {
+	
+	public SimulatedSound() {
 	}
-	@Override
-	public String toString() {
-		return "Up Button";
+	
+	// makes a sound at frequency for duration ms
+	@NotImplemented public void tone(int frequency, int duration) {
+	}
+	
+	@NotImplemented public void beep() { // make a beep
+		
 	}
 }

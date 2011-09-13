@@ -4,34 +4,44 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * CBCJVM is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-package cbc.sensors.buttons;
+package cbc.low;
 
 import cbc.Device;
 
 /**
+ * Subclasses of this should override the getNewSimulator() method. This class
+ * is what gets passed to Device to initialize a custom simulator. The purpose
+ * of making this a factory is to hold off any potentially wasteful
+ * initialization until after deciding if we are on the actual device or not.
  * 
- * @author Braden McDorman
- *
+ * @author Benjamin Woodruff
+ * 
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
+public abstract class SimulatorFactory {
+	
+	public SimulatorFactory() {
+		// nothing
 	}
-	@Override
-	public String toString() {
-		return "Up Button";
-	}
+	
+	public abstract Simulator getNewSimulator();
 }
+
+
+
+
+
+
+
+
+

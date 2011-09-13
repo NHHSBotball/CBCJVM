@@ -25,9 +25,9 @@
 	</target>
 	
 	<target name="document">
-		<javadoc packagenames="cbccore.*"
+		<javadoc packagenames="cbc.*"
 		         sourcepath="src"
-		         excludepackagenames="cbccore.low.simulator.*"
+		         excludepackagenames="cbc.low.simulator.*"
 		         destdir="${docs}"
 		         author="true"
 		         version="true"

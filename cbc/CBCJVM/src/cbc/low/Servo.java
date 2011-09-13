@@ -12,11 +12,9 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-package cbc.sensors.buttons;
-
-import cbc.Device;
+package cbc.low;
 
 /**
  * 
@@ -24,14 +22,9 @@ import cbc.Device;
  *
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
-	}
-	@Override
-	public String toString() {
-		return "Up Button";
-	}
+public class Servo {
+	public native void enable_servos(); /* powers up the servos */
+	public native void disable_servos(); /* powers down the servos */
+	public native int set_servo_position(int servo, int pos); /* sets servo (1 to 4) to pos (0 to 2047) */
+	public native int get_servo_position(int servo); /* returns int of last setting for servo (1 to 4) */
 }

@@ -25,7 +25,7 @@ import cbc.Device;
  */
 
 public class LeftButton extends AbstractButton {
-	private cbccore.low.Input lowInput = Device.getLowInputController();
+	private cbc.low.Input lowInput = Device.getLowInputController();
 	@Override
 	public boolean getValue() {
 		return lowInput.left_button() == 1;

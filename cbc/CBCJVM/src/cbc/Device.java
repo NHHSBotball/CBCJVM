@@ -16,8 +16,8 @@
 
 package cbc;
 
-import cbccore.low.*;
-import cbccore.low.simulator.CBCSimulatorFactory;
+import cbc.low.*;
+import cbc.low.simulator.CBCSimulatorFactory;
 
 /**
  * A static class with static access to instantiations cbccore.low classes.
@@ -41,7 +41,7 @@ public class Device {
 	private static Create lowCreate;
 	private static Servo lowServos;
 	private static Camera lowCamera;
-	private static cbccore.low.Device lowDevice;
+	private static cbc.low.Device lowDevice;
 	private static Input lowInput;
 	private static Sound lowSound;
 	private static Sensor lowSensors;
@@ -72,7 +72,7 @@ public class Device {
 			if(onCBC) {
 				lowSound = new Sound();
 				lowSensors = new Sensor();
-				lowDevice = new cbccore.low.Device();
+				lowDevice = new cbc.low.Device();
 				lowDisplay = new Display();
 				lowInput = new Input();
 				lowServos = new Servo();
@@ -114,7 +114,7 @@ public class Device {
 	 * level library.
 	 *
 	 * @return  an instance of Motor
-	 * @see     cbccore.low.Motor
+	 * @see     cbc.low.Motor
 	 */
 	public static Motor getLowMotorController() {
 		init();
@@ -127,7 +127,7 @@ public class Device {
 	 * higher level library.
 	 *
 	 * @return  an instance of Create
-	 * @see     cbccore.low.Create
+	 * @see     cbc.low.Create
 	 */
 	public static Create getLowCreateController() {
 		init();
@@ -140,7 +140,7 @@ public class Device {
 	 * higher level library.
 	 *
 	 * @return  an instance of Display
-	 * @see     cbccore.low.Display
+	 * @see     cbc.low.Display
 	 */
 	public static Display getLowDisplayController() {
 		init();
@@ -153,7 +153,7 @@ public class Device {
 	 * higher level library.
 	 *
 	 * @return  an instance of Servo
-	 * @see     cbccore.low.Servo
+	 * @see     cbc.low.Servo
 	 */
 	public static Servo getLowServoController() {
 		init();
@@ -166,7 +166,7 @@ public class Device {
 	 * higher level library.
 	 *
 	 * @return  an instance of Camera
-	 * @see     cbccore.low.Camera
+	 * @see     cbc.low.Camera
 	 */
 	public static Camera getLowCameraController() {
 		init();
@@ -179,9 +179,9 @@ public class Device {
 	 * higher level library. (Not to be confused with this "Device" class)
 	 *
 	 * @return  an instance of Device
-	 * @see     cbccore.low.Device
+	 * @see     cbc.low.Device
 	 */
-	public static cbccore.low.Device getLowDeviceController() {
+	public static cbc.low.Device getLowDeviceController() {
 		init();
 
 		return lowDevice;
@@ -192,7 +192,7 @@ public class Device {
 	 * higher level library.
 	 *
 	 * @return  an instance of Input
-	 * @see     cbccore.low.Input
+	 * @see     cbc.low.Input
 	 */
 	public static Input getLowInputController() {
 		init();
@@ -205,7 +205,7 @@ public class Device {
 	 * higher level library.
 	 *
 	 * @return  an instance of Sound
-	 * @see     cbccore.low.Sound
+	 * @see     cbc.low.Sound
 	 */
 	public static Sound getLowSoundController() {
 		init();
@@ -218,7 +218,7 @@ public class Device {
 	 * higher level library.
 	 *
 	 * @return  an instance of Sensor
-	 * @see     cbccore.low.Sensor
+	 * @see     cbc.low.Sensor
 	 */
 	public static Sensor getLowSensorController() {
 		init();

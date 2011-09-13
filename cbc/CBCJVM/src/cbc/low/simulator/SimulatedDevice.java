@@ -12,26 +12,24 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-package cbc.sensors.buttons;
+package cbc.low.simulator;
 
-import cbc.Device;
+import cbc.low.Device;
 
 /**
  * 
- * @author Braden McDorman
+ * @author Braden McDorman / Benjamin Woodruff
  *
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
+public class SimulatedDevice extends Device {
+	
+	public SimulatedDevice() {
 	}
-	@Override
-	public String toString() {
-		return "Up Button";
+	
+	public float power_level() { /* returns a float battery voltage */
+		return 9.f;
 	}
 }

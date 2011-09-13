@@ -2,15 +2,15 @@
 COMPILER=./compiler
 LINKER=./linker
 
-CBC_DEVICE=./cbccore_low_Device
-CBC_DISPLAY=./cbccore_low_Display
-CBC_INPUT=./cbccore_low_Input
-CBC_MOTOR=./cbccore_low_Motor
-CBC_SENSOR=./cbccore_low_Sensor
-CBC_SERVO=./cbccore_low_Servo
-CBC_SOUND=./cbccore_low_Sound
-CBC_CAMERA=./cbccore_low_Camera
-CBC_CREATE=./cbccore_low_Create
+CBC_DEVICE=./cbc_low_Device
+CBC_DISPLAY=./cbc_low_Display
+CBC_INPUT=./cbc_low_Input
+CBC_MOTOR=./cbc_low_Motor
+CBC_SENSOR=./cbc_low_Sensor
+CBC_SERVO=./cbc_low_Servo
+CBC_SOUND=./cbc_low_Sound
+CBC_CAMERA=./cbc_low_Camera
+CBC_CREATE=./cbc_low_Create
 
 echo "Compiling CBC_Device..."
 $COMPILER ${CBC_DEVICE}.c

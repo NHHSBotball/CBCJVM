@@ -12,11 +12,9 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-package cbc.sensors.buttons;
-
-import cbc.Device;
+package cbc.low;
 
 /**
  * 
@@ -24,14 +22,7 @@ import cbc.Device;
  *
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
-	}
-	@Override
-	public String toString() {
-		return "Up Button";
-	}
+public class Sound {
+	public native void tone(int frequency, int duration); /* makes a sound at frequency for duration ms */
+	public native void beep(); /* make a beep */   
 }

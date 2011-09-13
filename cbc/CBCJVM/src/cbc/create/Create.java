@@ -24,7 +24,7 @@ import cbc.create.commands.*;
 /**
  * Allows high-level access the the create (vs. cbccore.low.Create)
  * 
- * @see cbccore.low.Create
+ * @see cbc.low.Create
  * @see cbc.movement.plugins.create.CreateMovementPlugin
  * @see cbc.movement.DriveTrain
  */
@@ -36,7 +36,7 @@ public class Create {
 	
 	private float lag;
 	
-	private static cbccore.low.Create lowCreate =
+	private static cbc.low.Create lowCreate =
 		Device.getLowCreateController();
 	private static LowSideDrivers lowSideDrivers =
 		new LowSideDrivers(lowCreate);

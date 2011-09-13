@@ -1,8 +1,8 @@
 package cbc.create;
 
 public class LowSideDrivers {
-	private cbccore.low.Create create = null;
-	public LowSideDrivers(cbccore.low.Create create) {
+	private cbc.low.Create create = null;
+	public LowSideDrivers(cbc.low.Create create) {
 		this.create = create;
 	}
 	/**

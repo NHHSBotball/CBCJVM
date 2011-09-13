@@ -23,11 +23,11 @@ import cbc.Device;
  * Documentation stolen from the KISS-C documentation
  *
  * @author  Benjamin Woodruff
- * @see     cbccore.low.Camera
+ * @see     cbc.low.Camera
  */
 
 public class Camera {
-	private cbccore.low.Camera lowCamera = Device.getLowCameraController();
+	private cbc.low.Camera lowCamera = Device.getLowCameraController();
 	private static int updateLocks = 0; //we want this to be global
 	private static boolean initialized = false;
 	

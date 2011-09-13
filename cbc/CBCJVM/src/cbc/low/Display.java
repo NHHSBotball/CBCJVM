@@ -12,26 +12,28 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CBCJVM.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-package cbc.sensors.buttons;
-
-import cbc.Device;
-
-/**
- * 
- * @author Braden McDorman
- *
  */
 
-public class UpButton extends AbstractButton {
-	private cbc.low.Input lowInput = Device.getLowInputController();
-	@Override
-	public boolean getValue() {
-		return lowInput.up_button() == 1;
-	}
-	@Override
-	public String toString() {
-		return "Up Button";
-	}
+package cbc.low;
+
+/**
+ * Stuff like clearing the screen. Last I checked this stuff is broken, so just use something like
+ * System.out.print("\n\n\n\n\n\n\n\n\n");
+ * 
+ * @author Braden McDorman
+ */
+
+public class Display {
+	
+	/**
+	 * Clears display and pust cursor in upper left
+	 */
+	public native void display_clear();
+	
+	
+	
+	/**
+	 * Clear the CBC display
+	 */
+	public native void cbc_display_clear(); /*Clears console display on CBC*/
 }
