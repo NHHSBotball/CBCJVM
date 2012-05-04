@@ -150,7 +150,7 @@ public class Wheel extends Motor {
 	 * constructed.
 	 */
 	public double getCmCounter() {
-		return cmCount + toCm(getTickCounter());
+		return cmCount + super.getPosition();
 	}
 	
 	/**
